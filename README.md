@@ -1,6 +1,6 @@
 # Folio
 
-[한국어](README.ko.md) · [Releases](https://github.com/fbwndrud/folio/releases/tag/v0.1.0) · [Getting started (한국어)](docs/writing-guide.md) · [Report a bug](https://github.com/fbwndrud/folio/issues)
+[한국어](README.ko.md) · [English examples](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-english-example-library.zip) · [Releases](https://github.com/fbwndrud/folio/releases/tag/v0.1.0) · [Getting started (한국어)](docs/writing-guide.md) · [Report a bug](https://github.com/fbwndrud/folio/issues)
 
 Folio keeps the manuscripts, images and sources you work on with an AI assistant, along with their revisions and review history. Open Studio to read the work, follow its references and see what needs another check. Export a reading edition as a website or EPUB.
 
@@ -11,6 +11,8 @@ Folio keeps the manuscripts, images and sources you work on with an AI assistant
 *The screenshot uses a fixed synthetic example with simulated model responses and approval.*
 
 ## Try it
+
+To read an English work first, [download the English example library](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-english-example-library.zip). It includes a beginner guide and four other examples. The small fixed demo below uses Korean text.
 
 Use Node.js 24. Supported versions are 22.13+, 24 and 26 within their respective major versions. From a source checkout:
 

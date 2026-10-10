@@ -35,3 +35,5 @@ ZIP 5개와 내부 EPUB의 CRC, manifest 파일 hash/크기, en metadata, 번역
 검증: 관련 backend 회귀 테스트 33개, viewer 테스트 67개 통과. lint/typecheck/Studio build 통과. 변경 범위 밖의 전체 부하·모델 다운로드 검증은 이번에 재실행하지 않았다. 기존 GitHub hosted runner 제한은 해결됐다고 간주하지 않는다.
 
 기존 v0.1.0 엔진 tarball·태그와 한국어 예시는 덮어쓰지 않는다. 영어 예시와 별도 영어 checksum/provenance 파일을 같은 릴리스에 추가하며 npm 또는 새 엔진 버전은 게시하지 않는다.
+
+공개 후 영어 파일 9개를 다시 다운로드했다. checksum 파일에 있는 8개 데이터 파일 hash와 모든 ZIP CRC가 일치했다. 기존 릴리스 파일 11개의 asset 식별자와 크기가 유지됐고 엔진 태그 대상도 바뀌지 않았다. 공개 저장소 사본에서도 관련 테스트 33개와 viewer 테스트 67개, lint/typecheck/build를 통과했다.
