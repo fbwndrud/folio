@@ -99,8 +99,10 @@ test('example instructions work in both languages and retain commands and approv
     assert.ok(html.includes(text), text);
   }
   assert.match(render(Examples, {}, 'en'), /Small examples included with Folio/);
-  const { exampleApproval } = await server.ssrLoadModule('/src/components/ExampleNotice.jsx');
+  const { exampleApproval, exampleMetadata } = await server.ssrLoadModule('/src/components/ExampleNotice.jsx');
   assert.equal(exampleApproval({ getElementById: () => ({ textContent: '{"approval":"simulated"}' }) }), 'simulated');
   assert.equal(exampleApproval({ getElementById: () => ({ textContent: '{"approval":"approved"}' }) }), null);
   assert.equal(exampleApproval({ getElementById: () => ({ textContent: 'broken' }) }), null);
+  assert.equal(exampleMetadata({ getElementById: () => ({ textContent: '{"approval":"simulated","readingVariant":"en","studioVariant":"main"}' }) }).readingVariant, 'en');
+  assert.match(ko('Web and EPUB use the translation. Studio shows the original main manuscript; a variant selector is not available yet.'), /판본 선택기/);
 });

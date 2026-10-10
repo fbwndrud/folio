@@ -63,6 +63,8 @@ Folio는 내 컴퓨터에서 실행합니다. 호스팅·인증·공동 편집·
 
 중요한 작품은 먼저 백업하세요. [운영 안내](docs/operations.md)는 진단·복원·중단된 작업을, [호환성](docs/compatibility.md)은 확인한 환경과 검증 범위를 설명합니다. AI 구독과 생성 비용은 연결한 프로그램의 조건을 따릅니다.
 
+영어 예시는 [영어 모음 ZIP](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-english-example-library.zip)으로 받습니다. 새 단편·그림책·실습 안내서·네 장짜리 이야기와 기존 한국어 단편의 영어 번역이 들어 있습니다. 네 장짜리 이야기는 2,657단어의 구조 실습용 예시입니다. 번역본의 Web·EPUB는 영어이며 Studio는 한국어 원본을 보여 줍니다. 판본 선택기는 아직 없습니다.
+
 ## 더 읽기와 참여
 
 - **집필:** [첫 작품](docs/writing-guide.md), [그림](docs/assets.md), [자료](docs/resources.md), [Studio](docs/studio.md), [내보내기](docs/export.md).

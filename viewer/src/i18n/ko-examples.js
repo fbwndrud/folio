@@ -1,4 +1,5 @@
 export default Object.freeze({
+  "Web and EPUB use the translation. Studio shows the original main manuscript; a variant selector is not available yet.": "Web과 EPUB는 번역본입니다. Studio는 원본 원고를 보여 주며, 판본 선택기는 아직 제공하지 않습니다.",
   'Examples': '예시 모음',
   'Start with a small example, then explore a complete work separately.': '작은 예시로 시작하고, 별도로 제공하는 완성된 작품 예시도 살펴보세요.',
   'Small examples included with Folio': 'Folio에 포함된 작은 예시',

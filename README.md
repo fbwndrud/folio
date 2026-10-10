@@ -53,9 +53,15 @@ Optional [vector retrieval (한국어)](docs/embeddings.md) requires a separate 
 
 ## Open a complete example
 
-The release has five separate ZIPs: a short story, an illustrated picture book, a beginner's guide, a novella and an AI research book. Each contains a Folio work copy, images where used, Web/EPUB editions and a read-only Studio. Extract a ZIP, read its README and run `node serve.mjs` to open Studio. See [example instructions (한국어)](docs/examples.md).
+Choose an [English example library](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-english-example-library.zip) or the [Korean example library](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-example-library.zip). Both are separate downloads from the [v0.1.0 release](https://github.com/fbwndrud/folio/releases/tag/v0.1.0).
 
-The first four examples use simulated approval. The research book remains a draft awaiting author approval. Reviews are from the same host. These examples show the workflow and its outputs, not an independent assessment of writing quality. Generated works are release downloads; the source and engine package contain only small synthetic fixtures.
+The English library contains four new works—a short story, a picture-book manuscript with two illustrations, a practical beginner guide and a four-chapter story—plus an English translation of the Korean short story. The four-chapter story is a 2,657-word structural example, not a full-length novella. The Korean library includes a longer story and a research-book draft.
+
+Each bundle contains a Folio work copy, images where used, Web/EPUB editions and a read-only Studio. Extract a ZIP, read its English or Korean README and run `node serve.mjs` to open the collection. Copy the entire example folder before editing. See [example instructions](docs/examples.md#english).
+
+The translation keeps its Korean original and source-bound English variant. Its Web and EPUB editions are English; Studio currently shows the original main manuscript and has no variant reader selector.
+
+English examples use simulated approval and same-host review. The Korean research book remains a draft awaiting author approval. These examples show the workflow and its outputs, not an independent assessment of writing quality. Generated works are release downloads; the source and engine package contain only small synthetic fixtures.
 
 ## Before relying on it
 

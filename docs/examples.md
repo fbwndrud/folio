@@ -40,7 +40,7 @@ ZIP을 푼 폴더에서 `node serve.mjs`를 실행하고 표시된 주소를 연
 
 ## 배포 묶음 만들기
 
-유지관리자는 이미 검토한 공개용 작품만 명시적인 manifest로 고른다. `examples` 배열의 각 항목은 `id`, `title`, `description`, 절대 경로 `root`, `approval`(`simulated` 또는 `pending`)과 명시적인 `contentLicense`(`CC0-1.0` 또는 `not-set`)를 가진다. 생략하면 재사용 허락을 부여하지 않는 `not-set`으로 처리한다. 이 manifest와 출력물은 `.local-output/`에 둔다.
+유지관리자는 이미 검토한 공개용 작품만 명시적인 manifest로 고른다. `examples` 배열의 각 항목은 `id`, `title`, `description`, 절대 경로 `root`, `approval`(`simulated` 또는 `pending`)과 명시적인 `contentLicense`(`CC0-1.0` 또는 `not-set`)를 가진다. `language`(예: `en`), `variant`(기본 `main`), 읽기본에만 적용하는 `titles`(노드 ID → 제목)를 선택할 수 있다. 모음 전체의 `galleryLanguage`는 `ko` 또는 `en`이며 기존 기본값은 `ko`다. 콘텐츠 라이선스를 생략하면 재사용 허락을 부여하지 않는 `not-set`으로 처리한다. 이 manifest와 출력물은 `.local-output/`에 둔다.
 
 ```sh
 npm --prefix viewer run build
@@ -52,5 +52,15 @@ npm run examples:bundle -- .local-output/chosen-examples.json .local-output/new-
 결과에는 작품별 ZIP, `SHA256SUMS`, `catalog.json`, 한국어·영어 배포 화면이 생긴다. 출력 폴더에서 `node serve.mjs`로 로컬 검토한다. 이 명령은 GitHub 업로드나 npm 게시를 하지 않는다. 공개 릴리스가 준비되면 ZIP·checksum·catalog와 정적 예시 모음을 함께 제공할 수 있다.
 
 ## English
+
+[Download the English example library](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-english-example-library.zip). It includes four new English works and one Korean-to-English translation. Individual ZIPs are also available in the [release](https://github.com/fbwndrud/folio/releases/tag/v0.1.0). Check English downloads against `ENGLISH-SHA256SUMS`.
+
+- **The Last Light at Platform Nine:** three-scene original short story, 1,009 words.
+- **Pip and the Pocket of Wind:** four-spread original picture-book manuscript, 107 words, two illustrations.
+- **Your First Work with Folio:** four-part practical beginner guide, 902 words.
+- **The Atlas of Borrowed Rooms:** four chapters, eight scenes, 2,657 words; a structural example rather than a full-length novella. The brass key has four recorded custody states with passage references.
+- **The Mailbox After the Rain:** English translation of the Korean short story, with a term map and three source-bound review receipts. Web/EPUB are English. Studio shows the original main manuscript; it does not yet have a variant reader selector.
+
+All five use simulated approval and same-host, scripted review responses. Text and images were created by the assistant; Folio stored them through public MCP tools. Translation checks and source-change guards were exercised, but this is not independent certification of translation or literary quality.
 
 Small synthetic examples ship with Folio. Generated works ship separately as self-contained ZIPs; text, images, evidence and original activity records stay together. Open **Settings → Examples** in Studio. For a downloaded bundle, extract it, read `README.md`, then run `node serve.mjs` for the read-only Studio. Web and EPUB editions are also included. Copy the whole folder before editing. Simulated approval is not author approval. Version 0.1.0 examples are separate GitHub release downloads. Original example content is CC0-1.0; third-party quotes, code and trademarks are excluded, and Studio software retains its own licenses.
