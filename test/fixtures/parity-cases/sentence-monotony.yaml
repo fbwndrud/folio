@@ -1,0 +1,18 @@
+id: sentence-monotony
+title: 문장 길이가 모두 고르다
+episode: 2
+entities:
+  - { id: seoa, kind: character, name: 서아, aliases: [], data: { gender: female } }
+prose: |
+  다음 날 아침 서아는 일찍 일어났다. 창문을 열자 찬 바람이 들어왔다. 부엌에서 물을 한 잔 마셨다.
+
+  마당의 빨래는 아직 젖어 있었다. 서아는 빨래를 걷어 바구니에 담았다. 골목 끝에서 개가 짧게 짖었다.
+
+  우체부가 편지 한 통을 두고 갔다. 봉투에는 낯선 주소가 적혀 있었다. 서아는 편지를 식탁 위에 놓았다.
+
+  찻물이 끓는 소리가 조용히 났다. 서아는 창가에 앉아 차를 마셨다. 하지만 편지는 아직 뜯지 않았다.
+priorEvents: []
+draftEvents: []
+appearances: [seoa]
+mentions: []
+modelVerdicts: []

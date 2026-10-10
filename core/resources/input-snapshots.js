@@ -1,0 +1,59 @@
+import { join } from 'node:path';
+import { FolioError } from '../errors.js';
+import { canonicalJson, sha256 } from '../util/hash.js';
+import { withWorkspaceStateTransaction, readWorkspaceState } from '../publications/state.js';
+import { createResourceStore } from './revisions.js';
+import { assertRevisionId } from './schema.js';
+import { readObject, writeImmutable } from './files.js';
+import { validateDefinition } from './definitions.js';
+function invalid(message) { throw new FolioError('INPUT_INVALID', message); }
+function path(root, id) { assertRevisionId(id); return join(root, '.folio', 'resources', 'inputs', id.slice(7) + '.json'); }
+function copy(value) { try { return JSON.parse(canonicalJson(value)); } catch { invalid('JSON input required'); } }
+async function buildManifest(root, input, state) {
+  if (!Array.isArray(input.revisionIds) || !input.revisionIds.length || new Set(input.revisionIds).size !== input.revisionIds.length || Object.keys(input).some((key) => !['revisionIds', 'profileRevisionId', 'pipelineRevisionId', 'policyRevisionId', 'externalMode'].includes(key)) || !['reject', 'reference-only'].includes(input.externalMode ?? 'reject')) invalid('invalid revision set or external mode');
+  const store = createResourceStore(root);
+  const definitions = {};
+  const selections = [];
+  async function selected(id) {
+    const revision = await store.readRevision(id);
+    const marker = state.sourceSelections[revision.resourceId];
+    if (!marker || marker.revisionId !== id || marker.action?.actor !== 'user' || marker.action?.type !== 'select') invalid('input must name a user-selected revision at checkpoint');
+    selections.push({ resourceId: revision.resourceId, revisionId: id, selectionRevision: marker.selectionRevision, checkpoint: marker.checkpoint });
+    return revision;
+  }
+  for (const kind of ['profile', 'pipeline', 'policy']) {
+    const revision = await selected(input[kind + 'RevisionId']);
+    if (revision.kind !== kind || revision.storageStatus !== 'owned_snapshot' || revision.mediaType !== 'application/json') invalid('owned JSON definition of matching kind required');
+    const value = validateDefinition(kind, JSON.parse((await store.readContent(revision.revisionId)).toString('utf8')));
+    definitions[kind] = { revisionId: revision.revisionId, contentHash: revision.contentHash, definitionHash: sha256(canonicalJson(value)), byteLength: revision.byteLength, value };
+  }
+  const resources = []; let totalBytes = Object.values(definitions).reduce((total, definition) => total + definition.byteLength, 0);
+  for (const id of input.revisionIds) {
+    const revision = await selected(id);
+    if (resources.some((item) => item.resourceId === revision.resourceId) || !definitions.profile.value.scope.includes(revision.resourceId) || !definitions.policy.value.scope.includes(revision.resourceId)) invalid('input exceeds scope or duplicates a resource');
+    if (revision.storageStatus === 'external_unobserved' && input.externalMode !== 'reference-only') invalid('external input requires explicit reference-only');
+    resources.push({ resourceId: revision.resourceId, revisionId: id, contentHash: revision.contentHash, storageStatus: revision.storageStatus, byteLength: revision.byteLength ?? null, observation: revision.storageStatus === 'external_unobserved' ? 'reference-only' : 'folio-executed' });
+    totalBytes += revision.byteLength ?? 0;
+  }
+  const maxInputBytes = Math.min(definitions.profile.value.maxInputBytes, definitions.policy.value.maxInputBytes ?? Number.MAX_SAFE_INTEGER);
+  if (totalBytes > maxInputBytes) invalid('input exceeds byte budget');
+  return { version: 1, revisionIds: input.revisionIds, profileRevisionId: input.profileRevisionId, pipelineRevisionId: input.pipelineRevisionId, policyRevisionId: input.policyRevisionId, externalMode: input.externalMode ?? 'reject', workspaceCheckpoint: state.checkpoint, selections, resources, definitions, scope: resources.map((item) => item.resourceId), totalBytes, maxInputBytes, byteBudgetComplete: resources.every((item) => item.byteLength !== null) };
+}
+export async function prepareInput(root, input) {
+  input = copy(input);
+  return withWorkspaceStateTransaction(root, async ({ state }) => {
+    const manifest = await buildManifest(root, input, state);
+    const bytes = canonicalJson(manifest); const inputSnapshotId = sha256(bytes);
+    await writeImmutable(root, path(root, inputSnapshotId), bytes);
+    return { inputSnapshotId, manifest };
+  });
+}
+export async function verifyInput(root, inputSnapshotId) {
+  const bytes = await readObject(root, path(root, inputSnapshotId));
+  let manifest; try { manifest = JSON.parse(bytes.toString('utf8')); } catch { invalid('invalid snapshot JSON'); }
+  if (sha256(bytes) !== inputSnapshotId || canonicalJson(manifest) !== bytes.toString('utf8')) invalid('input snapshot hash differs');
+  const state = await readWorkspaceState(root, { checkpoint: manifest.workspaceCheckpoint });
+  const rebuilt = await buildManifest(root, { revisionIds: manifest.revisionIds, profileRevisionId: manifest.profileRevisionId, pipelineRevisionId: manifest.pipelineRevisionId, policyRevisionId: manifest.policyRevisionId, externalMode: manifest.externalMode }, state);
+  if (canonicalJson(rebuilt) !== canonicalJson(manifest)) invalid('input snapshot references differ');
+  return { inputSnapshotId, manifest };
+}

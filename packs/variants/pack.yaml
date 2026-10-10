@@ -1,0 +1,51 @@
+name: variants
+version: 1
+title: 판본
+description: 번역·개정·요약 판본을 원본(main 커밋 원고)과 견주는 둘째 팩. 판본 파이프라인(코어)의 variant-checks·variant-review 자리에서만 돈다 — 원본 실행에는 걸리지 않는다. 단계·프롬프트·프리셋은 첫 팩과 코어가 준다.
+checks:
+  variants.blocks-kept:
+    title: 블록 표시 대조
+    description: 원본의 블록 앵커·참조·각주·자료 인용이 판본에서 빠지거나(요약은 빼도 된다) 원본에 없는 것이 더해지면 알린다.
+    tier: deterministic
+    stage: variant-checks
+    severity: advisory
+    experimental: true
+    run: blocks-kept
+  variants.numbers-kept:
+    title: 숫자 대조
+    description: 원본의 숫자가 판본에서 빠지거나(요약은 빼도 된다) 원본에 없는 숫자가 더해지면 알린다.
+    tier: deterministic
+    stage: variant-checks
+    severity: advisory
+    experimental: true
+    run: numbers-kept
+  variants.paragraphs:
+    title: 문단·분량
+    description: 번역의 문단 수가 원본과 다르거나, 요약이 원본보다 짧지 않으면 알린다.
+    tier: deterministic
+    stage: variant-checks
+    severity: advisory
+    experimental: true
+    run: paragraphs
+  variants.terms:
+    title: 용어 대응표
+    description: 판본 폴더 terms.yaml 의 대응을 따르지 않은 곳(번역에 대응어가 없음, 원어가 남음)을 알린다.
+    tier: deterministic
+    stage: variant-checks
+    severity: advisory
+    experimental: true
+    run: terms
+  variants.fidelity:
+    title: 원본 대비 누락·추가
+    description: 원본에 있는데 판본에서 빠진 내용, 원본에 없는데 더해진 내용, 뜻이 바뀐 곳을 모델이 본다(실험).
+    tier: model
+    stage: variant-review
+    severity: advisory
+    experimental: true
+    instruction: checks/fidelity.md
+checkSets:
+  variants.basic:
+    title: 판본 기본
+    description: 블록·숫자·문단·용어 대조(결정론)와 원본 대비 누락·추가(모델). 판본 실행에서만 돈다(실험, 참고 의견).
+    checks: [variants.blocks-kept, variants.numbers-kept, variants.paragraphs, variants.terms, variants.fidelity]
+defaultCheckSets: [variants.basic]

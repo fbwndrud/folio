@@ -1,0 +1,30 @@
+{
+  "case": "destroyed-updated",
+  "caseDigest": "sha256:a190a8bda7d69d661cb43296e02626aca331a73849d1cfab517a15d4e4f93ea6",
+  "vibelore": {
+    "commit": "a79e7b36e4412339cc0f16a4f71f66c69a88fae9",
+    "script": "sha256:e65dace72be1e4519f049368d7c1af09482b29f02455061074c32df7f0d26e40"
+  },
+  "hard": [
+    {
+      "code": "LEDGER_UPDATE_AFTER_DESTROY",
+      "entityId": "silver-key"
+    }
+  ],
+  "soft": [
+    "DESTROYED_ENTITY_MENTION",
+    "QUALITY_GATE_PROSODY"
+  ],
+  "intendedDiffs": [
+    {
+      "kind": "advisory-start",
+      "code": "LEDGER_UPDATE_AFTER_DESTROY",
+      "reason": "advisory 로 시작함"
+    },
+    {
+      "kind": "folded",
+      "code": "DESTROYED_ENTITY_MENTION",
+      "reason": "Folio 는 파괴된 것 하나에 가장 구체적인 지적 하나만 낸다. 갱신(DESTROYED_UPDATED)이 있으면 언급(DESTROYED_MENTIONED)은 따로 내지 않는다."
+    }
+  ]
+}

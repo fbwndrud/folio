@@ -1,0 +1,18 @@
+{
+  "case": "fixed-fact-conflict",
+  "caseDigest": "sha256:7023a4bcfa8e06f5ada7524fc3a81fbbab7742a1f3192fb7e15b29e7be1c177e",
+  "vibelore": {
+    "commit": "a79e7b36e4412339cc0f16a4f71f66c69a88fae9",
+    "script": "sha256:e65dace72be1e4519f049368d7c1af09482b29f02455061074c32df7f0d26e40"
+  },
+  "hard": [
+    {
+      "code": "INTRINSIC_VIOLATION:llm",
+      "entityId": "mira"
+    }
+  ],
+  "soft": [
+    "QUALITY_GATE_PROSODY"
+  ],
+  "intendedDiffs": []
+}

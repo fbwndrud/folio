@@ -1,0 +1,14 @@
+{
+  "case": "no-time-skip",
+  "caseDigest": "sha256:35b33c1b671eea43f6e13a33acb6e270827e80828d7ac101e109da858861465f",
+  "vibelore": {
+    "commit": "a79e7b36e4412339cc0f16a4f71f66c69a88fae9",
+    "script": "sha256:e65dace72be1e4519f049368d7c1af09482b29f02455061074c32df7f0d26e40"
+  },
+  "hard": [],
+  "soft": [
+    "NO_TIME_SKIP",
+    "QUALITY_GATE_PROSODY"
+  ],
+  "intendedDiffs": []
+}

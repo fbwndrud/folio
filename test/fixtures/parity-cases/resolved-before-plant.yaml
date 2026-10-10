@@ -1,0 +1,20 @@
+id: resolved-before-plant
+title: 심지 않은 약속을 갚는다
+episode: 3
+entities:
+  - { id: seoa, kind: character, name: 서아, aliases: [], data: { gender: female } }
+  - { id: sealed-letter, kind: promise, name: 봉인된 편지, aliases: [], data: { horizon: soon } }
+prose: |
+  바람이 창틀을 두드렸다.
+
+  서아는 서랍 깊숙이 넣어 둔 봉투를 꺼냈다. 봉인을 뜯자 누렇게 바랜 종이가 나왔다.
+
+  "결국 아버지가 남긴 말은 이것뿐이었구나."
+
+  그녀는 편지를 접어 품에 넣고 등불을 껐다.
+priorEvents: []
+draftEvents:
+  - { entityId: sealed-letter, kind: promise.resolved, quote: 봉인을 뜯자 누렇게 바랜 종이가 나왔다. }
+appearances: [seoa]
+mentions: [sealed-letter]
+modelVerdicts: []

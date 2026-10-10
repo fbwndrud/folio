@@ -1,0 +1,14 @@
+{
+  "workId": "synthetic-lighthouse",
+  "arcNumber": 1,
+  "title": "버린 계획",
+  "promise": "이 아크는 버려졌다.",
+  "startChapter": 1,
+  "estimatedEpisodes": 2,
+  "status": "rejected",
+  "episodes": [
+    { "index": 1, "chapter": 1, "title": "버린 1화", "goal": "버림" },
+    { "index": 2, "chapter": 2, "title": "버린 2화", "goal": "버림" }
+  ],
+  "rejectedAt": "2026-01-02T00:00:00.000Z"
+}

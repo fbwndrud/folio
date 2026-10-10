@@ -1,0 +1,18 @@
+id: no-time-skip
+title: 시간 도약 표지가 하나도 없다
+episode: 2
+entities:
+  - { id: seoa, kind: character, name: 서아, aliases: [], data: { gender: female } }
+prose: |
+  강가에는 옅은 안개가 깔려 있었다.
+
+  서아는 나룻배의 밧줄을 풀고 노를 저었다. 물살이 비단 폭처럼 부드럽게 갈라졌다.
+
+  건너편 기슭에는 작은 찻집이 불을 밝히고 있었다.
+
+  하지만 찻집 문에는 닫혔다는 팻말이 걸려 있었다.
+priorEvents: []
+draftEvents: []
+appearances: [seoa]
+mentions: []
+modelVerdicts: []

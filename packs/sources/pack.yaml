@@ -1,0 +1,57 @@
+name: sources
+version: 2
+title: 자료 근거
+description: 주장과 자료를 잇는 둘째 팩. 근거 없는 주장, 자료와 다른 숫자·연도, 신뢰도 낮은 자료에만 기댄 주장을 알린다. 단계·프롬프트·프리셋은 첫 팩이 준다.
+checks:
+  sources.claim-supported:
+    title: 근거 있는 주장
+    description: 추출된 주장 가운데 확인된 근거(자료 인용)가 없는 것을 알린다.
+    tier: deterministic
+    stage: facts
+    severity: advisory
+    experimental: true
+    run: claim-supported
+  sources.numbers-match:
+    title: 숫자·연도 대조
+    description: 주장 인용의 숫자·연도가 연결된 자료 인용에 없으면 알린다.
+    tier: deterministic
+    stage: facts
+    severity: advisory
+    experimental: true
+    run: numbers-match
+  sources.reliability:
+    title: 자료 신뢰도
+    description: 신뢰도 낮은(reliability low) 자료에만 기댄 주장을 알린다.
+    tier: deterministic
+    stage: facts
+    severity: advisory
+    experimental: true
+    run: low-reliability
+  sources.conflict:
+    title: 자료끼리 어긋남
+    description: 이 원고에 연결된 자료끼리 서로 어긋나는 곳을 본다(실험).
+    tier: model
+    stage: critic
+    severity: advisory
+    experimental: true
+    instruction: checks/conflict.md
+  sources.claims-found:
+    title: 표시 안 된 주장
+    description: 근거가 필요한데 주장으로 표시되지 않은 문장을 찾는다(실험).
+    tier: model
+    stage: critic
+    severity: advisory
+    experimental: true
+    requireQuote: true
+    instruction: checks/claims-found.md
+checkSets:
+  sources.citations:
+    title: 논픽션 인용
+    description: 근거 없는 주장, 자료와 다른 숫자·연도, 신뢰도 낮은 자료에만 기댄 주장을 알린다(결정론, 실험, 참고 의견).
+    checks: [sources.claim-supported, sources.numbers-match, sources.reliability]
+    recommendedFor: { kinds: [textbook, history, guide, sourcebook] }
+  sources.review:
+    title: 자료 검토
+    description: 자료끼리 어긋남과 표시 안 된 주장을 모델이 본다(실험, 참고 의견).
+    checks: [sources.conflict, sources.claims-found]
+    recommendedFor: { kinds: [history, sourcebook] }

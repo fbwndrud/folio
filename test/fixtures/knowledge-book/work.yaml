@@ -1,0 +1,11 @@
+title: 처음 만나는 세포
+levels:
+  - name: part
+    children: [1, 6]
+  - name: chapter
+    children: [1, 10]
+  - name: section
+    leaf: true
+order: linear
+packs: [knowledge]
+checkSets: []

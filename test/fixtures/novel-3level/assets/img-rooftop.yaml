@@ -1,0 +1,10 @@
+id: img-rooftop
+file: img-rooftop.svg
+brief:
+  mustShow:
+    - 난간에 기댄 마라
+  mustNotShow:
+    - 편지 내용
+  entities:
+    - mara
+    - rooftop

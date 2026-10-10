@@ -1,0 +1,11 @@
+{
+  "checkId": "check-0002bbbb",
+  "workflowId": "wf-0002",
+  "workId": "synthetic-lighthouse",
+  "chapter": 2,
+  "proseHash": "sha256:0000000000000000000000000000000000000000000000000000000000000002",
+  "verdict": "failed",
+  "hardViolations": 1,
+  "advisories": [],
+  "checkedAt": "2026-01-05T00:00:00.000Z"
+}

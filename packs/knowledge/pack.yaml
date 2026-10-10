@@ -1,0 +1,181 @@
+name: knowledge
+version: 1
+title: 지식 책
+description: 교재·역사서·안내서. 개념을 정의한 뒤에 쓰고, 선수 개념 순서와 용어 통일을 본다. 계획·원고·사건 추출 순서로 쓴다.
+scopeFields: [prerequisites]
+presets:
+  textbook:
+    title: 교재
+    description: 부·장·절로 쓴다.
+    levels:
+      - { name: part, children: [1, 10] }
+      - { name: chapter, children: [1, 20] }
+      - { name: section, leaf: true }
+    checkSets: [knowledge.basic]
+  history:
+    title: 역사
+    description: 시대·장·절로 쓴다.
+    levels:
+      - { name: era, children: [1, 20] }
+      - { name: chapter, children: [1, 30] }
+      - { name: section, leaf: true }
+    checkSets: [knowledge.basic]
+  guide:
+    title: 안내서
+    description: 장·절로 쓴다.
+    levels:
+      - { name: chapter, children: [1, 30] }
+      - { name: section, leaf: true }
+    checkSets: [knowledge.basic]
+  sourcebook:
+    title: 자료 책
+    description: 모은 자료(folio_sources)로 부·장·절을 쓴다. 작품 packs 는 [knowledge, sources] 여야 한다(자료 근거 세트).
+    levels:
+      - { name: part, children: [1, 10] }
+      - { name: chapter, children: [1, 20] }
+      - { name: section, leaf: true }
+    checkSets: [knowledge.basic, sources.citations]
+  reference:
+    title: 사전·매뉴얼
+    description: 부·항목으로 쓴다. 순서 없음(order none) — 앞뒤를 따지는 검사는 해당 없음이고, 항목끼리는 앞머리 links 로 잇는다.
+    levels:
+      - { name: part, children: [1, 30] }
+      - { name: entry, leaf: true }
+    order: none
+    checkSets: [knowledge.basic, knowledge.unordered]
+pipelines:
+  leaf:
+    - { id: plan, kind: generate, produces: plan }
+    - { id: draft, kind: generate, produces: draft }
+    - { id: extract, kind: generate, produces: events, requires: [draft] }
+    - { id: facts, kind: check, tier: deterministic, stage: facts, requires: [extract] }
+    - { id: critic, kind: check, tier: model, stage: critic }
+    - { id: revise, kind: generate, produces: draft, loop: { until: [facts], max: 3 } }
+    - { id: approve, kind: gate }
+    - { id: commit, kind: commit }
+  branch:
+    - { id: plan, kind: generate, produces: plan }
+    - { id: fit, kind: check, tier: model, stage: fit }
+    - { id: revise, kind: generate, produces: draft, loop: { until: [fit], max: 3 } }
+    - { id: approve, kind: gate }
+    - { id: children, kind: generate, produces: children }
+    - { id: review, kind: check, tier: model, stage: review }
+    - { id: commit, kind: commit }
+prompts:
+  leaf.plan: prompts/leaf-plan.md
+  leaf.draft: prompts/draft.md
+  leaf.extract: prompts/extract.md
+  leaf.revise: prompts/revise.md
+  branch.plan: prompts/branch-plan.md
+  branch.revise: prompts/revise-plan.md
+  branch.children: prompts/children.md
+checks:
+  knowledge.defined-before-use:
+    title: 정의 전 사용
+    description: 앞에서 정의하지 않은 개념·용어를 이 절이 쓰면 알린다. 이 원고의 정의는 원고 인용이 있어야 인정한다.
+    tier: deterministic
+    stage: facts
+    severity: advisory
+    experimental: true
+    requiresOrder: linear
+    run: defined-before-use
+  knowledge.prerequisite-order:
+    title: 선수 개념 순서
+    description: 개념을 정의할 때 그 선수 개념이 먼저 정의됐는지 본다.
+    tier: deterministic
+    stage: facts
+    severity: advisory
+    experimental: true
+    requiresOrder: linear
+    run: prerequisite-order
+  knowledge.term-consistency:
+    title: 용어 통일
+    description: 엔티티에 적은 쓰지 않을 표기(avoid)가 본문에 나오면 알린다. 코드 블록 안은 보지 않는다.
+    tier: deterministic
+    stage: facts
+    severity: advisory
+    experimental: true
+    run: term-consistency
+  knowledge.parent-fit:
+    title: 윗계획 맞춤
+    description: 이 계획이 윗계획의 학습 목표와 약속을 지키는지.
+    tier: model
+    stage: fit
+    severity: block
+    requiresParentPlan: true
+    instruction: checks/parent-fit.md
+  knowledge.critic:
+    title: 원고 검토
+    description: 배우는 사람 입장에서 걸리는 곳. 참고 의견일 뿐 자동으로 고치지 않는다.
+    tier: model
+    stage: critic
+    severity: advisory
+    instruction: checks/critic.md
+  knowledge.goals-covered:
+    title: 학습 목표 다룸
+    description: 끝난 자식들이 이 장의 학습 목표를 다뤘는지.
+    tier: model
+    stage: review
+    severity: advisory
+    instruction: checks/goals-covered.md
+  knowledge.exercises-cover-goals:
+    title: 연습문제와 목표
+    description: 연습문제가 학습 목표를 덮는지(실험).
+    tier: model
+    stage: critic
+    severity: advisory
+    experimental: true
+    instruction: checks/exercises-cover-goals.md
+  knowledge.cross-refs:
+    title: 상호 참조
+    description: 원고의 블록 참조([[block:id]])·앵커({#id})·각주([^id])·자료 인용([[source:id]])이 가리키는 것이 있는지 본다. 코드 블록 안은 보지 않는다.
+    tier: deterministic
+    stage: facts
+    severity: advisory
+    experimental: true
+    run: cross-refs
+  knowledge.links:
+    title: 노드 링크
+    description: 이 노드 앞머리 links 가 없는 노드나 이 노드 자신을 가리키면 알린다.
+    tier: deterministic
+    stage: facts
+    severity: advisory
+    experimental: true
+    run: links
+  knowledge.linked-consistency:
+    title: 연결 항목과 맞춤
+    description: 순서 없는 작품에서 이 항목이 links 로 가리키는 항목의 사건(linkedEvents)과 어긋나는지 본다. 원고 인용이 있어야 한다.
+    tier: model
+    stage: critic
+    severity: advisory
+    experimental: true
+    requiresOrder: none
+    requireQuote: true
+    instruction: checks/linked-consistency.md
+checkSets:
+  knowledge.basic:
+    title: 교재 기본
+    description: 정의 전 사용·선수 개념 순서를 알리고 계획·원고·학습 목표를 검토한다.
+    checks: [knowledge.defined-before-use, knowledge.prerequisite-order, knowledge.parent-fit, knowledge.critic, knowledge.goals-covered]
+    recommendedFor: { kinds: [textbook, history, guide] }
+  knowledge.terms:
+    title: 용어 통일
+    description: 쓰지 않기로 한 표기를 알린다.
+    checks: [knowledge.term-consistency]
+    recommendedFor: { kinds: [textbook, guide] }
+  knowledge.exercises:
+    title: 연습문제(실험)
+    description: 연습문제가 학습 목표를 덮는지 본다.
+    checks: [knowledge.exercises-cover-goals]
+    recommendedFor: { kinds: [textbook], levels: [section] }
+  knowledge.references:
+    title: 상호 참조
+    description: 블록 참조·앵커·각주·자료 인용이 가리키는 것이 있는지 알린다(실험, 참고).
+    checks: [knowledge.cross-refs]
+    recommendedFor: { kinds: [textbook, history, guide] }
+  knowledge.unordered:
+    title: 사전·매뉴얼
+    description: 순서 없는 작품의 상호 참조 중심 검사. 노드 링크, 블록 참조·각주·자료 인용, 용어 통일, 연결 항목과 맞춤(모두 실험, 참고).
+    checks: [knowledge.links, knowledge.cross-refs, knowledge.term-consistency, knowledge.linked-consistency]
+    recommendedFor: { kinds: [reference] }
+defaultCheckSets: [knowledge.basic]

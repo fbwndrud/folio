@@ -1,0 +1,30 @@
+{
+  "case": "cliche-and-tags",
+  "caseDigest": "sha256:aa697c6cc02d3d51d31eeac1a1ca33ac136a2cfe7e89c7969fa017b7b1df1da3",
+  "vibelore": {
+    "commit": "a79e7b36e4412339cc0f16a4f71f66c69a88fae9",
+    "script": "sha256:e65dace72be1e4519f049368d7c1af09482b29f02455061074c32df7f0d26e40"
+  },
+  "hard": [
+    {
+      "code": "WEBNOVEL_DIALOGUE_NOT_ISOLATED",
+      "entityId": null
+    }
+  ],
+  "soft": [
+    "CLICHE_DENSITY",
+    "DIALOGUE_TAG_MONOTONY",
+    "LEXICAL_FATIGUE",
+    "ONOMATOPOEIA_OVERUSE",
+    "QUALITY_GATE_PROSODY",
+    "SENTENCE_MONOTONY",
+    "SIMILE_TOO_SPARSE"
+  ],
+  "intendedDiffs": [
+    {
+      "kind": "advisory-start",
+      "code": "WEBNOVEL_DIALOGUE_NOT_ISOLATED",
+      "reason": "advisory 로 시작함"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+.reader-workspace { display: grid; grid-template-columns: minmax(0, 1fr); gap: 36px; }
+.reader-workspace.review-open { grid-template-columns: minmax(0, 1fr) 280px; }
+.reader { min-width: 0; width: 100%; max-width: var(--reader-width); margin: 0 auto; }
+.reader-heading { margin: 24px 0; }
+.reader-heading h1 { margin: 12px 0 0; font-size: clamp(27px, 3vw, 36px); }
+.reader-toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.reading-settings { font-size: 13px; }
+.reading-settings > summary { min-height: 40px; border: 1px solid var(--line); padding: 8px 12px; border-radius: 5px; }
+.reading-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; padding: 16px; margin: 8px 0; border: 1px solid var(--line); background: var(--surface); border-radius: 6px; }
+.reader-toolbar .reading-settings[open] { flex-basis: 100%; order: 3; }
+.reading-fields label { display: grid; gap: 5px; }
+.reader-toolbar > button { font-size: 13px; }
+.manuscript-body { font-size: var(--reader-size); line-height: var(--reader-leading); padding: 8px 0; border: 0; border-radius: 0; background: transparent; }
+.reader-serif .manuscript-body { font-family: "Noto Serif", Georgia, "Noto Serif CJK KR", "Batang", serif; }
+.reader-sans .manuscript-body { font-family: "Noto Sans", "Segoe UI", system-ui, sans-serif; }
+.modes { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 24px; }
+.modes button { font-size: 13px; }
+.modes button[aria-pressed="true"] { color: var(--accent); background: var(--wash); border-color: var(--accent); }
+.quote-notice { padding: 10px 0; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 13px; color: var(--muted); }
+mark { background: var(--highlight); color: var(--highlight-ink); padding: 2px 0; }
+.section-definitions { margin-top: 30px; font-size: 14px; }
+.empty-text { padding: 28px 0; color: var(--muted); }
+.review-panel { min-width: 0; border-left: 1px solid var(--line); padding-left: 24px; font-size: 13px; overflow-wrap: anywhere; }
+.review-panel h2 { font-size: 18px; margin: 0 0 16px; }
+.review-back { display: none; }
+.review-state { font-size: 15px; font-weight: 650; margin: 0 0 12px; }
+.review-drift .review-state, .review-stale .review-state, .review-attention .review-state, .review-unknown .review-state { color: var(--lock); }
+.review-unverified .review-state { color: var(--error); }
+.review-disclosure { background: var(--wash); padding: 12px; border-radius: 5px; }
+.finding-group { margin: 24px 0; }
+.finding-group h3 { margin: 0 0 12px; }
+.finding-group h3 .muted { margin-left: 6px; font-weight: 400; }
+.finding-group ul { list-style: none; margin: 0; padding: 0; }
+.finding-group li { padding: 14px 0; border-top: 1px solid var(--line); }
+.finding-group blockquote { color: var(--muted); white-space: pre-wrap; }
+.finding-group strong { font-weight: 600; }
+.review-record-link { display: inline-block; padding: 12px 0; margin-top: 16px; }
+.review-history { border-top: 1px solid var(--line); padding: 16px 0; }
+.review-history summary { font-weight: 600; }
+.review-history table { margin-top: 16px; }
+.main-receipt .review-summary { max-width: 80ch; margin-bottom: 24px; }
+.focus-mode .reader-workspace { display: block; }
+.focus-mode .reader { max-width: var(--reader-width); }
+.focus-mode .reader-toolbar { position: sticky; top: 0; background: var(--bg); z-index: 2; padding-top: 8px; }
+@media (max-width: 1199px) {
+  .reader-workspace.review-open { grid-template-columns: minmax(0, 1fr); }
+  .review-panel { max-width: 76ch; width: 100%; margin: 0 auto; padding: 24px 0; border-left: 0; border-top: 1px solid var(--line); }
+  .review-back { display: inline-block; margin-bottom: 20px; }
+}
+@media (max-width: 440px) {
+  .reader-toolbar { gap: 6px; }
+  .reader-toolbar > button, .reading-settings > summary { padding: 8px; }
+  .modes { gap: 4px; }
+  .modes button { padding: 8px; font-size: 12px; }
+  .pager { gap: 10px; font-size: 12px; }
+}

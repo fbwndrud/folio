@@ -1,0 +1,89 @@
+name: novel
+version: 1
+title: 소설
+description: 장편·연재·단편 소설. 죽은 인물 등장 같은 사실 충돌을 막고, 계획·원고·사건 추출 순서로 쓴다.
+presets:
+  serial:
+    title: 연재
+    description: 아크 아래 회차를 쓴다.
+    levels:
+      - { name: arc, children: [1, 60] }
+      - { name: episode, leaf: true }
+    checkSets: [novel.basic, novel.serial]
+  novel:
+    title: 장편
+    description: 권·장·장면으로 쓴다.
+    levels:
+      - { name: book, children: [1, 10] }
+      - { name: chapter, children: [1, 40] }
+      - { name: scene, leaf: true }
+    checkSets: [novel.basic]
+  scene:
+    title: 단편
+    description: 장면만 늘어놓는다.
+    levels:
+      - { name: scene, leaf: true }
+    checkSets: [novel.basic]
+  picturebook:
+    title: 그림책 원고
+    description: 책 아래 펼침면별 읽을 글과 그림 설명을 쓴다. 실제 삽화와 지면은 별도 제작한다.
+    levels:
+      - { name: book, children: [1, 40] }
+      - { name: spread, leaf: true }
+    checkSets: [novel.basic, novel.young-readers]
+  fairytale:
+    title: 동화
+    description: 장 아래 장면으로 쓴다. 독자와 읽기 방식은 계획에서 정한다.
+    levels:
+      - { name: chapter, children: [1, 40] }
+      - { name: scene, leaf: true }
+    checkSets: [novel.basic, novel.young-readers]
+pipelines:
+  leaf:
+    - { id: plan, kind: generate, produces: plan }
+    - { id: draft, kind: generate, produces: draft }
+    - { id: extract, kind: generate, produces: events, requires: [draft] }
+    - { id: facts, kind: check, tier: deterministic, stage: facts, requires: [extract] }
+    - { id: critic, kind: check, tier: model, stage: critic }
+    - { id: revise, kind: generate, produces: draft, loop: { until: [facts], max: 3 } }
+    - { id: approve, kind: gate }
+    - { id: commit, kind: commit }
+  branch:
+    - { id: plan, kind: generate, produces: plan }
+    - { id: fit, kind: check, tier: model, stage: fit }
+    - { id: revise, kind: generate, produces: draft, loop: { until: [fit], max: 3 } }
+    - { id: approve, kind: gate }
+    - { id: children, kind: generate, produces: children }
+    - { id: review, kind: check, tier: model, stage: review }
+    - { id: commit, kind: commit }
+prompts:
+  leaf.plan: prompts/leaf-plan.md
+  leaf.draft: prompts/draft.md
+  leaf.extract: prompts/extract.md
+  leaf.revise: prompts/revise.md
+  branch.plan: prompts/branch-plan.md
+  branch.revise: prompts/revise-plan.md
+  branch.children: prompts/children.md
+checks: checks.yaml
+checkSets:
+  novel.basic:
+    title: 소설 기본
+    description: 사실 충돌을 막고 원고·계획을 검토한다.
+    checks: [novel.dead-on-stage, novel.fixed-facts, novel.critic, novel.parent-fit, novel.promise-kept, novel.destroyed-object, novel.honorific-gender, novel.metadata-leak, novel.promise-evidence, novel.promise-flow]
+    recommendedFor: { kinds: [novel, serial, picturebook, fairytale] }
+  novel.serial:
+    title: 웹소설 연재
+    description: 회차 끝 당김·절단, 시간 도약, 모바일 문단 형식, 분량, 설정 되풀이, 민감 표현, 잠든 약속(모두 실험, 참고 의견).
+    checks: [novel.episode-hook, novel.cliffhanger, novel.time-skip, novel.webnovel-format, novel.length, novel.info-restate, novel.sensitive, novel.promise-dormant]
+    recommendedFor: { kinds: [serial], levels: [episode] }
+  novel.young-readers:
+    title: 그림책·동화 독자 검토
+    description: 읽기 방식·독자의 이해·그림 설명과 본문의 역할을 살펴본다(실험, 참고 의견).
+    checks: [novel.young-readers]
+    recommendedFor: { kinds: [picturebook, fairytale], levels: [spread] }
+  novel.style:
+    title: 문체 유지
+    description: 문장 리듬, 운율, 보여주기, 상투 표현, 발화 동사, 대사 비율, 시점, 문체 기준 이탈(모두 실험, 참고 의견).
+    checks: [novel.sentence-rhythm, novel.prosody, novel.show-dont-tell, novel.cliche, novel.dialogue-tags, novel.dialogue-ratio, novel.pov, novel.style-drift]
+    recommendedFor: { kinds: [novel, serial] }
+defaultCheckSets: [novel.basic]

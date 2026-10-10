@@ -1,0 +1,36 @@
+{
+  "case": "dense-format",
+  "caseDigest": "sha256:3b78c998d1484fc14e2affeedf9dc95cb5a2aae5af2d28d08bc460257da288bc",
+  "vibelore": {
+    "commit": "a79e7b36e4412339cc0f16a4f71f66c69a88fae9",
+    "script": "sha256:e65dace72be1e4519f049368d7c1af09482b29f02455061074c32df7f0d26e40"
+  },
+  "hard": [
+    {
+      "code": "WEBNOVEL_DIALOGUE_NOT_ISOLATED",
+      "entityId": null
+    },
+    {
+      "code": "WEBNOVEL_SOFT_LINEBREAKS",
+      "entityId": null
+    }
+  ],
+  "soft": [
+    "DIALOGUE_RATIO_OFF",
+    "QUALITY_GATE_PROSODY",
+    "SENTENCE_CHAOS",
+    "WEBNOVEL_DENSE_PARAGRAPH"
+  ],
+  "intendedDiffs": [
+    {
+      "kind": "advisory-start",
+      "code": "WEBNOVEL_DIALOGUE_NOT_ISOLATED",
+      "reason": "advisory 로 시작함"
+    },
+    {
+      "kind": "advisory-start",
+      "code": "WEBNOVEL_SOFT_LINEBREAKS",
+      "reason": "advisory 로 시작함"
+    }
+  ]
+}

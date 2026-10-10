@@ -1,0 +1,19 @@
+- nodeId: ep-001
+  entityId: red-seal
+  kind: promise.planted
+- nodeId: ep-001
+  entityId: old-map
+  kind: promise.planted
+- nodeId: ep-002
+  entityId: old-map
+  kind: promise.advanced
+- nodeId: ep-002
+  entityId: sword
+  kind: state
+  data:
+    exists: destroyed
+- nodeId: ep-003
+  entityId: hana
+  kind: state
+  data:
+    vital: dead

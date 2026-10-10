@@ -1,0 +1,33 @@
+id: cliche-and-tags
+title: 같은 상투 구절과 "말했다"만 되풀이한다
+episode: 2
+entities:
+  - { id: seoa, kind: character, name: 서아, aliases: [], data: { gender: female } }
+  - { id: jiho, kind: character, name: 지호, aliases: [], data: { gender: male } }
+prose: |
+  다음 날 아침, 두 사람은 역 앞 벤치에 앉았다.
+
+  "기차가 늦네." 서아가 말했다.
+
+  "원래 그래." 지호가 말했다.
+
+  서아는 시계를 보았다. 그럴 수밖에 없었다.
+
+  "표는 샀어?" 서아가 물었다.
+
+  "응, 두 장." 지호가 말했다.
+
+  "그럼 기다리자." 서아가 말했다.
+
+  지호는 고개를 끄덕였다. 그럴 수밖에 없었다.
+
+  "추워." 서아가 말했다.
+
+  "조금만 참아." 지호가 말했다.
+
+  기차는 오지 않았다. 그럴 수밖에 없었다. 하지만 선로 끝에서 불빛 하나가 번쩍였다.
+priorEvents: []
+draftEvents: []
+appearances: [seoa, jiho]
+mentions: []
+modelVerdicts: []

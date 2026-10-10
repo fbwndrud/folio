@@ -1,0 +1,9 @@
+title: 붉은 봉인
+levels:
+  - name: arc
+    children: [1, 10]
+  - name: episode
+    leaf: true
+order: linear
+packs: [novel]
+checkSets: [novel.basic, novel.serial, novel.style]

@@ -1,0 +1,107 @@
+name: gamebook
+version: 1
+title: 게임북
+description: 명시적인 진입과 선택 경로를 가진 게임북. 경로별 사건은 합치지 않는다.
+presets:
+  gamebook:
+    title: 게임북
+    description: 장 계획 아래 선택 장면을 쓴다.
+    levels:
+      - { name: chapter, children: [1, 40] }
+      - { name: scene, leaf: true }
+    order: branching
+    checkSets: [gamebook.basic]
+pipelines:
+  leaf:
+    - { id: plan, kind: generate, produces: plan }
+    - { id: draft, kind: generate, produces: draft }
+    - { id: extract, kind: generate, produces: events, requires: [draft] }
+    - { id: facts, kind: check, tier: deterministic, stage: facts, requires: [extract] }
+    - { id: critic, kind: check, tier: model, stage: critic }
+    - { id: revise, kind: generate, produces: draft, loop: { until: [facts], max: 3 } }
+    - { id: approve, kind: gate }
+    - { id: commit, kind: commit }
+  branch:
+    - { id: plan, kind: generate, produces: plan }
+    - { id: fit, kind: check, tier: model, stage: fit }
+    - { id: revise, kind: generate, produces: draft, loop: { until: [fit], max: 3 } }
+    - { id: approve, kind: gate }
+    - { id: children, kind: generate, produces: children }
+    - { id: review, kind: check, tier: model, stage: review }
+    - { id: commit, kind: commit }
+prompts:
+  leaf.plan: prompts/leaf-plan.md
+  leaf.draft: prompts/draft.md
+  leaf.extract: prompts/extract.md
+  leaf.revise: prompts/revise.md
+  branch.plan: prompts/branch-plan.md
+  branch.revise: prompts/revise-plan.md
+  branch.children: prompts/children.md
+checks:
+  gamebook.dead-ends:
+    title: 막다른 분기
+    description: 선택 경로를 분리해 자료와 구조를 확인한다.
+    tier: deterministic
+    stage: facts
+    severity: advisory
+    experimental: true
+    requiresOrder: branching
+    run: dead-ends
+  gamebook.unreachable:
+    title: 도달 불가 장면
+    description: 선택 경로를 분리해 자료와 구조를 확인한다.
+    tier: deterministic
+    stage: facts
+    severity: advisory
+    experimental: true
+    requiresOrder: branching
+    run: unreachable
+  gamebook.paths:
+    title: 분기 자료 검증
+    description: 선택 경로를 분리해 자료와 구조를 확인한다.
+    tier: deterministic
+    stage: facts
+    severity: advisory
+    experimental: true
+    requiresOrder: branching
+    run: paths
+  gamebook.path-facts:
+    title: 경로별 사실
+    description: 선택 경로를 분리해 자료와 구조를 확인한다.
+    tier: deterministic
+    stage: facts
+    severity: advisory
+    experimental: true
+    requiresOrder: branching
+    run: path-facts
+  gamebook.critic:
+    title: 선택 장면 검토
+    description: 선택 동기와 장면 또는 장 계획을 검토한다.
+    tier: model
+    stage: critic
+    severity: advisory
+    experimental: true
+    instruction: checks/critic.md
+  gamebook.parent-fit:
+    title: 윗계획 맞춤
+    description: 선택 동기와 장면 또는 장 계획을 검토한다.
+    tier: model
+    stage: fit
+    severity: advisory
+    experimental: true
+    instruction: checks/parent-fit.md
+  gamebook.structure-review:
+    title: 전체 선택 구조 검토
+    description: 선택 동기와 장면 또는 장 계획을 검토한다.
+    tier: model
+    stage: review
+    severity: advisory
+    experimental: true
+    instruction: checks/structure-review.md
+checkSets:
+  gamebook.basic:
+    title: 게임북 기본
+    description: 경로별 사실과 선택 구조를 검토한다.
+    checks: [gamebook.dead-ends, gamebook.unreachable, gamebook.paths, gamebook.path-facts, gamebook.critic, gamebook.parent-fit, gamebook.structure-review]
+    recommendedFor: { kinds: [gamebook] }
+defaultCheckSets: [gamebook.basic]

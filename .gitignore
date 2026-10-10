@@ -1,0 +1,7 @@
+node_modules/
+**/.folio/index.db
+**/.folio/index.db-*
+coverage/
+*.tmp
+.local-output/
+viewer/dist/

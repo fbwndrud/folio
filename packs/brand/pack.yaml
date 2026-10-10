@@ -1,0 +1,67 @@
+name: brand
+version: 1
+title: 브랜드
+description: 회사 문서(제품 소개서·브로셔)를 위한 둘째 팩. 브랜드 어조, 금지 표현, 자료와 수치 대조를 본다. 수치 대조 세트는 sources 팩이 함께 있어야 한다. 단계·프롬프트·프리셋은 첫 팩이 준다.
+checks:
+  brand.tone:
+    title: 브랜드 어조
+    description: 윗계획·brief 에 적은 어조 지침(없으면 높임 체 섞임·반말·겹친 감탄)과 어긋나는 문장을 모델이 본다(실험).
+    tier: model
+    stage: critic
+    severity: advisory
+    experimental: true
+    requireQuote: true
+    instruction: checks/tone.md
+  brand.banned-phrases:
+    title: 금지 표현
+    description: 근거 없이 쓰면 과장·단정이 되는 표현(기본 목록)이 원고에 있으면 알린다. 작품마다 다른 금지 표현은 사용자 검사(words·pattern)로 더한다.
+    tier: deterministic
+    stage: facts
+    severity: advisory
+    experimental: true
+    run: banned-phrases
+    config:
+      words: [최고, 최초, 유일, 1위, 100%, 완벽, 무조건, 보장, 절대, 최저가, 최대, 독보적, 압도적, 획기적]
+      allow: [최고경영자, 최고기술책임자, 최고재무책임자, 최고운영책임자, 최대한]
+  brand.figure-units:
+    title: 수치 단위 대조
+    description: 주장의 숫자가 연결된 자료 인용에는 다른 단위로만 있으면 알린다(주장은 30%, 자료는 30억).
+    tier: deterministic
+    stage: facts
+    severity: advisory
+    experimental: true
+    run: figure-units
+    config:
+      units:
+        '%p': ['%p', '%P', '％p', '％P', '%포인트', '％포인트', '퍼센트포인트']
+        '%': ['%', '％', '퍼센트']
+        조: [조]
+        억: [억]
+        만: [만]
+        천: [천]
+        원: [원]
+        달러: [달러]
+        배: [배]
+        명: [명]
+        곳: [곳]
+        개: [개]
+        건: [건]
+        위: [위]
+        년: [년]
+        개월: [개월]
+        월: [월]
+        일: [일]
+        시간: [시간]
+        분: [분]
+        초: [초]
+checkSets:
+  brand.voice:
+    title: 브랜드 어조
+    description: 브랜드 어조(모델)와 과장·단정 금지 표현(결정론)을 알린다(실험, 참고 의견).
+    checks: [brand.tone, brand.banned-phrases]
+    recommendedFor: { kinds: [company, brochure] }
+  brand.figures:
+    title: 수치 대조
+    description: 근거 없는 주장, 자료에 없는 숫자, 자료와 다른 단위를 알린다. packs 에 sources 가 있어야 한다(결정론, 실험, 참고 의견).
+    checks: [sources.claim-supported, sources.numbers-match, brand.figure-units]
+    recommendedFor: { kinds: [company, brochure] }

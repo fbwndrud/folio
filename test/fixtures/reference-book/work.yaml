@@ -1,0 +1,9 @@
+title: 작은 세포 사전
+levels:
+  - name: part
+    children: [1, 10]
+  - name: entry
+    leaf: true
+order: none
+packs: [knowledge]
+checkSets: []

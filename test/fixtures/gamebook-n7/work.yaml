@@ -1,0 +1,7 @@
+title: 합성 선택 실험
+levels:
+  - { name: chapter, children: [1, 40] }
+  - { name: scene, leaf: true }
+order: branching
+packs: [gamebook]
+checkSets: [gamebook.basic]

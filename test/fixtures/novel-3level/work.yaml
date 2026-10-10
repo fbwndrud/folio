@@ -1,0 +1,15 @@
+title: 붉은 편지
+levels:
+  - name: book
+    children: [1, 5]
+  - name: chapter
+    children: [1, 20]
+  - name: scene
+    leaf: true
+order: linear
+packs: [novel, image]
+checkSets: [novel.basic]
+checks:
+  no-honorifics:
+    source: checks/no-honorifics.md
+    severity: block

@@ -1,0 +1,19 @@
+id: honorific-mismatch
+title: 여성 인물을 도련님이라 부른다
+episode: 2
+entities:
+  - { id: hana, kind: character, name: 하나, aliases: [], data: { gender: female } }
+prose: |
+  다음 날 아침, 부엌에서 국 끓는 냄새가 올라왔다.
+
+  "도련님, 식사 준비가 끝났습니다."
+
+  하나는 소매를 걷으며 계단을 내려왔다. 아침 햇살이 금가루처럼 마루에 흩어져 있었다.
+
+  하지만 식탁에는 수저가 한 벌 더 놓여 있었다.
+priorEvents: []
+draftEvents:
+  - { entityId: hana, kind: address, data: { term: 도련님 }, quote: "\"도련님, 식사 준비가 끝났습니다.\"" }
+appearances: [hana]
+mentions: []
+modelVerdicts: []

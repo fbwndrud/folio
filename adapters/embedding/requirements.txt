@@ -1,0 +1,8 @@
+# Python 3.12, CPU float32. Install separately; npm does not install model weights.
+torch==2.14.1
+torchvision==0.29.1
+transformers==5.19.0
+sentence-transformers==6.1.0
+numpy==2.5.3
+Pillow==12.3.0
+huggingface-hub==1.33.0

@@ -1,0 +1,25 @@
+{
+  "case": "restore-without-note",
+  "caseDigest": "sha256:c0984e12c153c0cfd195c676e43ce461637eb1be8bea3f75340b3aee36d1f161",
+  "vibelore": {
+    "commit": "a79e7b36e4412339cc0f16a4f71f66c69a88fae9",
+    "script": "sha256:e65dace72be1e4519f049368d7c1af09482b29f02455061074c32df7f0d26e40"
+  },
+  "hard": [
+    {
+      "code": "LEDGER_RESTORE_NOTE_REQUIRED",
+      "entityId": "bronze-lamp"
+    }
+  ],
+  "soft": [
+    "DESTROYED_ENTITY_MENTION",
+    "QUALITY_GATE_PROSODY"
+  ],
+  "intendedDiffs": [
+    {
+      "kind": "advisory-start",
+      "code": "LEDGER_RESTORE_NOTE_REQUIRED",
+      "reason": "advisory 로 시작함"
+    }
+  ]
+}

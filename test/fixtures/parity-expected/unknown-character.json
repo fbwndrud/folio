@@ -1,0 +1,31 @@
+{
+  "case": "unknown-character",
+  "caseDigest": "sha256:941c896855a604afe64b98df0f31303e5479986c4086abfa6264fcd6ff82d9fe",
+  "vibelore": {
+    "commit": "a79e7b36e4412339cc0f16a4f71f66c69a88fae9",
+    "script": "sha256:e65dace72be1e4519f049368d7c1af09482b29f02455061074c32df7f0d26e40"
+  },
+  "hard": [
+    {
+      "code": "INTRINSIC_VIOLATION:structural",
+      "entityId": "stranger"
+    }
+  ],
+  "soft": [
+    "GENDER_HONORIFIC_MISMATCH",
+    "QUALITY_GATE_PROSODY"
+  ],
+  "intendedDiffs": [
+    {
+      "kind": "core-refusal",
+      "code": "EVENT_INVALID",
+      "source": "INTRINSIC_VIOLATION:structural",
+      "reason": "모르는 엔티티의 사건은 코어 추출(parseEvents)이 EVENT_INVALID 로 거절하고 다시 묻는다. 검사까지 가지 않는다."
+    },
+    {
+      "kind": "not-ported",
+      "code": "GENDER_HONORIFIC_MISMATCH",
+      "reason": "vibelore Mode B 는 대명사 \"그\"(남성 함의)를 호칭으로 세어 여성 인물이 있으면 soft 로 낸다. Folio 는 관형사 \"그 이름\"과 가를 수 없어 기본값(proseSkipTerms: [그])으로 건너뛴다."
+    }
+  ]
+}

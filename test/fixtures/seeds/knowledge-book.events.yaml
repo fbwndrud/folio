@@ -1,0 +1,12 @@
+- nodeId: membranes
+  entityId: atp
+  kind: term.used
+- nodeId: membranes
+  entityId: energy-detail
+  kind: promise.planted
+- nodeId: atp-section
+  entityId: atp
+  kind: term.defined
+- nodeId: atp-section
+  entityId: energy-detail
+  kind: promise.resolved

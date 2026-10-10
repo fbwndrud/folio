@@ -1,0 +1,94 @@
+{
+  "vibelore": {
+    "commit": "a79e7b36e4412339cc0f16a4f71f66c69a88fae9",
+    "script": "sha256:e65dace72be1e4519f049368d7c1af09482b29f02455061074c32df7f0d26e40"
+  },
+  "steps": [
+    {
+      "vibelore": "chapter_plan",
+      "file": "src/tools/workflow.js",
+      "line": 454,
+      "marker": "operation: 'chapter_plan'",
+      "folio": "plan"
+    },
+    {
+      "vibelore": "draft",
+      "file": "src/tools/workflow.js",
+      "line": 492,
+      "marker": "?? 'draft'",
+      "folio": "draft"
+    },
+    {
+      "vibelore": "mandatory_validation (extract)",
+      "file": "src/tools/workflow.js",
+      "line": 596,
+      "marker": "operation: 'mandatory_validation'",
+      "folio": "extract"
+    },
+    {
+      "vibelore": "mandatory_validation (facts)",
+      "file": "src/tools/workflow.js",
+      "line": 596,
+      "marker": "operation: 'mandatory_validation'",
+      "folio": "facts"
+    },
+    {
+      "vibelore": "check_and_reviews",
+      "file": "src/tools/workflow.js",
+      "line": 661,
+      "marker": "operation: 'check_and_reviews'",
+      "folio": "critic"
+    },
+    {
+      "vibelore": "revise",
+      "file": "src/tools/workflow.js",
+      "line": 767,
+      "marker": "operation: 'revise'",
+      "folio": "revise"
+    },
+    {
+      "vibelore": "awaiting_draft_approval",
+      "file": "src/tools/workflow.js",
+      "line": 839,
+      "marker": "transition(store, workflow, 'awaiting_draft_approval'",
+      "folio": "approve"
+    },
+    {
+      "vibelore": "commit (receipt consumed)",
+      "file": "src/tools/workflow.js",
+      "line": 888,
+      "marker": "receipt.consumedAt = now()",
+      "folio": "commit"
+    }
+  ],
+  "refusals": [
+    {
+      "case": "no_receipt",
+      "file": "src/tools/commit.js",
+      "line": 67,
+      "marker": "MISSING_VALIDATION_RECEIPT",
+      "folio": "LOCK_NO_RECEIPT"
+    },
+    {
+      "case": "hash_changed",
+      "file": "src/tools/commit.js",
+      "line": 82,
+      "marker": "receipt.proseHash !== hash",
+      "folio": "LOCK_HASH_MISMATCH"
+    },
+    {
+      "case": "hard_violation",
+      "file": "src/tools/commit.js",
+      "line": 82,
+      "marker": "receipt.verdict !== 'passed'",
+      "folio": "LOCK_HARD_VIOLATION"
+    },
+    {
+      "case": "receipt_consumed",
+      "file": "src/tools/commit.js",
+      "line": 82,
+      "marker": "receipt.consumedAt",
+      "folio": "LOCK_RECEIPT_CONSUMED"
+    }
+  ]
+}

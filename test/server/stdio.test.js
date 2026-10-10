@@ -1,0 +1,25 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { join } from 'node:path';
+import { TOOLS } from '../../server/tools/definitions.js';
+import { connectFolio } from '../support/mcp-client.js';
+import { tempDir } from '../support/fixtures.js';
+
+test('the stdio server lists the tools, answers calls and keeps stderr free of the SQLite warning', async (t) => {
+  const folio = await connectFolio();
+  t.after(() => folio.close());
+  const { tools } = await folio.client.listTools();
+  assert.deepEqual(tools.map((tool) => tool.name), TOOLS.map((tool) => tool.name));
+  assert.deepEqual(tools.find((tool) => tool.name === 'folio_run').inputSchema, TOOLS.find((tool) => tool.name === 'folio_run').inputSchema);
+  const root = join(await tempDir('folio-mcp-'), 'work');
+  const init = await folio.call('folio_init', { root, title: '유리 등대', preset: 'serial' });
+  assert.equal(init.ok, true);
+  assert.equal(init.result.created, true);
+  const relative = await folio.call('folio_status', { root: 'relative/work' });
+  assert.deepEqual([relative.ok, relative.error.code], [false, 'ROOT_NOT_ABSOLUTE']);
+  const missing = await folio.call('folio_find', { root, query: 'node', id: 'ep-1' });
+  assert.deepEqual([missing.ok, missing.error.code], [false, 'NODE_NOT_FOUND']);
+  const status = await folio.call('folio_status', { root });
+  assert.equal(status.result.next, null);
+  assert.doesNotMatch(folio.stderr(), /ExperimentalWarning/);
+});

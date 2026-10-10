@@ -1,0 +1,21 @@
+id: destroyed-updated
+title: 2화에 부서진 은빛 열쇠를 4화에서 다시 쓴다
+episode: 4
+entities:
+  - { id: seoa, kind: character, name: 서아, aliases: [], data: { gender: female } }
+  - { id: silver-key, kind: item, name: 은빛 열쇠, aliases: [], data: {} }
+prose: |
+  다음 날 아침, 서아는 탑의 북쪽 문 앞에 섰다.
+
+  서아는 은빛 열쇠를 자물쇠에 꽂았다. 녹슨 문이 낮게 울며 안쪽으로 밀려났다.
+
+  계단은 깊은 우물처럼 어둠 속으로 이어져 있었다.
+
+  그런데 아래에서 누군가 그녀의 이름을 불렀다.
+priorEvents:
+  - { episode: 2, entityId: silver-key, kind: state, data: { exists: destroyed }, quote: 열쇠는 용광로 속에서 녹아 사라졌다. }
+draftEvents:
+  - { entityId: silver-key, kind: state, data: { holder: seoa }, quote: 서아는 은빛 열쇠를 자물쇠에 꽂았다. }
+appearances: [seoa]
+mentions: []
+modelVerdicts: []

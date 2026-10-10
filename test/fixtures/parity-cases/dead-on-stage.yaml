@@ -1,0 +1,22 @@
+id: dead-on-stage
+title: 2화에 죽은 도윤이 4화 무대에 선다
+episode: 4
+entities:
+  - { id: doyun, kind: character, name: 도윤, aliases: [], data: { gender: male } }
+  - { id: seoa, kind: character, name: 서아, aliases: [], data: { gender: female } }
+prose: |
+  새벽 안개가 부두를 덮고 있었다.
+
+  서아는 젖은 밧줄을 감아 쥐고 배 끝에 섰다.
+
+  "늦었네."
+
+  도윤이 난간에 기대어 손을 흔들었다. 그의 외투 자락에서 바닷물이 뚝뚝 떨어졌다.
+
+  서아는 대답하지 않고 닻줄을 끌어올렸다.
+priorEvents:
+  - { episode: 2, entityId: doyun, kind: state, data: { vital: dead }, quote: 도윤은 끝내 눈을 뜨지 않았다. }
+draftEvents: []
+appearances: [doyun, seoa]
+mentions: []
+modelVerdicts: []

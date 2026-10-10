@@ -1,0 +1,24 @@
+{
+  "case": "honorific-mismatch",
+  "caseDigest": "sha256:d05d9b134a99e64a5525f9a9dc32f3d85be18af0fc2c62843ca92af4642178c7",
+  "vibelore": {
+    "commit": "a79e7b36e4412339cc0f16a4f71f66c69a88fae9",
+    "script": "sha256:e65dace72be1e4519f049368d7c1af09482b29f02455061074c32df7f0d26e40"
+  },
+  "hard": [
+    {
+      "code": "GENDER_HONORIFIC_MISMATCH",
+      "entityId": "hana"
+    }
+  ],
+  "soft": [
+    "GENDER_HONORIFIC_MISMATCH"
+  ],
+  "intendedDiffs": [
+    {
+      "kind": "advisory-start",
+      "code": "GENDER_HONORIFIC_MISMATCH",
+      "reason": "advisory 로 시작함"
+    }
+  ]
+}

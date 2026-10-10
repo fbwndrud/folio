@@ -1,0 +1,64 @@
+name: image
+version: 1
+title: 그림
+description: 삽화·웹툰 그림을 노드에 붙이는 둘째 팩. 그림 한 장을 설명서 → 생성 전 점검 → 생성 → 검토 → 승인 → 커밋 순서로 만든다(folio_image). 단계·프리셋은 첫 팩이 준다.
+checks:
+  image.asset-refs:
+    title: 본문 그림 참조
+    description: 원고의 ![[asset:id]] 가 작품에 없는 그림이나 이미지 파일이 없는 그림을 가리키면 알린다(실험).
+    tier: deterministic
+    stage: facts
+    severity: advisory
+    experimental: true
+    run: asset-refs
+  image.dialogue-in-text:
+    title: 대사 원문 대조
+    description: 설명서의 대사가 그림이 붙는 노드 본문에 그대로 있는지 본다(작품 언어 원문, 실험).
+    tier: deterministic
+    stage: image-precheck
+    severity: advisory
+    experimental: true
+    run: dialogue-in-text
+  image.entities-in-node:
+    title: 장면 밖 엔티티
+    description: 설명서에 적은 엔티티가 그림이 붙는 노드에 나오지 않으면 알린다(앞머리 entities 또는 본문 속 이름, 실험).
+    tier: deterministic
+    stage: image-precheck
+    severity: advisory
+    experimental: true
+    run: entities-in-node
+  image.references-present:
+    title: 기준 그림 없음
+    description: 설명서 엔티티에 실어 보낼 기준 그림이 하나도 없으면 알린다(imageReferences 가 켜졌을 때만, 실험).
+    tier: deterministic
+    stage: image-precheck
+    severity: advisory
+    experimental: true
+    run: references-present
+  image.show-conflict:
+    title: 보여줄 것과 금지가 겹침
+    description: 꼭 보여줄 것과 보여주면 안 될 것에 같은 항목이 있으면 알린다(실험).
+    tier: deterministic
+    stage: image-precheck
+    severity: advisory
+    experimental: true
+    run: show-conflict
+  image.review:
+    title: 그림 검토
+    description: 호스트 모델이 그림 파일을 직접 열어 설명서와 비교한다. 같은 호스트의 자기검토이며 독립 평가가 아니다(실험, 참고 의견).
+    tier: model
+    stage: image-review
+    severity: advisory
+    experimental: true
+    instruction: checks/review.md
+checkSets:
+  image.basic:
+    title: 그림 기본
+    description: 생성 전 점검 넷(대사 원문, 장면 밖 엔티티, 기준 그림, 보여줄 것·금지 겹침)과 그림 검토(실험, 참고 의견).
+    checks: [image.dialogue-in-text, image.entities-in-node, image.references-present, image.show-conflict, image.review]
+    recommendedFor: { kinds: [webtoon, illustrated] }
+  image.placement:
+    title: 본문 그림 배치
+    description: 원고 속 그림 참조(![[asset:id]])가 작품의 그림을 가리키는지 본다(실험, 참고 의견).
+    checks: [image.asset-refs]
+    recommendedFor: { kinds: [webtoon, illustrated] }

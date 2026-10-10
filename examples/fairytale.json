@@ -1,0 +1,27 @@
+{
+  "id": "fairytale",
+  "title": "합성 예제: 동화 구조",
+  "preset": "fairytale",
+  "packs": ["novel"],
+  "rootNode": { "level": "chapter", "id": "toy-chapter", "title": "작은 선택" },
+  "nodes": {
+    "toy-chapter": {
+      "plan": "합성 실행 입력이다. 혼자 읽는 독자를 위해 두 장면의 원인과 결과를 연결한다. 대상 연령을 5세로 가정하거나 별도 교훈을 붙이지 않는다.",
+      "children": [
+        { "id": "toy-scene-1", "title": "선택", "brief": "기다리기를 선택한다." },
+        { "id": "toy-scene-2", "title": "결과", "brief": "기다린 뒤 길을 건넌다." }
+      ]
+    },
+    "toy-scene-1": {
+      "plan": "웅덩이 앞에서 잠시 기다리기로 정한다.",
+      "draft": "길 가운데 웅덩이가 있었다. 바로 뛰어넘기에는 넓었다. 잠시 기다리기로 했다.\n",
+      "extract": { "events": [], "appearances": [], "mentions": [], "occurrences": [] }
+    },
+    "toy-scene-2": {
+      "plan": "물이 줄자 마른 돌을 밟아 건넌다. 별도 교훈 문장을 붙이지 않는다.",
+      "draft": "물이 조금 빠졌다. 마른 돌 하나가 보였다. 돌을 밟고 길을 건넜다.\n",
+      "extract": { "events": [], "appearances": [], "mentions": [], "occurrences": [] }
+    }
+  },
+  "entities": []
+}

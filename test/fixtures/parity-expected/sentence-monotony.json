@@ -1,0 +1,15 @@
+{
+  "case": "sentence-monotony",
+  "caseDigest": "sha256:1e734b74cb220d4f076e0d15f0ea560ddd7ab8dfa5d43f80eb140df226ff0a79",
+  "vibelore": {
+    "commit": "a79e7b36e4412339cc0f16a4f71f66c69a88fae9",
+    "script": "sha256:e65dace72be1e4519f049368d7c1af09482b29f02455061074c32df7f0d26e40"
+  },
+  "hard": [],
+  "soft": [
+    "QUALITY_GATE_PROSODY",
+    "SENTENCE_MONOTONY",
+    "SIMILE_TOO_SPARSE"
+  ],
+  "intendedDiffs": []
+}

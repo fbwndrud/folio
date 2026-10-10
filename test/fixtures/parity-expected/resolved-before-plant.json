@@ -1,0 +1,22 @@
+{
+  "case": "resolved-before-plant",
+  "caseDigest": "sha256:64e31637b672a294cd13db3c4a8bd90ccca5387a0ee0346e326bd8e9208bd51b",
+  "vibelore": {
+    "commit": "a79e7b36e4412339cc0f16a4f71f66c69a88fae9",
+    "script": "sha256:e65dace72be1e4519f049368d7c1af09482b29f02455061074c32df7f0d26e40"
+  },
+  "hard": [],
+  "soft": [
+    "CLIFFHANGER_MISSING",
+    "LEDGER_UNKNOWN_ID",
+    "NO_TIME_SKIP",
+    "SIMILE_TOO_SPARSE"
+  ],
+  "intendedDiffs": [
+    {
+      "kind": "folio-stricter",
+      "code": "PROMISE_RESOLVED_BEFORE_PLANT",
+      "reason": "심지 않은 약속의 해소는 코어 잠금(core.promise-order, hard)이다. vibelore 는 모르는 hook id 로 보고 soft LEDGER_UNKNOWN_ID 만 낸다."
+    }
+  ]
+}

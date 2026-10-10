@@ -1,0 +1,19 @@
+id: fixed-fact-conflict
+title: 왼손잡이 미라가 오른손으로 검을 뽑는다
+episode: 3
+entities:
+  - { id: mira, kind: character, name: 미라, aliases: [], data: { gender: female }, body: 미라는 왼손잡이다. 오른손은 어릴 때 다쳐 검을 쥐지 못한다. }
+prose: |
+  그날 밤, 성벽 위로 차가운 바람이 불었다.
+
+  미라는 오른손으로 검을 뽑았다. 칼날이 달빛을 받아 물고기 비늘처럼 번뜩였다.
+
+  성문 아래에서 횃불 몇 개가 천천히 다가왔다.
+
+  하지만 그들이 든 깃발은 아군의 것이 아니었다.
+priorEvents: []
+draftEvents: []
+appearances: [mira]
+mentions: []
+modelVerdicts:
+  - { entityId: mira, code: FIXED_FACT_CONFLICT, quote: 미라는 오른손으로 검을 뽑았다. }

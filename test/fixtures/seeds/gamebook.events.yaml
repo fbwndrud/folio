@@ -1,0 +1,5 @@
+- nodeId: ending-key
+  entityId: brass-key
+  kind: state
+  data:
+    holder: player

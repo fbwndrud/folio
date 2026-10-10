@@ -1,0 +1,21 @@
+{
+  "case": "dead-on-stage",
+  "caseDigest": "sha256:e96d6558cf40ea9e8e9ebf67fc20c971dbb81f536972dcc4d7c599fb3111d190",
+  "vibelore": {
+    "commit": "a79e7b36e4412339cc0f16a4f71f66c69a88fae9",
+    "script": "sha256:e65dace72be1e4519f049368d7c1af09482b29f02455061074c32df7f0d26e40"
+  },
+  "hard": [
+    {
+      "code": "DEAD_CHARACTER_ON_STAGE",
+      "entityId": "doyun"
+    }
+  ],
+  "soft": [
+    "CLIFFHANGER_MISSING",
+    "NO_TIME_SKIP",
+    "ONOMATOPOEIA_OVERUSE",
+    "SIMILE_TOO_SPARSE"
+  ],
+  "intendedDiffs": []
+}

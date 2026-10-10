@@ -1,0 +1,19 @@
+id: unknown-character
+title: 등록되지 않은 인물의 사실이 바뀐다
+episode: 2
+entities:
+  - { id: seoa, kind: character, name: 서아, aliases: [], data: { gender: female } }
+prose: |
+  다음 날 아침, 낯선 사내가 여관 문을 두드렸다.
+
+  서아는 문틈으로 바깥을 살폈다. 사내의 얼굴은 비에 젖은 종이처럼 창백했다.
+
+  "나는 이 마을의 옛 문지기다."
+
+  하지만 서아는 그 이름을 어디서도 들어 본 적이 없었다.
+priorEvents: []
+draftEvents:
+  - { entityId: stranger, kind: state, data: { role: gatekeeper }, quote: "\"나는 이 마을의 옛 문지기다.\"" }
+appearances: [seoa]
+mentions: []
+modelVerdicts: []

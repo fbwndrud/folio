@@ -1,0 +1,9 @@
+title: 성문
+levels:
+  - name: chapter
+    children: [1, 10]
+  - name: scene
+    leaf: true
+order: branching
+packs: [novel]
+checkSets: []

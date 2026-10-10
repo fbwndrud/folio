@@ -1,0 +1,232 @@
+novel.dead-on-stage:
+  title: 죽은 인물 등장
+  description: 앞에서 죽은 인물이 되살아나는 사건 없이 다시 등장하면 막는다.
+  tier: deterministic
+  stage: facts
+  severity: hard
+  requiresOrder: linear
+  run: dead-on-stage
+novel.fixed-facts:
+  title: 고정 설정 위반
+  description: 엔티티 설정 문서의 고정 사실과 원고가 어긋나면 막는다. 원고 인용이 있어야 한다.
+  tier: model
+  stage: critic
+  severity: hard
+  requireQuote: true
+  instruction: checks/fixed-facts.md
+novel.critic:
+  title: 원고 검토
+  description: 읽는 사람 입장에서 걸리는 곳. 참고 의견일 뿐 자동으로 고치지 않는다.
+  tier: model
+  stage: critic
+  severity: advisory
+  instruction: checks/critic.md
+novel.episode-hook:
+  title: 회차 끝 당김
+  description: 회차 끝이 다음 화를 읽고 싶게 하는지.
+  tier: model
+  stage: critic
+  severity: advisory
+  experimental: true
+  instruction: checks/episode-hook.md
+novel.parent-fit:
+  title: 윗계획 맞춤
+  description: 이 계획이 윗계획의 약속을 지키는지.
+  tier: model
+  stage: fit
+  severity: block
+  requiresParentPlan: true
+  instruction: checks/parent-fit.md
+novel.promise-kept:
+  title: 계획 이행
+  description: 끝난 자식들이 이 계획을 지켰는지.
+  tier: model
+  stage: review
+  severity: advisory
+  instruction: checks/promise-kept.md
+novel.young-readers:
+  title: 어린 독자와 글·그림의 역할
+  description: 계획에서 정한 독자·읽기 방식과 글·그림 분담을 검토한다. 적합성 인증이 아닌 참고 의견이다.
+  tier: model
+  stage: critic
+  severity: advisory
+  experimental: true
+  requireQuote: true
+  instruction: checks/young-readers.md
+novel.destroyed-object:
+  title: 파괴된 물건 재등장
+  description: 앞에서 파괴된 것이 되돌림 없이 다시 쓰이거나 등장하면 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  requiresOrder: linear
+  run: destroyed-object
+novel.honorific-gender:
+  title: 호칭과 성별
+  description: 성별을 함의하는 호칭이 불리는 인물의 성별과 어긋나면 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  requiresOrder: linear
+  config: { proseScan: true, proseSkipTerms: ['그'] }
+  run: honorific-gender
+novel.metadata-leak:
+  title: 내부 메타데이터 노출
+  description: 본문에 엔티티 id 나 말미 캐스트 목록이 새어 나오면 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  run: metadata-leak
+novel.promise-evidence:
+  title: 근거 없는 약속 해소
+  description: 약속을 갚았다고 적으면서 원고에서 그 장면을 인용하지 않으면 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  config: { minQuote: 8 }
+  run: promise-evidence
+novel.promise-flow:
+  title: 약속 흐름
+  description: 닫힌 약속을 다시 열지 않고 쓰거나 심지 않은 약속을 언급하면 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  requiresOrder: linear
+  run: promise-flow
+novel.promise-dormant:
+  title: 잠든 약속
+  description: 갚지 않은 약속이 읽는 순서로 기한 거리 넘게 움직이지 않으면 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  requiresOrder: linear
+  config: { spans: { next: 2, soon: 5, arc: 10, long: 16, finale: 24 }, defaults: { core: 8, other: 10, parked: 10 } }
+  run: promise-dormant
+novel.cliffhanger:
+  title: 회차 끝 절단
+  description: 마지막 문단에 의문·미완 사건·반전 표지가 없으면 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  config: { when: always }
+  run: cliffhanger
+novel.time-skip:
+  title: 시간 도약 없음
+  description: 회차에 "다음 날", "며칠 후" 같은 시간 도약 표지가 하나도 없으면 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  run: time-skip
+novel.length:
+  title: 분량 부족
+  description: 원고 분량이 목표의 85%에 못 미치면 알린다. 목표가 없으면 보지 않는다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  config: { target: null, unit: graphemes }
+  run: length
+novel.info-restate:
+  title: 설정 되풀이
+  description: 엔티티 설정 사실의 명사구가 한 원고에 3번 이상 나오면 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  run: info-restate
+novel.sensitive:
+  title: 민감 표현
+  description: 욕설·성 표현·폭력 묘사·약물·자해 어휘를 범주별로 알린다(성인/청소년 기준).
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  config: { mode: adult }
+  run: sensitive
+novel.webnovel-format:
+  title: 웹소설 문단 형식
+  description: 과밀 문단, 문단 안 줄바꿈, 대사 분리, 잘게 끊긴 호흡 등 모바일 문단 모양을 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  config: { dialogueBreakMode: strict }
+  run: webnovel-format
+novel.sentence-rhythm:
+  title: 문장 리듬
+  description: 문장 길이가 너무 고르거나 너무 들쭉날쭉하면 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  config: { minSentences: 10, monotonyMax: 6, chaosMin: 30 }
+  run: sentence-rhythm
+novel.prosody:
+  title: 운율
+  description: 종결어미·문장 길이·체언/용언 균형으로 잰 운율 점수가 강도 기준보다 낮으면 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  config: { level: normal }
+  run: prosody
+novel.show-dont-tell:
+  title: 보여주기와 말하기
+  description: 감정을 말로만 하거나 의성어·직유가 너무 많거나 적으면 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  config: { minEmotions: 3, ratioMin: 0.3, overtellDensityMax: 0.02, onomatopoeiaDensityMax: 0.03, simileDensityMin: 0.002, simileDensityMax: 0.04 }
+  run: show-dont-tell
+novel.cliche:
+  title: 상투 표현
+  description: 상투 구절이 되풀이되거나 몰려 있으면 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  config: { genre: null, repeatMin: 3, densityMax: 0.01 }
+  run: cliche
+novel.dialogue-tags:
+  title: 발화 동사 단조
+  description: 발화 동사가 "말했다"에 몰려 있으면 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  config: { monotonyRatio: 0.8, minTags: 5 }
+  run: dialogue-tags
+novel.dialogue-ratio:
+  title: 대사 비율
+  description: 대사 줄의 비율이 장르나 정한 범위를 벗어나면 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  config: { genre: null, range: null, minLines: 6 }
+  run: dialogue-ratio
+novel.pov:
+  title: 시점 누설
+  description: 서술이 화자 아닌 인물의 감정·속마음을 사실로 말하면 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  run: pov
+novel.style-drift:
+  title: 문체 기준 이탈
+  description: 승인한 문체 기준 노드와 문단 호흡·대사 비율이 크게 다르면 알린다.
+  tier: deterministic
+  stage: facts
+  severity: advisory
+  experimental: true
+  run: style-drift

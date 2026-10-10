@@ -1,0 +1,27 @@
+{
+  "id": "picturebook",
+  "title": "합성 예제: 펼침면 원고",
+  "preset": "picturebook",
+  "packs": ["novel"],
+  "rootNode": { "level": "book", "id": "toy-book", "title": "합성 그림책" },
+  "nodes": {
+    "toy-book": {
+      "plan": "합성 실행 입력이다. 함께 읽는 짧은 두 펼침면으로 변화 하나를 보여 준다. 읽을 글과 그림 제작 지시를 나누며 실제 삽화는 만들지 않는다.",
+      "children": [
+        { "id": "toy-spread-1", "title": "상자", "brief": "닫힌 상자를 본다." },
+        { "id": "toy-spread-2", "title": "열기", "brief": "상자를 열어 공을 본다." }
+      ]
+    },
+    "toy-spread-1": {
+      "plan": "닫힌 상자를 보여 준다. 읽을 글은 짧게 묻고 그림 설명은 색과 위치를 지정한다.",
+      "draft": "### 읽을 글\n상자 안에는 무엇이 있을까?\n\n### 그림 설명\n바닥 가운데 닫힌 파란 상자 하나. 실제 이미지가 아닌 제작 지시다.\n",
+      "extract": { "events": [], "appearances": [], "mentions": [], "occurrences": [] }
+    },
+    "toy-spread-2": {
+      "plan": "상자를 열어 공을 보여 준다. 글은 열림만 말하고 그림에 공의 모양을 맡긴다.",
+      "draft": "### 읽을 글\n뚜껑을 살짝 열었어.\n\n### 그림 설명\n열린 파란 상자 안에 노란 공 하나. 공의 발견은 그림으로 전달할 계획이다. 실제 삽화는 아직 없다.\n",
+      "extract": { "events": [], "appearances": [], "mentions": [], "occurrences": [] }
+    }
+  },
+  "entities": []
+}

@@ -1,0 +1,20 @@
+id: dormant-promise
+title: 바로 다음 화에 풀기로 한 약속이 세 화째 잠들어 있다
+episode: 4
+entities:
+  - { id: seoa, kind: character, name: 서아, aliases: [], data: { gender: female } }
+  - { id: old-map, kind: promise, name: 찢어진 옛 지도, aliases: [], data: { horizon: next } }
+prose: |
+  다음 날 아침, 시장 골목은 장사꾼들의 목소리로 가득했다.
+
+  서아는 과일 가게 앞에서 사과 두 알을 골랐다. 껍질이 잘 닦은 구리처럼 붉게 빛났다.
+
+  골목 끝에서 악사가 느린 곡조를 뜯고 있었다.
+
+  하지만 서아가 돌아섰을 때 악사는 이미 사라지고 없었다.
+priorEvents:
+  - { episode: 1, entityId: old-map, kind: promise.planted, quote: 지도의 오른쪽 절반은 누군가 찢어 가고 없었다. }
+draftEvents: []
+appearances: [seoa]
+mentions: []
+modelVerdicts: []

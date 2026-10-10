@@ -1,0 +1,17 @@
+{
+  "workId": "synthetic-lighthouse",
+  "arcNumber": 2,
+  "title": "꺼진 등대",
+  "promise": "세린은 꺼진 등불의 이유를 찾아 바다의 돌길을 건넌다.",
+  "type": "mystery",
+  "startChapter": 1,
+  "estimatedEpisodes": 5,
+  "status": "active",
+  "episodes": [
+    { "index": 1, "chapter": 1, "title": "등불", "goal": "꺼진 등불을 발견한다" },
+    { "index": 2, "chapter": 2, "title": "일지", "beat": "찢긴 일지" },
+    { "index": 3, "chapter": 3, "title": "돌길", "goal": "돌길이 열린다" },
+    { "index": 4, "chapter": 5, "title": "아직 안 쓴 화", "goal": "미정" }
+  ],
+  "createdAt": "2026-01-03T00:00:00.000Z"
+}

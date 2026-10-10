@@ -1,0 +1,17 @@
+Folio
+Copyright 2026 JoungKyoungLyoo and Folio contributors
+
+Licensed under the Apache License, Version 2.0. See LICENSE.
+
+Folio ports rules and checkers from vibelore (Apache-2.0, same author).
+
+Built Studio screens include third-party software. Their complete license
+and copyright notices, versions and source locations accompany the built
+screens in viewer/dist/THIRD-PARTY-NOTICES.txt (or
+studio/THIRD-PARTY-NOTICES.txt in an example bundle). The build derives this
+file from packages actually included in its JavaScript chunks.
+
+ELK/elkjs is distributed under EPL-2.0. Its complete EPL text and
+version-pinned source locations are included in that notices file.
+Other bundled components retain their own licenses; Folio's Apache-2.0
+license does not replace them.

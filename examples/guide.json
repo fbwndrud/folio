@@ -1,0 +1,22 @@
+{
+  "id": "guide",
+  "title": "합성 예제: 가상 온실 관찰 안내서",
+  "preset": "guide",
+  "packs": ["knowledge"],
+  "rootNode": { "level": "chapter", "id": "ch-observe", "title": "관찰의 기초" },
+  "nodes": {
+    "ch-observe": {
+      "plan": "학습 목표: 관찰 주기를 정의하고 가상 온실 기록을 남기는 순서를 익힌다. 관찰 주기 한 절로 구성한다.",
+      "children": [{ "id": "sec-cycle", "title": "관찰 주기", "brief": "관찰 주기를 먼저 정의한 뒤 기록 절차를 설명한다." }]
+    },
+    "sec-cycle": {
+      "plan": "관찰 주기를 먼저 정의하고, 가상 온실의 기록 절차를 세 단계로 설명한다.",
+      "draft": "관찰 주기는 같은 대상을 다시 살펴보기까지의 간격이다. 이 안내서의 가상 온실에서는 관찰 주기에 맞춰 기록을 남긴다.\n\n첫째, 관찰할 화분의 이름을 적는다. 둘째, 잎의 색과 흙의 상태를 관찰한다. 셋째, 이전 기록과 달라진 점을 한 문장으로 적는다.\n\n연습: 오늘 관찰한 내용과 다음에 확인할 내용을 각각 한 문장으로 써 보자.\n",
+      "extract": {
+        "events": [{ "entityId": "observation-cycle", "kind": "term.defined", "quote": "관찰 주기는 같은 대상을 다시 살펴보기까지의 간격이다" }],
+        "appearances": [], "mentions": [], "occurrences": []
+      }
+    }
+  },
+  "entities": [{ "id": "observation-cycle", "kind": "term", "name": "관찰 주기" }]
+}

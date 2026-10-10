@@ -1,0 +1,11 @@
+- nodeId: rooftop-scene
+  entityId: red-letter
+  kind: promise.resolved
+- nodeId: post-office
+  entityId: red-letter
+  kind: promise.planted
+- nodeId: last-night
+  entityId: mara
+  kind: state
+  data:
+    vital: dead

@@ -1,0 +1,8 @@
+id: cell-notes
+title: 세포 강의 메모
+file: cell-notes.txt
+date: 2026-01-10
+reliability: medium
+spans:
+  - id: s1
+    quote: ATP는 세포의 에너지 화폐로 불린다.

@@ -1,0 +1,18 @@
+.resources { overflow-wrap: anywhere; }
+.resource-summary { padding: 14px 18px; border: 1px solid var(--line); border-radius: 6px; background: var(--wash); margin: 24px 0; }
+.resource-summary > p:first-child { font-weight: 650; }
+.resource-list, .resource-contexts { list-style: none; padding: 0; }
+.resource-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 20px; }
+.resource-list > li { border: 1px solid var(--line); background: var(--surface); padding: 20px; border-radius: 6px; min-width: 0; }
+.resource-list h2 { margin: 0 0 8px; font-size: 21px; }
+.resource-contexts > li { padding: 12px 0; border-top: 1px solid var(--line); }
+.resource-role { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; }
+.resource-role span { font-size: 13px; }
+.resource-contexts ul { padding-left: 20px; }
+.resource-contexts .technical { margin-bottom: 0; }
+.resource-preview { font: inherit; max-height: 60vh; overflow: auto; }
+.main > .export-action { max-width: 1200px; margin-inline: auto; }
+@media (max-width: 440px) {
+  .resource-list > li, .resource-summary { padding: 14px; }
+  .resource-preview { padding: 14px; }
+}

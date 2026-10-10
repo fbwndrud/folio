@@ -1,0 +1,21 @@
+id: restore-without-note
+title: 깨진 청동 등잔이 까닭 없이 되돌아온다
+episode: 3
+entities:
+  - { id: seoa, kind: character, name: 서아, aliases: [], data: { gender: female } }
+  - { id: bronze-lamp, kind: item, name: 청동 등잔, aliases: [], data: {} }
+prose: |
+  그날 밤, 서아는 다락방 창가에 앉아 있었다.
+
+  탁자 위에는 청동 등잔이 놓여 있었다. 불꽃이 바람에 흔들리는 촛불처럼 가늘게 떨렸다.
+
+  서아는 등잔을 들어 올려 바닥의 먼지를 비추었다.
+
+  그런데 먼지 위에는 처음 보는 발자국이 찍혀 있었다.
+priorEvents:
+  - { episode: 1, entityId: bronze-lamp, kind: state, data: { exists: destroyed }, quote: 등잔은 돌바닥에 떨어져 산산이 깨졌다. }
+draftEvents:
+  - { entityId: bronze-lamp, kind: state, data: { exists: restored } }
+appearances: [seoa]
+mentions: []
+modelVerdicts: []

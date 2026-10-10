@@ -1,0 +1,14 @@
+- nodeId: ep-001
+  entityId: locked-door
+  kind: promise.planted
+- nodeId: ep-002
+  entityId: doyun
+  kind: state
+  data:
+    vital: dead
+- nodeId: ep-003
+  entityId: locked-door
+  kind: promise.advanced
+- nodeId: ep-006
+  entityId: locked-door
+  kind: promise.resolved

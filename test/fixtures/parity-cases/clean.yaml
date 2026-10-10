@@ -1,0 +1,22 @@
+id: clean
+title: 걸릴 것 없는 회차
+episode: 2
+entities:
+  - { id: seoa, kind: character, name: 서아, aliases: [], data: { gender: female } }
+prose: |
+  다음 날 아침, 강가에는 옅은 안개가 깔려 있었다.
+
+  서아는 나룻배의 밧줄을 풀고 천천히 노를 저었다. 물살이 비단 폭처럼 부드럽게 갈라졌다.
+
+  "오늘은 건너편까지 가 볼까?"
+
+  대답할 사람은 없었지만 괜찮았다. 강바람이 대신 뺨을 스치고 지나갔으니까.
+
+  건너편 기슭에는 작은 찻집이 불을 밝히고 있었고, 굴뚝에서는 흰 연기가 느리게 피어올랐지.
+
+  하지만 찻집 문에는 닫혔다는 팻말이 걸려 있었다.
+priorEvents: []
+draftEvents: []
+appearances: [seoa]
+mentions: []
+modelVerdicts: []
