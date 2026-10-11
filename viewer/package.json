@@ -1,9 +1,9 @@
 {
-  "name": "folio-viewer",
+  "name": "linivera-viewer",
   "version": "0.1.1",
   "private": true,
   "type": "module",
-  "description": "Folio local viewer screens (M6). Built into viewer/dist and served by server/view.",
+  "description": "Linivera Studio screens, built into viewer/dist and served locally by server/view.",
   "license": "Apache-2.0",
   "scripts": {
     "dev": "vite",

@@ -1,11 +1,11 @@
 # 진단과 백업 복원
 
 작품에 이상이 있으면 먼저 쓰기를 멈추고 읽기 전용 진단을 실행한다.
-설치본은 `folio-doctor`, 소스 체크아웃은 `npm run doctor --`를 쓴다.
+설치본은 `linivera-doctor`, 소스 체크아웃은 `npm run doctor --`를 쓴다.
 
 ```sh
-folio-doctor "/path/to/work"
-folio-doctor "/path/to/work" --json
+linivera-doctor "/path/to/work"
+linivera-doctor "/path/to/work" --json
 npm run doctor -- "/path/to/work" --json
 ```
 
@@ -43,19 +43,19 @@ Resource 체크포인트가 읽는 동안 바뀌면 오류로 알려 다시 진�
 ## 백업과 복원 수용 순서
 
 1. 모든 작품 호스트·MCP 서버·뷰어 및 다른 쓰기 프로세스를 종료한다.
-   한 작품의 모든 기록자는 같은 Folio 버전을 사용해야 한다. 옛 기록자와
+   한 작품의 모든 기록자는 같은 Linivera 버전을 사용해야 한다. 옛 기록자와
    새 기록자를 섞어서 쓰지 않는다.
 2. **작품 폴더 전체**를 별도 위치에 복사한다. 본문뿐 아니라 실제 존재하는
    설정·자료·그림·검사·exports 및 숨김 `.folio/`도 포함한다. 기록장·head,
    불변 객체·세대, run·staged image, `.lock`·gate DB와 동반 파일을 빠뜨리지 않는다.
 3. 복원 시험은 기존 작품과 다른 **새 폴더**에서 한다. 기존 작품 위에
    덮어쓰거나 새 작품으로 초기화하지 않는다. 원본과 백업은 보존한다.
-4. 새 폴더에 `folio-doctor <copy> --json`을 실행한다. 오류가 있으면
+4. 새 폴더에 `linivera-doctor <copy> --json`을 실행한다. 오류가 있으면
    쓰기를 시작하지 않고 정상 백업과 비교한다. Activity record의 hash를
    다시 계산하거나 기록 줄을 삭제해 통과시키지 않는다.
 5. 복원 사본을 조회해 예상 원고·그림·선택 원본·승인 output과 검토 기록,
    변경·승인 이력, pending 상태를 확인한다. 경고의 다음 행동을 검토한다.
-6. 같은 Folio 버전의 MCP 서버로 **복원 사본 root**에 다시 연결하고
+6. 같은 Linivera 버전의 MCP 서버로 **복원 사본 root**에 다시 연결하고
    공개 상태·조회 도구로 이력을 확인한다. 이 단계의 일반 조회는 필요한
    파생 캐시나 잠금 파일을 만들 수 있으므로 순수 진단과 구별한다.
    일부 공개 조회도 잠금·복구 경로를 사용하므로 중단된 쓰기가 있다면

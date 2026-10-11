@@ -1,9 +1,11 @@
 ---
 name: folio
-description: Folio MCP로 새 작품·이어쓰기·그림책·동화·게임북·지식 책·번역 판본을 계획하고 쓴다. 그림 생성·등록·검토, 추적 인터뷰·위임·기록 보충, 원본·입력·결과 관리, 검토 화면·내보내기와 Vibelore 가져오기를 다룬다.
+description: Linivera MCP로 새 작품·이어쓰기·그림책·동화·게임북·지식 책·번역 판본을 계획하고 쓴다. 그림 생성·등록·검토, 추적 인터뷰·위임·기록 보충, 원본·입력·결과 관리, 검토 화면·내보내기와 Vibelore 가져오기를 다룬다.
 ---
 
-# folio — 작품 쓰기
+# Linivera — 작품 쓰기
+
+제품 이름은 Linivera(리니베라)다. 기존 지침 호환을 위해 스킬 ID/폴더는 folio, MCP 도구 ID는 folio_*를 유지한다. 저장된 작품을 이름 변경 때문에 변환하지 않는다.
 
 ## 사용자에게 설명할 때
 
@@ -76,7 +78,7 @@ description: Folio MCP로 새 작품·이어쓰기·그림책·동화·게임북
 8. **블록·각주·참고문헌·색인**: 그림·표·식 앵커(`{#fig-1-1}`), 블록 참조(`[[block:id]]`), 각주(`[^id]`), 자료 인용(`[[source:id]]`)과 `folio_find`의 `blocks`·`bibliography`·`terms`는 [references/blocks.md](references/blocks.md).
 9. **순서 없는 작품**: 사전·매뉴얼(`order: none`, 지식 책 `reference` 프리셋), 노드 링크(앞머리 `links`), `folio_find`의 `links`, `folio_status.links`는 [references/order.md](references/order.md).
 10. **그림**: 웹툰·삽화의 그림 한 장(설명서 → 점검 → 그림 → 검토 → 승인 → 영수증), 기준 그림, 본문에 놓기(`![[asset:id]]`)는 [references/image.md](references/image.md).
-11. **vibelore 가져오기**: 옛 연재를 옮기고, 가져온 노드를 recommit으로 Folio 검사에 거는 법은 [references/import.md](references/import.md).
+11. **vibelore 가져오기**: 옛 연재를 옮기고, 가져온 노드를 recommit으로 Linivera 검사에 거는 법은 [references/import.md](references/import.md).
 12. **판본**: 번역·개정·요약을 만들거나 `folio_status.variants`를 설명할 때는 [references/variants.md](references/variants.md).
 
 ## 답하는 법 (`needs_model`)
@@ -108,7 +110,7 @@ description: Folio MCP로 새 작품·이어쓰기·그림책·동화·게임북
 - `CONFIG_INVALID`: work.yaml이 틀렸다. `details.errors`를 작가에게 설명한다 — 단 `details`가 `{ truncated: true }`로 왔으면 오류 목록이 너무 커서 안 실린 것이다(아래 `details: { truncated: true }` 참고). 그럴 땐 목록을 대신 설명하지 말고 work.yaml을 다시 보게 한다.
 - `YAML_INVALID`: work.yaml 등 YAML 파일의 문법이 틀렸다. `details.source`(어느 파일), `details.line`, `details.column`을 작가에게 알려 그 자리의 YAML 문법을 고치게 한다.
 - `WORK_ROOT_INVALID`: 준 root가 폴더가 아니다. work.yaml이 있는 작품 폴더의 절대 경로를 작가에게 다시 받는다.
-- `INTERNAL_ERROR`: 예상 밖의 오류다. `message`는 고정 문구이고 `details.errno`만 실린다 — 원문은 folio-mcp 서버 로그(stderr)에만 남는다. 작가에게는 다시 시도해 보라고 하고, 반복되면 서버 로그를 확인한다.
+- `INTERNAL_ERROR`: 예상 밖의 오류다. `message`는 고정 문구이고 `details.errno`만 실린다 — 원문은 linivera-mcp 서버 로그(stderr)에만 남는다. 작가에게는 다시 시도해 보라고 하고, 반복되면 서버 로그를 확인한다.
 - `details: { truncated: true }`: 어느 오류든 `details`가 이 모양으로 왔으면 원래 담길 내용이 너무 커서 대신 온 것이다(`CONFIG_INVALID`의 `details.errors`도 포함). 실제 값 대신 이 사실만 작가에게 알린다.
 - `FEATURE_DISABLED`: 작가가 끈 기능이다. 켤지는 작가에게 묻는다 — 호스트가 직접 work.yaml을 고치지 않는다.
 - `RENAME_PLAN_STALE`: 계획을 보여 준 뒤 작품이 바뀌었다. `folio_find { query: 'rename', ... }`으로 계획을 다시 받아 작가에게 다시 보여 준다.

@@ -17,7 +17,7 @@ export function createMcpServer(toolbox) {
   const server = new Server({ ...SERVER_INFO }, { capabilities: { tools: {} }, instructions: SERVER_INSTRUCTIONS });
   // 통로 오류(예: 한 메시지가 SDK 읽기 한도를 넘어 연결이 닫힘)를 stderr 한 줄로 남긴다. stdout 은 MCP 통로라 쓰지 않는다.
   server.onerror = (error) => {
-    process.stderr.write(`folio-mcp: ${String(error?.message ?? error).replace(/\s+/g, ' ')}\n`);
+    process.stderr.write(`linivera-mcp: ${String(error?.message ?? error).replace(/\s+/g, ' ')}\n`);
   };
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
     tools: toolbox.tools.map(({ name, description, inputSchema, annotations, outputSchema }) => ({ name, description, inputSchema, annotations, outputSchema })),

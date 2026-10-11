@@ -17,10 +17,10 @@ export const PAGE_CSP = "default-src 'self'; script-src 'self'; style-src 'self'
 export const BUILD_HINT = 'npm --prefix viewer ci && npm --prefix viewer run build';
 
 /** viewer/dist 가 없을 때의 첫 화면. API 는 이미 돈다. */
-export const FALLBACK_HTML = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Folio Viewer</title></head>
+export const FALLBACK_HTML = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Linivera Viewer</title></head>
 <body><h1>The viewer is not ready yet</h1>
 <p>Ask your AI assistant to prepare the viewing screens, then reopen this page.</p>
-<details><summary>Setup details</summary><p>In the Folio repository, run <code>${BUILD_HINT}</code>. An installed package should already contain the screens; reinstall a prepared tarball if they are missing. The viewing service is already running.</p></details></body></html>
+<details><summary>Setup details</summary><p>In the Linivera repository, run <code>${BUILD_HINT}</code>. An installed package should already contain the screens; reinstall a prepared tarball if they are missing. The viewing service is already running.</p></details></body></html>
 `;
 
 const notFound = (pathname) => new FolioError('STATIC_NOT_FOUND', String(pathname).slice(0, 200));

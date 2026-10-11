@@ -17,7 +17,7 @@ export async function runExamples({ names = EXAMPLES, out = null, verify = false
   if (out && verify) throw new Error('--out and --verify cannot be combined');
   const base = out ? resolve(out) : await mkdtemp(join(tmpdir(), 'folio-example-'));
   if (out) await mkdir(base, { recursive: false });
-  const transport = new StdioClientTransport({ command: process.execPath, args: [join(REPO, 'bin', 'folio-mcp.js')], cwd: REPO, stderr: 'pipe' });
+  const transport = new StdioClientTransport({ command: process.execPath, args: [join(REPO, 'bin', 'linivera-mcp.js')], cwd: REPO, stderr: 'pipe' });
   let stderr = '';
   transport.stderr?.on('data', (chunk) => { stderr += String(chunk); });
   const client = new Client({ name: 'folio-synthetic-example', version: '0.1.0' });

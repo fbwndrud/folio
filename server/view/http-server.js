@@ -12,7 +12,7 @@ const ASSET_CSP = "default-src 'none'; style-src 'unsafe-inline'; sandbox";
 
 /** @param {unknown} error */
 const logToStderr = (error) => {
-  process.stderr.write(`folio-view: ${String(/** @type {any} */ (error)?.message ?? error).replace(/\s+/g, ' ').slice(0, 300)}\n`);
+  process.stderr.write(`linivera-view: ${String(/** @type {any} */ (error)?.message ?? error).replace(/\s+/g, ' ').slice(0, 300)}\n`);
 };
 
 /**

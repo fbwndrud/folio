@@ -6,7 +6,7 @@ image/png, image/jpeg, image/webp, image/gif 원본만 색인한다. 후보와 �
 미관측 외부 URI는 다운로드하지 않으며 coverage.missing에 external-unobserved로
 표시한다. audio/wav, audio/mpeg, video/mp4는 opaque 보관만 지원하고
 벡터 실행은 media-unsupported다. Google 모델 자체의 네 모달리티 능력과
-Folio에서 실제 검증한 text/image 경로를 구분한다.
+Linivera에서 실제 검증한 text/image 경로를 구분한다.
 
 ## MCP
 
@@ -63,7 +63,7 @@ requireCurrent를 차단한다. allowStale 저장도 과거 checkpoint를 그대
 모델 접근 조건을 확인하고 같은 revision을 미리 다운로드해 로컬 Hugging Face
 캐시를 준비한다. `HF_HOME`을 지정하면 worker도 같은 캐시를 사용한다.
 worker는 HF_HUB_OFFLINE=1/TRANSFORMERS_OFFLINE=1/local_files_only=True로 실행한다.
-Folio 실행에 모델 API 키는 필요하지 않다. 가중치 접근/설치 단계의 저장소 조건은
+Linivera 실행에 모델 API 키는 필요하지 않다. 가중치 접근/설치 단계의 저장소 조건은
 별도다. CPU float32 기본이며 float16은 공간 계약에서 거부한다.
 
 subprocess는 shell 없이 실행하며 stdout은 JSON만, stdout4MiB/stderr64KiB,

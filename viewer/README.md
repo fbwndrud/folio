@@ -1,4 +1,4 @@
-# Folio viewer
+# Linivera viewer
 
 The viewer is a local workspace for reading your manuscript and understanding
 its review records. Interface labels are English; manuscript text is preserved.
@@ -34,7 +34,7 @@ referenced versions and content fingerprints. Approvals and finalization remain
 available through your AI assistant rather than through new viewer write actions.
 
 Export review view creates a read-only workspace copy for review, rather than a
-finished manuscript edition. From the Folio repository, run
+finished manuscript edition. From the Linivera repository, run
 `npm run preview -- "/path/to/work/exports/viewer"` and open the printed address.
 The export includes reading preferences controls but does not
 offer writing-step mutations, viewer shutdown or another export.

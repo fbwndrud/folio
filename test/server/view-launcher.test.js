@@ -31,7 +31,7 @@ test('launcher help and invalid input work from another current directory', asyn
   const invalid = await cli(['--preview', '--section', 'x', cwd], cwd).done;
   assert.equal(invalid.code, 1); assert.match(invalid.stderr, /Choose one/);
   const missing = await cli(['--preview', join(cwd, 'absent')], cwd).done;
-  assert.equal(missing.code, 1); assert.match(missing.stderr, /not a Folio viewer export/);
+  assert.equal(missing.code, 1); assert.match(missing.stderr, /not a Linivera viewer export/);
 });
 
 test('standalone work viewing preserves tokens and cleans lifecycle listeners on shutdown', async (t) => {
@@ -85,6 +85,6 @@ test('the documented npm viewer command does not accidentally invoke a preview p
   let stdout = '', stderr = '';
   child.stdout.on('data', (chunk) => { stdout += chunk; }); child.stderr.on('data', (chunk) => { stderr += chunk; });
   const [code] = await once(child, 'exit');
-  assert.equal(code, 0, stderr); assert.match(stdout, /Folio viewer/);
-  assert.doesNotMatch(stdout, /> node bin\/folio-view.js --preview/);
+  assert.equal(code, 0, stderr); assert.match(stdout, /Linivera viewer/);
+  assert.doesNotMatch(stdout, /> node bin\/linivera-view.js --preview/);
 });

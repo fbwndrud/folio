@@ -30,8 +30,8 @@
 
 coverage.scope=selected-sources다. 외부 URI bytes는 자동 fetch하지 않고
 coverage.missing에 external-unobserved를 반환한다. audio/video는 opaque 보관만
-가능하며 media-unsupported로 누락된다. 모델의 네 모달리티 설명을 Folio의
-검증 완료 능력으로 바꾸어 말하지 않는다. Folio 실제 실행 지원은 text/image다.
+가능하며 media-unsupported로 누락된다. 모델의 네 모달리티 설명을 Linivera의
+검증 완료 능력으로 바꾸어 말하지 않는다. Linivera 실제 실행 지원은 text/image다.
 requireCurrent 검색은 checkpoint 변경(stale)과 누락(partial)을 거부한다.
 allowStale은 과거 판본·checkpoint·누락을 명시하며 손상은 여전히 거부한다.
 PROJECTION_NOT_CURRENT는 명시적 재색인으로 해결한다. VECTOR_PROFILE_MISMATCH는

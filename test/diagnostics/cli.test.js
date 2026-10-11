@@ -13,7 +13,8 @@ const run = (args) => spawnSync(process.execPath, [join(repo, 'bin/folio-doctor.
 test('doctor has a packaged command and a source convenience script', async () => {
   const manifest = JSON.parse(await readFile(join(repo, 'package.json'), 'utf8'));
   assert.equal(manifest.bin['folio-doctor'], 'bin/folio-doctor.js');
-  assert.equal(manifest.scripts.doctor, 'node bin/folio-doctor.js');
+  assert.equal(manifest.bin['linivera-doctor'], 'bin/linivera-doctor.js');
+  assert.equal(manifest.scripts.doctor, 'node bin/linivera-doctor.js');
 });
 
 test('CLI supports human and JSON output without touching the work', async () => {
@@ -51,6 +52,6 @@ test('CLI rejects absent, extra, repeated and unknown arguments with usage exit 
     const result = run(args);
     assert.equal(result.status, 2, args.join(' '));
     assert.equal(result.stdout, '');
-    assert.match(result.stderr, /^Usage: folio-doctor/);
+    assert.match(result.stderr, /^Usage: linivera-doctor/);
   }
 });

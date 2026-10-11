@@ -8,7 +8,7 @@ What did you try, what happened, and what did you expect?
 
 Steps to reproduce / 재현 방법:
 
-Version or commit, OS and Node.js version / Folio·운영체제·Node.js 버전:
+Version or commit, OS and Node.js version / Linivera·운영체제·Node.js 버전:
 
 Use a small synthetic example. Do not attach private manuscripts, API keys or host tokens.
 작은 합성 예시를 사용하세요. 개인 원고·API 키·호스트 토큰을 첨부하지 마세요.

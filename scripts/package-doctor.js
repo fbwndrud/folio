@@ -16,10 +16,10 @@ async function snapshot(root) {
 }
 
 /** Verify the installed command from a fresh tarball using a synthetic Resource-only folder. */
-export async function verifyInstalledDoctor(sandbox, installed) {
-  const command = join(sandbox, 'node_modules', '.bin', process.platform === 'win32' ? 'folio-doctor.cmd' : 'folio-doctor');
+export async function verifyInstalledDoctor(sandbox, installed, prefix = 'linivera') {
+  const command = join(sandbox, 'node_modules', '.bin', process.platform === 'win32' ? `${prefix}-doctor.cmd` : `${prefix}-doctor`);
   await access(command);
-  const root = join(sandbox, 'doctor-synthetic');
+  const root = join(sandbox, `${prefix}-doctor-synthetic`);
   await mkdir(root);
   const { createResourceStore } = await import(pathToFileURL(join(installed, 'core', 'resources', 'revisions.js')).href);
   const store = createResourceStore(root);
@@ -28,7 +28,7 @@ export async function verifyInstalledDoctor(sandbox, installed) {
   const before = await snapshot(root);
   // Windows npm creates a .cmd shim; verify its presence, then execute its packaged Node target without shell expansion.
   const invoke = (args) => spawnSync(process.platform === 'win32' ? process.execPath : command,
-    process.platform === 'win32' ? [join(installed, 'bin', 'folio-doctor.js'), ...args] : args,
+    process.platform === 'win32' ? [join(installed, 'bin', `${prefix}-doctor.js`), ...args] : args,
     { cwd: sandbox, encoding: 'utf8', timeout: 30000 });
   const json = invoke([root, '--json']);
   assert.equal(json.status, 0, json.stderr);

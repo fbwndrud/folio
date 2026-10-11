@@ -18,7 +18,7 @@ const snapshotOf = (html) => JSON.parse(html.match(/id="folio-data">(.*?)<\/scri
 export async function runProductionExample() {
   const base = await mkdtemp(join(tmpdir(), 'folio-production-'));
   const client = new Client({ name: 'folio-synthetic-production', version: '0.1.0' });
-  const transport = new StdioClientTransport({ command: process.execPath, args: [join(REPO, 'bin/folio-mcp.js')], cwd: REPO,
+  const transport = new StdioClientTransport({ command: process.execPath, args: [join(REPO, 'bin/linivera-mcp.js')], cwd: REPO,
     env: { PATH: process.env.PATH ?? '', FOLIO_EMBEDDING_PYTHON: '' }, stderr: 'pipe' });
   let stderr = ''; transport.stderr?.on('data', (chunk) => { stderr += String(chunk); });
   const validators = new Map();

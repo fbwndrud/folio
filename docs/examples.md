@@ -1,16 +1,16 @@
 # 예시를 고르는 방법
 
-Folio 본체에는 작은 합성 예시가 들어 있다. 이미지가 있는 전체 작품 예시는 별도 ZIP으로 제공한다. ZIP 안에서는 원고와 그림을 분리하지 않는다. 그림 ID·파일·사용 위치·근거·기록장을 함께 유지해야 다른 컴퓨터에서도 작품을 확인할 수 있기 때문이다.
+Linivera 본체에는 작은 합성 예시가 들어 있다. 이미지가 있는 전체 작품 예시는 별도 ZIP으로 제공한다. ZIP 안에서는 원고와 그림을 분리하지 않는다. 그림 ID·파일·사용 위치·근거·기록장을 함께 유지해야 다른 컴퓨터에서도 작품을 확인할 수 있기 때문이다.
 
 ## 처음에는 작은 예시
 
 Studio의 **설정 → 예시 모음**, 작품 개요의 **예시로 시작하기**에서 안내를 볼 수 있다. 자료 전용 작업 공간에도 **예시 모음**이 있다.
 
-> Folio의 story 합성 예시를 새 폴더에서 실행하고 화면을 열어 줘. 원고와 검토 기록을 함께 설명해 줘.
+> Linivera의 story 합성 예시를 새 폴더에서 실행하고 화면을 열어 줘. 원고와 검토 기록을 함께 설명해 줘.
 
 `story`, `guide`, `picturebook`, `fairytale` 중 고른다. 그림책 합성 예시는 글과 삽화 요청을 보여 준다. 생성 이미지가 있는 전체 그림책은 별도 작품 묶음에서 확인한다. 이 입력은 작게 고정되어 있으며 AI 응답과 승인도 모의 처리다. 실제 AI 글 품질을 보장하는 실험은 아니다.
 
-명령으로 실행한다면 Folio 소스 또는 설치 패키지 폴더에서 실행한다. 출력 부모는 존재해야 하며 마지막 출력 폴더는 새 이름이어야 한다.
+명령으로 실행한다면 Linivera 소스 또는 설치 패키지 폴더에서 실행한다. 출력 부모는 존재해야 하며 마지막 출력 폴더는 새 이름이어야 한다.
 
 ```sh
 node examples/run.js all --out ./my-new-examples
@@ -20,12 +20,12 @@ node examples/run.js all --out ./my-new-examples
 
 ## 전체 작품 예시
 
-배포 모음에서 **책 읽기**, **Studio 살펴보기**, **전체 ZIP**, **EPUB**를 고른다. 별도 생성 작품은 Git이나 npm 본체에 넣지 않는다. [0.1.0 릴리스](https://github.com/fbwndrud/folio/releases/tag/v0.1.0)에서 작품별 ZIP과 전체 예시 모음을 받는다.
+배포 모음에서 **책 읽기**, **Studio 살펴보기**, **전체 ZIP**, **EPUB**를 고른다. 별도 생성 작품은 Git이나 npm 본체에 넣지 않는다. [0.1.0 릴리스](https://github.com/fbwndrud/linivera/releases/tag/v0.1.0)에서 작품별 ZIP과 전체 예시 모음을 받는다.
 
 | 파일·폴더 | 용도 |
 |---|---|
 | `README.md` | 처음 여는 사람을 위한 안내와 예시의 승인 상태 |
-| `work/` | Folio로 이어 작업할 원고·설정·자료·이미지·기록장 사본 |
+| `work/` | Linivera로 이어 작업할 원고·설정·자료·이미지·기록장 사본 |
 | `studio/` | 구조·인물·관계·근거·검토 기록의 읽기 전용 화면 |
 | `web/index.html` | 브라우저에서 읽거나 인쇄할 원고 |
 | `epub/book.epub` | 전자책 앱에서 읽는 EPUB |
@@ -53,14 +53,14 @@ npm run examples:bundle -- .local-output/chosen-examples.json .local-output/new-
 
 ## English
 
-[Download the English example library](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-english-example-library-studio.zip). It includes four new English works and one Korean-to-English translation. Individual ZIPs are also available in the [release](https://github.com/fbwndrud/folio/releases/tag/v0.1.0). The updated collection and translation Studio ZIP use `STUDIO-EDITION-SHA256SUMS`; the earlier individual English ZIPs use `ENGLISH-SHA256SUMS`. Earlier downloads remain unchanged.
+[Download the English example library](https://github.com/fbwndrud/linivera/releases/download/v0.1.0/folio-english-example-library-studio.zip). It includes four new English works and one Korean-to-English translation. Individual ZIPs are also available in the [release](https://github.com/fbwndrud/linivera/releases/tag/v0.1.0). The updated collection and translation Studio ZIP use `STUDIO-EDITION-SHA256SUMS`; the earlier individual English ZIPs use `ENGLISH-SHA256SUMS`. Earlier downloads remain unchanged.
 
 - **The Last Light at Platform Nine:** three-scene original short story, 1,009 words.
 - **Pip and the Pocket of Wind:** four-spread original picture-book manuscript, 107 words, two illustrations.
-- **Your First Work with Folio:** four-part practical beginner guide, 902 words.
+- **Your First Work with Linivera:** four-part practical beginner guide, 902 words.
 - **The Atlas of Borrowed Rooms:** four chapters, eight scenes, 2,657 words; a structural example rather than a full-length novella. The brass key has four recorded custody states with passage references.
-- **The Mailbox After the Rain:** English translation of the Korean short story, with a term map and three source-bound review receipts. The updated collection opens the English variant in Web/EPUB and Studio. Use **Reading edition** to switch text, section review records and publication between original and translation. Outline, settings and tracking describe the original. Download just the [updated translation Studio bundle](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-example-en-mailbox-translation-studio.zip) if preferred.
+- **The Mailbox After the Rain:** English translation of the Korean short story, with a term map and three source-bound review receipts. The updated collection opens the English variant in Web/EPUB and Studio. Use **Reading edition** to switch text, section review records and publication between original and translation. Outline, settings and tracking describe the original. Download just the [updated translation Studio bundle](https://github.com/fbwndrud/linivera/releases/download/v0.1.0/folio-example-en-mailbox-translation-studio.zip) if preferred.
 
-All five use simulated approval and same-host, scripted review responses. Text and images were created by the assistant; Folio stored them through public MCP tools. Translation checks and source-change guards were exercised, but this is not independent certification of translation or literary quality.
+All five use simulated approval and same-host, scripted review responses. Text and images were created by the assistant; Linivera stored them through public MCP tools. Translation checks and source-change guards were exercised, but this is not independent certification of translation or literary quality.
 
-Small synthetic examples ship with Folio. Generated works ship separately as self-contained ZIPs; text, images, evidence and original activity records stay together. Open **Settings → Examples** in Studio. For a downloaded bundle, extract it, read `README.md`, then run `node serve.mjs` for the read-only Studio. Web and EPUB editions are also included. Copy the whole folder before editing. Simulated approval is not author approval. Version 0.1.0 examples are separate GitHub release downloads. Original example content is CC0-1.0; third-party quotes, code and trademarks are excluded, and Studio software retains its own licenses.
+Small synthetic examples ship with Linivera. Generated works ship separately as self-contained ZIPs; text, images, evidence and original activity records stay together. Open **Settings → Examples** in Studio. For a downloaded bundle, extract it, read `README.md`, then run `node serve.mjs` for the read-only Studio. Web and EPUB editions are also included. Copy the whole folder before editing. Simulated approval is not author approval. Version 0.1.0 examples are separate GitHub release downloads. Original example content is CC0-1.0; third-party quotes, code and trademarks are excluded, and Studio software retains its own licenses.

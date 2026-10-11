@@ -39,7 +39,7 @@ export function verifyEpub(bytes, svg) {
 }
 
 export async function verifyViewerCli(repo, root) {
-  const child = spawn(process.execPath, [join(repo, 'bin/folio-view.js'), root], { cwd: root, stdio: ['ignore', 'pipe', 'pipe'] });
+  const child = spawn(process.execPath, [join(repo, 'bin/linivera-view.js'), root], { cwd: root, stdio: ['ignore', 'pipe', 'pipe'] });
   const done = once(child, 'exit');
   let stdout = '', stderr = '', timer;
   try {

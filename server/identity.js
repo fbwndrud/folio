@@ -11,4 +11,4 @@ export const SERVER_INSTRUCTIONS = `${manifest.name} manages local resources, re
   + 'Relay actual user decisions; do not turn self-review or an example approval into author acceptance. '
   + 'Studio supports Korean and English UI independently of Reading edition. Reading edition selects '
   + 'the original or a declared translation/revision/summary for section text, section review records and publication; '
-  + 'settings and tracking remain tied to the original. Legacy folio_* tool names remain supported.';
+  + 'settings and tracking remain tied to the original. Tool IDs retain the folio_* prefix for compatibility.';

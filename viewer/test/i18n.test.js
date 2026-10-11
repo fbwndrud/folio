@@ -98,7 +98,7 @@ test('example instructions work in both languages and retain commands and approv
   for (const text of ['예시 모음', '모의 승인을', '작품 예시', 'node serve.mjs', 'node examples/run.js', 'work 폴더']) {
     assert.ok(html.includes(text), text);
   }
-  assert.match(render(Examples, {}, 'en'), /Small examples included with Folio/);
+  assert.match(render(Examples, {}, 'en'), /Small examples included with Linivera/);
   const { exampleApproval, exampleMetadata } = await server.ssrLoadModule('/src/components/ExampleNotice.jsx');
   assert.equal(exampleApproval({ getElementById: () => ({ textContent: '{"approval":"simulated"}' }) }), 'simulated');
   assert.equal(exampleApproval({ getElementById: () => ({ textContent: '{"approval":"approved"}' }) }), null);

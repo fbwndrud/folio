@@ -67,7 +67,7 @@ test('an English gallery starts in English and packaged metadata distinguishes t
   const html = await readFile(join(result.output, 'index.html'), 'utf8');
   assert.match(html, /<html lang="en">/);
   assert.match(html, /<option value="en" selected>/);
-  assert.match(html, /<title>Folio — Example Library/);
+  assert.match(html, /<title>Linivera — Example Library/);
   assert.match(html, /<span lang="ko" hidden>/);
   const studio = await readFile(join(result.output, 'examples/english/studio/index.html'), 'utf8');
   assert.match(studio, /"language": "en"/);

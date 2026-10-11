@@ -29,7 +29,7 @@ stdio MCP 호스트가 필요하다. 자동 테스트는 Node MCP SDK 클라이�
 - 웹·EPUB 내보내기와 수동 지면 좌표 배치, 판본별 집필·검사, 호스트가 생성하는 별도 그림 실행.
 - 게임북 분기 구조 검사와 선택지 링크. 의미적 연속성의 모델 검토에는 품질 한계가 있다.
 - Resource 전용 폴더의 선택 원본·승인 결과 metadata 조회. 선택 embedding은 별도 오프라인 런타임을 사용한다.
-- 원고·Resource 폴더의 읽기 전용 `folio-doctor` 진단과 새 사본의 백업 복원 확인.
+- 원고·Resource 폴더의 읽기 전용 `linivera-doctor` 진단과 새 사본의 백업 복원 확인.
 
 ## 아직 제공하지 않는 범위
 
@@ -60,3 +60,7 @@ severity를 선언보다 높일 수 있다(로드맵 S에서 제한 예정).
 ## 0.1.0 공개 검증
 
 2026-10-11 기준 macOS arm64·Node 24.19.0에서 backend 1,751개, viewer 67개 테스트와 새 tarball 설치 검증을 통과했다. GitHub 호스팅 runner가 시작되지 않아 원격 OS/Node matrix 실행 결과는 없다. CI 설정을 통과 결과로 해석하지 않는다. 0.1.0은 이 한계를 명시한 초기 프리릴리스이며 안정 운영 인증이 아니다.
+
+## Folio 이름을 쓰던 설치본
+
+제품 표시명은 Linivera(리니베라), 새 패키지는 `linivera`다. 기존 작품은 변환 없이 열고 `work.yaml`·`.folio`·원고·승인 영수증을 유지한다. MCP 도구 ID `folio_*`, 기존 `folio-*` 명령, `skill/folio/` 및 `FOLIO_EMBEDDING_*` 설정은 호환용으로 보존한다. 새 설치의 MCP 스크립트 경로는 `node_modules/linivera/bin/linivera-mcp.js`다. 기존 설치본과 정적 사본은 재연결/재내보내기 전까지 이전 이름을 표시한다. [업데이트 순서](production.md#기존-설치-갱신과-롤백)를 따른다.

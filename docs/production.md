@@ -1,10 +1,10 @@
 # 로컬 설치와 첫 실행 검증
 
-Folio는 로컬 폴더에서 실행한다. 0.1.0은 GitHub에서 배포하는 로컬 초기 버전이다. npm 공개 게시·클라우드 게시 서비스는 제공하지 않는다. Node 지원 범위는 package.json에 있으며 Node 24를 권장한다.
+Linivera는 로컬 폴더에서 실행한다. 0.1.0은 GitHub에서 배포하는 로컬 초기 버전이다. npm 공개 게시·클라우드 게시 서비스는 제공하지 않는다. Node 지원 범위는 package.json에 있으며 Node 24를 권장한다.
 
 ## 릴리스에서 받기
 
-[0.1.0 다운로드](https://github.com/fbwndrud/folio/releases/tag/v0.1.0)에서 `folio-0.1.0.tgz`와 `SHA256SUMS`를 받는다. tarball에는 빌드된 화면이 들어 있다. 아래 “준비된 패키지 만들기와 설치하기”의 설치 명령을 따른다. 전체 작품 ZIP은 엔진과 별도이며 [예시 안내](examples.md)에서 설명한다.
+[0.1.0 다운로드](https://github.com/fbwndrud/linivera/releases/tag/v0.1.0)에서 `folio-0.1.0.tgz`와 `SHA256SUMS`를 받는다. 이 다운로드는 이름 변경 전 Folio 패키지다. 새 이름의 패키지는 아래 소스 빌드로 준비한다. tarball에는 빌드된 화면이 들어 있다. 아래 “준비된 패키지 만들기와 설치하기”의 설치 명령을 따른다. 전체 작품 ZIP은 엔진과 별도이며 [예시 안내](examples.md)에서 설명한다.
 
 ## 소스에서 준비하기
 
@@ -20,7 +20,7 @@ setup은 잠긴 root/viewer 의존성을 설치하고 화면을 빌드한다. pr
 
 ## 준비된 패키지 만들기와 설치하기
 
-준비된 패키지에는 읽기 전용 `folio-doctor`도 포함된다. package:verify는
+준비된 패키지에는 읽기 전용 `linivera-doctor`도 포함된다. package:verify는
 실제 설치 bin의 사람용·JSON 출력, 없는 root 종료 코드와 파일·디렉터리
 무변경을 합성 Resource 폴더에서 확인한다. 진단과 전체 백업의 새 폴더 복원,
 MCP 재연결 수용 순서는 [운영 안내](operations.md)를 참고한다.
@@ -32,17 +32,19 @@ npm run package:build
 npm run package:verify
 ```
 
-package:build는 viewer build 후 npm pack --ignore-scripts를 수행해 현재 폴더에 tarball을 만든다. package:verify는 화면을 다시 빌드하고 임시 tarball을 개발 의존성 없이 새로 설치한다. 설치본의 stdio 스키마, 네 원고·자산·추적 예제, 전체 production 경로와 folio-view 실행, 설치본 package.json과 MCP 초기 응답의 이름·버전 일치, 합성 영어 번역의 원본 결속 영수증·판본 HTTP 조회·Web/EPUB 실제 본문을 확인하고 임시 설치와 npm cache를 정리한다. 단순 npm pack은 화면을 빌드하지 않으므로 배포에는 package:build를 쓴다.
+package:build는 viewer build 후 npm pack --ignore-scripts를 수행해 현재 폴더에 tarball을 만든다. package:verify는 화면을 다시 빌드하고 임시 tarball을 개발 의존성 없이 새로 설치한다. 설치본의 stdio 스키마, 네 원고·자산·추적 예제, 전체 production 경로와 linivera-view 실행, 설치본 package.json과 MCP 초기 응답의 이름·버전 일치, 합성 영어 번역의 원본 결속 영수증·판본 HTTP 조회·Web/EPUB 실제 본문을 확인하고 임시 설치와 npm cache를 정리한다. 단순 npm pack은 화면을 빌드하지 않으므로 배포에는 package:build를 쓴다.
 
 tarball을 받은 사용자는 별도 설치 폴더에서 다음처럼 실행한다(파일 이름은 받은 파일로 바꾼다).
 
 ```sh
-npm install --omit=dev --ignore-scripts /path/to/folio-0.1.0.tgz
-./node_modules/.bin/folio-view "/path/to/work"
-./node_modules/.bin/folio-doctor "/path/to/work" --json
+npm install --omit=dev --ignore-scripts /path/to/linivera-0.1.1.tgz
+./node_modules/.bin/linivera-view "/path/to/work"
+./node_modules/.bin/linivera-doctor "/path/to/work" --json
 ```
 
-Windows에서는 같은 설치 폴더의 `node_modules\.bin\folio-view.cmd`를 쓴다. MCP 호스트에는 `node /absolute/install/path/node_modules/folio/bin/folio-mcp.js`를 등록한다. 설치된 패키지는 화면을 포함하므로 setup을 다시 실행하지 않는다. 설치 hook, Python 설치와 모델 가중치는 없다. 선택 embedding용 Python 스크립트는 포함하지만 Python 자체는 의존성이 아니다. 화면 누락 패키지는 새로 빌드한 tarball로 교체한다.
+기존 `folio-0.1.0.tgz`를 설치하면 패키지 폴더는 `node_modules/folio`, 명령은 `folio-view`·`folio-doctor`, MCP 실행 파일은 `node_modules/folio/bin/folio-mcp.js`다. 위 새 이름의 명령은 새 패키지 설치본에 사용한다.
+
+Windows에서는 같은 설치 폴더의 `node_modules\.bin\linivera-view.cmd`를 쓴다. MCP 호스트에는 `node /absolute/install/path/node_modules/linivera/bin/linivera-mcp.js`를 등록한다. 설치된 패키지는 화면을 포함하므로 setup을 다시 실행하지 않는다. 설치 hook, Python 설치와 모델 가중치는 없다. 선택 embedding용 Python 스크립트는 포함하지만 Python 자체는 의존성이 아니다. 화면 누락 패키지는 새로 빌드한 tarball로 교체한다.
 
 ## 기존 설치 갱신과 롤백
 
@@ -52,7 +54,7 @@ Windows에서는 같은 설치 폴더의 `node_modules\.bin\folio-view.cmd`를 �
 4. MCP를 재연결하고 serverInfo 이름·버전이 설치된 package.json과 일치하는지 확인한다. 앱이 캐시한 도구·지침은 새 대화에서 확인한다.
 5. 작품 상태와 읽기 전용 doctor를 확인한 뒤 Studio를 다시 연다. 정적 검토 사본은 다시 내보낸다.
 
-문제가 생기면 MCP 실행 경로를 이전 설치 폴더로 되돌린다. 이번 업데이트는 기존 작품 형식·`.folio` 기록장·`folio_*` 도구 이름을 유지한다. 최신 소스는 0.1.1 패키지를 준비하며, 최초 v0.1.0 다운로드는 이전 버전으로 그대로 보존한다. 새 이름과 릴리스가 확정되기 전에는 0.1.1 공개 다운로드가 있다고 안내하지 않는다.
+문제가 생기면 MCP 실행 경로를 이전 설치 폴더로 되돌린다. 이번 업데이트는 기존 작품 형식·`.folio` 기록장·`folio_*` 도구 이름을 유지한다. 최신 소스는 0.1.1 패키지를 준비하며, 최초 v0.1.0 다운로드는 이전 버전으로 그대로 보존한다. 0.1.1은 소스에서 빌드하는 버전이며 별도 공개 릴리스 파일이 게시되기 전에는 다운로드가 있다고 안내하지 않는다. 새 패키지에도 기존 `folio-*` 실행 명령을 포함한다.
 
 ## 화면과 내보내기
 
@@ -66,26 +68,26 @@ Windows에서는 같은 설치 폴더의 `node_modules\.bin\folio-view.cmd`를 �
 **Export review view**는 읽기 전용 화면 사본을 작품의 exports/viewer에 만든다. 다음으로 로컬에서 열 수 있다.
 
 ```sh
-folio-view --preview "/path/to/work/exports/viewer"
+linivera-view --preview "/path/to/work/exports/viewer"
 ```
 
 본문의 웹·EPUB은 folio_export로 작품 밖의 새 출력 폴더에 만든다. PDF는 웹 내보내기의 브라우저 인쇄를 사용한다. 수동 지면 좌표 배치는 지원하지만 자동 조판·클라우드 게시를 수행하지 않는다. EPUB은 흐르는 본문 형식이다. Resources의 binary 원본은 정적 화면에 포함하지 않는다.
 
 ## 정적 사본 교체와 복구
 
-동시에 두 정적 내보내기를 실행하면 EXPORT_BUSY로 거부한다. exports/viewer의 기존 Folio 사본은 임시 결과가 준비된 뒤 같은 exports 폴더의 고유 .viewer-*.backup 이름으로 옮긴다. 교체 실패 시 원래 위치로 되돌린다. 그 사이 다른 파일이 원래 위치를 차지하면 덮지 않고 EXPORT_RECOVERY_REQUIRED와 backup 경로를 알려 준다. 그 백업에 이전 사본이 남는다. 작가 파일로 만든 출력 폴더나 바뀐 target은 덮지 않는다.
+동시에 두 정적 내보내기를 실행하면 EXPORT_BUSY로 거부한다. exports/viewer의 기존 Linivera 사본은 임시 결과가 준비된 뒤 같은 exports 폴더의 고유 .viewer-*.backup 이름으로 옮긴다. 교체 실패 시 원래 위치로 되돌린다. 그 사이 다른 파일이 원래 위치를 차지하면 덮지 않고 EXPORT_RECOVERY_REQUIRED와 backup 경로를 알려 준다. 그 백업에 이전 사본이 남는다. 작가 파일로 만든 출력 폴더나 바뀐 target은 덮지 않는다.
 
-프로세스가 강제 종료되면 exports/.viewer-export.lock, .viewer-*.tmp 또는 .viewer-*.backup이 남을 수 있다. 모든 Folio 프로세스를 종료하고 기존 viewer·backup 내용을 확인한다. 보존할 사본을 따로 복사한 뒤, target이 없을 때 확인한 backup을 viewer로 옮긴다. 잠금은 자동 탈취하지 않는다. 확인을 마친 뒤 남은 잠금과 본인이 확인한 임시 폴더만 지우고 다시 내보낸다. 자동 손상 복구 기능이 아니다.
+프로세스가 강제 종료되면 exports/.viewer-export.lock, .viewer-*.tmp 또는 .viewer-*.backup이 남을 수 있다. 모든 Linivera 프로세스를 종료하고 기존 viewer·backup 내용을 확인한다. 보존할 사본을 따로 복사한 뒤, target이 없을 때 확인한 backup을 viewer로 옮긴다. 잠금은 자동 탈취하지 않는다. 확인을 마친 뒤 남은 잠금과 본인이 확인한 임시 폴더만 지우고 다시 내보낸다. 자동 손상 복구 기능이 아니다.
 
 이미지는 화면 요약을 만든 실제 catalog 판본에 결속한다. managed 이미지는 그 판본의 경로와 contentHash, legacy 이미지는 설명서와 당시 파일 bytes의 fingerprint를 검증한다. 같은 ID의 새 파일이 들어와도 이전 승인 표시와 새 bytes를 섞지 않는다. 복사는 한 장씩 수행한다. 선언된 파일의 손상·누락은 실패이며, file:null 또는 알 수 없는 참조는 화면에 명시된 placeholder로 남는다.
 
-이 교체 계약은 같은 로컬 파일시스템에서 Folio의 잠금에 협력하는 프로세스를 전제로 한다. Node의 portable directory rename에는 no-replace 옵션이 없어 최종 존재 확인과 rename 사이에 비협력 프로세스가 빈 폴더를 삽입하는 경쟁까지 보장하지 않는다. 네트워크 공유 폴더·전원 손실 복구는 검증하지 않았다.
+이 교체 계약은 같은 로컬 파일시스템에서 Linivera의 잠금에 협력하는 프로세스를 전제로 한다. Node의 portable directory rename에는 no-replace 옵션이 없어 최종 존재 확인과 rename 사이에 비협력 프로세스가 빈 폴더를 삽입하는 경쟁까지 보장하지 않는다. 네트워크 공유 폴더·전원 손실 복구는 검증하지 않았다.
 
 ## 의존성 검증
 
-SDK minimum은 patched 1.x이며 현재 lock은 1.32.1이다. [SDK advisory](https://github.com/advisories/GHSA-6qxp-vccf-f47h)는 OAuth 클라이언트 문제이며 MCP 서버와 stdio 클라이언트를 영향 대상에서 제외한다. 현재 Folio stdio 경로의 exploitability를 주장하지 않는다. viewer의 source-map-js lock은 [1.2.2 수정판](https://github.com/7rulnik/source-map-js/releases/tag/v1.2.2)이다.
+SDK minimum은 patched 1.x이며 현재 lock은 1.32.1이다. [SDK advisory](https://github.com/advisories/GHSA-6qxp-vccf-f47h)는 OAuth 클라이언트 문제이며 MCP 서버와 stdio 클라이언트를 영향 대상에서 제외한다. 현재 Linivera stdio 경로의 exploitability를 주장하지 않는다. viewer의 source-map-js lock은 [1.2.2 수정판](https://github.com/7rulnik/source-map-js/releases/tag/v1.2.2)이다.
 
-ESLint 9 deprecation을 확인하고 10.12.0 및 @eslint/js 10.0.1로 갱신했다. 지원 Node 범위는 Folio와 맞는다. [v10 migration](https://eslint.org/docs/latest/use/migrate-to-10.0.0)의 새 recommended 규칙을 모두 유지했다. no-useless-assignment가 찾은 사용되지 않는 초기값 세 개만 제거했다. preserve-caught-error를 맞추려고 사용자 경로·민감 원인을 공개 오류에 추가하지 않았다. 기존 FolioError 마스킹 경계는 유지하며 이 규칙이 사용자 정의 오류의 마스킹 정확성을 보증하지는 않는다.
+ESLint 9 deprecation을 확인하고 10.12.0 및 @eslint/js 10.0.1로 갱신했다. 지원 Node 범위는 Linivera와 맞는다. [v10 migration](https://eslint.org/docs/latest/use/migrate-to-10.0.0)의 새 recommended 규칙을 모두 유지했다. no-useless-assignment가 찾은 사용되지 않는 초기값 세 개만 제거했다. preserve-caught-error를 맞추려고 사용자 경로·민감 원인을 공개 오류에 추가하지 않았다. 기존 FolioError 마스킹 경계는 유지하며 이 규칙이 사용자 정의 오류의 마스킹 정확성을 보증하지는 않는다.
 
 감사는 root runtime(`npm audit --omit=dev`)과 viewer full(`npm --prefix viewer audit`) 결과를 구분한다. build의 graph chunk 크기 경고는 성공 종료와 별개다. 실제 로컬 결과·CI 설정과 미검증 범위는 [검증 기록](testing.md)을 따른다.
 
@@ -101,11 +103,11 @@ npm run benchmark:local
 100개 상세·정적 검토 사본·웹 export를 실제 실행한다. 환경·package/commit·판본과
 checkpoint 근거, 작업별 milliseconds와 JSON 출력 bytes, export 전체 bytes를 기록한다.
 AI 품질 점수나 처리 SLA는 만들지 않는다. 성공·실패 모두 자체 임시 폴더를 정리한다.
-설치본에서는 `node /path/to/node_modules/folio/scripts/benchmark-local.js`로 실행할 수 있다.
+설치본에서는 `node /path/to/node_modules/linivera/scripts/benchmark-local.js`로 실행할 수 있다.
 테스트 fixture import와 개발 의존성은 필요 없다. package:verify는 설치본 모듈의 모든
 의존성 해석을 확인하며, 100개 실제 측정은 benchmark:local의 별도 실행이다.
 
-현재 검증 결과와 남은 관문은 [출시 판정 기록](https://github.com/fbwndrud/folio/blob/v0.1.0/docs/plans/2026-10-09-production-readiness.md)에
+현재 검증 결과와 남은 관문은 [출시 판정 기록](https://github.com/fbwndrud/linivera/blob/v0.1.0/docs/plans/2026-10-09-production-readiness.md)에
 구분한다. 과거 vector profile의 input policy에는 명시 재색인이 필요하다.
 개별8MiB·100개·합산32MiB는 core pin과 adapter 직접 호출에 모두 적용되며
 source evidence의 개별 bytes 검증을 생략하지 않는다.
@@ -122,4 +124,4 @@ Review의 Changes는 기존 stale/drift/recheck/flagged와 근거 연결·추적
 ledger/head 및 run 파일 hash를 다시 읽는다. 변화하면 VIEW_CHANGED로 거부한다.
 Resource 체크포인트와 실제 이미지 복사의 기존 버전/bytes 검증도 유지한다.
 한꺼번에 만드는 정적 JSON의 크기나 사용자 의미 판정 비용까지 줄이는 기능은 아니다.
-실측과 잔여 출시 관문은 [변경 영향 구현 결과](https://github.com/fbwndrud/folio/blob/v0.1.0/docs/plans/2026-10-10-impact-and-performance-results.md)를 따른다.
+실측과 잔여 출시 관문은 [변경 영향 구현 결과](https://github.com/fbwndrud/linivera/blob/v0.1.0/docs/plans/2026-10-10-impact-and-performance-results.md)를 따른다.

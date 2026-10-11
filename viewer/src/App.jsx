@@ -113,7 +113,7 @@ function Shell({ route }) {
     main.current?.focus();
     window.scrollTo({ top: 0 });
   }, [route.screen, route.id, setFocused]);
-  useEffect(() => { document.title = `${outline.data?.title || t("Folio")} | ${t(group.name)}`; }, [outline.data?.title, group.name, t]);
+  useEffect(() => { document.title = `${outline.data?.title || t("Linivera")} | ${t(group.name)}`; }, [outline.data?.title, group.name, t]);
   if (closed) return <main className="closed"><p>{t("Viewer closed. Reopen the work to view it again.")}</p></main>;
   const shutdown = async () => {
     setShutdownError(null);
@@ -124,7 +124,7 @@ function Shell({ route }) {
     <div className={`shell ${contentsOpen && !resourceOnly && !wideMode ? 'contents-open' : 'contents-closed'} ${focused ? 'focus-mode' : ''}`}>
       <a className="skip-link" href="#main-content" onClick={(event) => { event.preventDefault(); main.current?.focus(); }}>{t("Skip to content")}</a>
       <header className="top">
-        <a className="title" href="#/"><span className="folio-mark" aria-hidden="true">{t("F")}</span>{outline.data?.title || t("Folio")}</a>
+        <a className="title" href="#/"><span className="folio-mark" aria-hidden="true">{t("L")}</span>{outline.data?.title || t("Linivera")}</a>
         <nav aria-label={t("Pages")}>
           {groups.map((item) => <a key={item.name} href={item.screen === 'home' && readId ? hrefFor('read', readId) : item.screen === 'home' ? '#/' : hrefFor(item.screen)} aria-current={group.name === item.name ? 'true' : undefined}>{t(item.name)}</a>)}
         </nav>

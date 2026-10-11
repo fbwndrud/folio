@@ -1,6 +1,6 @@
-# 호스트가 만든 그림을 Folio에 등록하기
+# 호스트가 만든 그림을 Linivera에 등록하기
 
-생성·편집·시각 검토는 호스트가 한다. Folio는 데이터·버전·연결·검토·작가 결정을 관리한다.
+생성·편집·시각 검토는 호스트가 한다. Linivera는 데이터·버전·연결·검토·작가 결정을 관리한다.
 사용 가능한 이미지 도구를 환경에서 확인한다. 제공자·모델·명령을 필수로 가정하지 않는다.
 생성 도구가 없으면 설명서만 등록하고 미완료 상태를 설명한다.
 
@@ -11,9 +11,9 @@
    `folio_assets { root, op: 'add', id, title?, brief }`. 생성 완료로 말하지 않는다.
 2. 호스트의 이미지 도구로 생성·편집한다. 이미 받은 결과도 같은 방식으로 인계한다.
 3. `folio_assets { root, op: 'put', id, expectedRev, path, mediaType, origin? }`.
-   path는 Folio 서버에서 읽을 수 있는 파일의 절대 경로다. 성공 뒤에만 보관 완료로 말한다.
+   path는 Linivera 서버에서 읽을 수 있는 파일의 절대 경로다. 성공 뒤에만 보관 완료로 말한다.
    origin은 선택적인 `{ provider?, imageId?, model? }` 문자열 정보다.
-   Folio ID와 제공자 imageId는 별개다. 특정 개인의 경로를 가정하지 않는다.
+   Linivera ID와 제공자 imageId는 별개다. 특정 개인의 경로를 가정하지 않는다.
 4. output.file은 작품 assets/ 기준 상대 경로다. 그 사본을 보고 설명서·엔티티와 대조한다.
    보지 못하면 검토 대기라고 알린다. `folio_assets { op: 'review', root, id, expectedRev,
    contentHash: asset.output.contentHash, checked, findings }`로 실제 검토 결과를 제출한다.
@@ -50,7 +50,7 @@ findings는 `{ checkId, code, message, location? }`다. severity를 입력하지
 contentVerified는 hash 확인이다. 형식·해상도 디코딩이나 시각 품질 인증으로 설명하지 않는다.
 mediaType은 호스트 정보다. 파일은 1바이트~20MiB 일반 파일이다.
 path와 uri 중 하나만 인계한다. URI를 다운로드하거나 보고된 hash를 확인된 hash로 쓰지 않는다.
-파일을 확보한 뒤 put한다. Folio 내부에 제공자 API 키·SDK·폴링을 넣지 않는다.
+파일을 확보한 뒤 put한다. Linivera 내부에 제공자 API 키·SDK·폴링을 넣지 않는다.
 
 update와 put은 새 버전으로 옛 검토·승인이 풀린다. 새 review도 옛 결정을 푼다.
 같은 검토는 한 번만 결정한다. list/get으로 미완료·이력·사용 위치를 확인한다.

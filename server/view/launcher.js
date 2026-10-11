@@ -7,15 +7,15 @@ import { createViewerRegistry, DIST_DIR, preferredPort } from './registry.js';
 import { startViewServer } from './http-server.js';
 import { startExportPreview } from './export-preview.js';
 
-const HELP = `Folio viewer
+const HELP = `Linivera viewer
 
 View a work locally:
   npm run viewer -- "/path/to/work"
-  folio-view "/path/to/work" --section opening
+  linivera-view "/path/to/work" --section opening
 
 Preview a read-only export:
   npm run preview -- "/path/to/work/exports/viewer"
-  folio-view --preview "/path/to/work/exports/viewer"
+  linivera-view --preview "/path/to/work/exports/viewer"
 
 Options:
   --section <id>  Open a section in the live work viewer.
@@ -31,7 +31,7 @@ An installed tarball already includes the viewing screens.
 export function launchError(error) {
   const code = /** @type {any} */ (error)?.code;
   if (code === 'VIEWER_NOT_BUILT') return 'The viewing screens are not prepared. In a source checkout, run npm run setup. For an installed package, reinstall a prepared tarball.';
-  if (code === 'VIEWER_EXPORT_INVALID') return 'This is not a Folio viewer export. Choose the exports/viewer folder made by Export review view.';
+  if (code === 'VIEWER_EXPORT_INVALID') return 'This is not a Linivera viewer export. Choose the exports/viewer folder made by Export review view.';
   if (code === 'FEATURE_DISABLED') return 'The viewer is turned off for this work. Ask your AI assistant to check the work settings.';
   if (code === 'NODE_NOT_FOUND') return 'That section does not exist. Open the work without --section to choose from Contents.';
   if (code === 'VIEWER_USAGE_INVALID' || String(code).startsWith('ERR_PARSE_ARGS')) return `Choose one work or export folder. Use --help for examples.\n${HELP}`;

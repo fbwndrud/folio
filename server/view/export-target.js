@@ -29,7 +29,7 @@ export async function prepareExportTarget(root) {
     targetInfo = await lstatOrNull(target);
     markerInfo = targetInfo?.isDirectory() ? await lstatOrNull(join(target, EXPORT_MARKER)) : null;
     if (targetInfo && (!targetInfo.isDirectory() || !markerInfo?.isFile())) {
-      throw new FolioError('EXPORT_DIR_NOT_OURS', 'The output folder was not made by Folio', { dir: EXPORT_DIR });
+      throw new FolioError('EXPORT_DIR_NOT_OURS', 'The output folder was not made by Linivera', { dir: EXPORT_DIR });
     }
   } catch (error) { await release(); throw error; }
   return { temp, release, async publish() {

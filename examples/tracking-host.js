@@ -26,7 +26,7 @@ export function planFor(scenario) {
 export async function connectSyntheticMcp() {
   const repo = join(import.meta.dirname, '..');
   const transport = new StdioClientTransport({ command: process.execPath,
-    args: [join(repo, 'bin/folio-mcp.js')], cwd: repo, stderr: 'pipe' });
+    args: [join(repo, 'bin/linivera-mcp.js')], cwd: repo, stderr: 'pipe' });
   let stderr = '';
   transport.stderr?.on('data', (chunk) => { stderr += String(chunk); });
   const client = new Client({ name: 'folio-synthetic-tracking', version: '1.0.0' });

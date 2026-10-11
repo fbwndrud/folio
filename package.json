@@ -1,18 +1,18 @@
 {
-  "name": "folio",
+  "name": "linivera",
   "version": "0.1.1",
   "private": true,
   "type": "module",
-  "description": "Local MCP tools for managing manuscripts, assets, sources and review history.",
+  "description": "Local MCP tools for keeping sources, revisions, AI results and review history connected.",
   "license": "Apache-2.0",
   "engines": {
     "node": "^22.13.0 || ^24.0.0 || ^26.0.0"
   },
   "scripts": {
     "setup": "npm ci && npm --prefix viewer ci && npm --prefix viewer run build",
-    "viewer": "node bin/folio-view.js",
-    "doctor": "node bin/folio-doctor.js",
-    "preview": "node bin/folio-view.js --preview",
+    "viewer": "node bin/linivera-view.js",
+    "doctor": "node bin/linivera-doctor.js",
+    "preview": "node bin/linivera-view.js --preview",
     "test": "node --test --test-concurrency=2 \"test/**/*.test.js\"",
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.json",
@@ -44,6 +44,9 @@
     "licenses/"
   ],
   "bin": {
+    "linivera-mcp": "bin/linivera-mcp.js",
+    "linivera-view": "bin/linivera-view.js",
+    "linivera-doctor": "bin/linivera-doctor.js",
     "folio-doctor": "bin/folio-doctor.js",
     "folio-mcp": "bin/folio-mcp.js",
     "folio-view": "bin/folio-view.js"
@@ -61,10 +64,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fbwndrud/folio.git"
+    "url": "git+https://github.com/fbwndrud/linivera.git"
   },
   "bugs": {
-    "url": "https://github.com/fbwndrud/folio/issues"
+    "url": "https://github.com/fbwndrud/linivera/issues"
   },
-  "homepage": "https://github.com/fbwndrud/folio#readme"
+  "homepage": "https://github.com/fbwndrud/linivera#readme"
 }

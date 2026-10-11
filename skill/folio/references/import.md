@@ -14,7 +14,7 @@
 
 ## 가져오는 것
 
-| vibelore | Folio |
+| vibelore | Linivera |
 |---|---|
 | `chapters/<n>.md` | 회차 `ep-<n>`(최소 세 자리). 제목은 회차 앞머리 → 아크 계획 → `<n>화` |
 | `.vibelore/arcs/<n>.json` | 버린 아크를 제외한 `arc-<n>`(본문은 약속). 빈 아크는 경고 후 제외한다. 아크에 없는 회차는 `arc-imported` 아래에 둔다 |
@@ -28,9 +28,9 @@
 ## 가져온 뒤
 
 - 작품은 `serial` 프리셋과 `novel`·`image` 팩을 쓴다. 검사 세트는 프리셋 그대로이고 그림 검사 세트는 작가가 고른다.
-- 모든 노드는 `imported`다. `type: import` 기록은 출처 기록이며 Folio 검사 통과나 커밋 영수증이 아니다. vibelore 판정도 옮겨 말하지 않는다.
+- 모든 노드는 `imported`다. `type: import` 기록은 출처 기록이며 Linivera 검사 통과나 커밋 영수증이 아니다. vibelore 판정도 옮겨 말하지 않는다.
 - 가져온 노드는 완료한 것으로 쳐서 다음 노드로 다시 고르지 않는다. 새 회차는 `folio_structure { op: 'add' }`로 더한다.
-- 작가가 Folio 검사를 원하는 노드마다 `folio_run { root, node, mode: 'recommit' }`을 쓴다. 현재 본문에 추출·검사·승인·영수증을 거친 뒤 `committed`가 된다.
+- 작가가 Linivera 검사를 원하는 노드마다 `folio_run { root, node, mode: 'recommit' }`을 쓴다. 현재 본문에 추출·검사·승인·영수증을 거친 뒤 `committed`가 된다.
 - 뷰어에서 노드 상태는 "가져옴"으로 보인다. 현재 영수증 상세 화면은 가져오기 출처 필드를 그리지 않고 "커밋 기록이 없다"고 표시한다. 가져오기 기록을 검사 영수증으로 해석하지 않는다.
 
 ## 오류일 때

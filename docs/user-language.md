@@ -1,6 +1,6 @@
 # User-facing language
 
-Folio offers Korean and English product labels, selected by the user in the viewer header. English labels are stable translation keys; Korean translations live in `viewer/src/i18n/`. The saved browser preference takes priority over supported browser languages, with English as the fallback. A section can be saved as a draft before it is reviewed, so **Finalize** means recording the reviewed and approved version; it is more specific than Save.
+Linivera offers Korean and English product labels, selected by the user in the viewer header. English labels are stable translation keys; Korean translations live in `viewer/src/i18n/`. The saved browser preference takes priority over supported browser languages, with English as the fallback. A section can be saved as a draft before it is reviewed, so **Finalize** means recording the reviewed and approved version; it is more specific than Save.
 
 | Internal identifier | Product label | Meaning |
 |---|---|---|

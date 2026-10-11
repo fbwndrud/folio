@@ -26,6 +26,6 @@ test('a transport error such as a read buffer overflow leaves one diagnostic lin
   await closed;
   process.stderr.write = originalWrite;
   assert.equal(stderr.length, 1);
-  assert.match(stderr[0], /^folio-mcp: ReadBuffer exceeded maximum size of 64 bytes\n$/);
+  assert.match(stderr[0], /^linivera-mcp: ReadBuffer exceeded maximum size of 64 bytes\n$/);
   assert.deepEqual(written, []);
 });

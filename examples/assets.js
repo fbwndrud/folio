@@ -15,7 +15,7 @@ export async function runAssetExample() {
   const root = join(base, 'work');
   const path = join(base, 'host-result.svg');
   const client = new Client({ name: 'folio-synthetic-assets', version: '0.1.0' });
-  const transport = new StdioClientTransport({ command: process.execPath, args: [join(REPO, 'bin', 'folio-mcp.js')], cwd: REPO, stderr: 'pipe' });
+  const transport = new StdioClientTransport({ command: process.execPath, args: [join(REPO, 'bin', 'linivera-mcp.js')], cwd: REPO, stderr: 'pipe' });
   let stderr = '';
   transport.stderr?.on('data', (chunk) => { stderr += String(chunk); });
   async function call(name, args, errorCode = null) {

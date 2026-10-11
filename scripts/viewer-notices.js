@@ -38,10 +38,10 @@ async function noticeFor({ directory, metadata }) {
     `Published package: ${tarball}`, `Upstream source: ${upstream(metadata) ?? tarball}`];
   if (metadata.name === 'elkjs') {
     if (metadata.version !== ELK_VERSION) throw new Error('Update and verify ELK source availability for the new elkjs version');
-    heading.push('Folio distributes elkjs under EPL-2.0; its secondary GPL option is not selected.',
+    heading.push('Linivera distributes elkjs under EPL-2.0; its secondary GPL option is not selected.',
       'ELK source is available under EPL-2.0 at the following version-pinned locations:',
       `elkjs ${ELK_VERSION}: ${ELKJS_SOURCE}`, `ELK ${ELK_VERSION}: ${ELK_SOURCE}`,
-      'Folio does not modify ELK source. Bundling and minification change its distribution format.',
+      'Linivera does not modify ELK source. Bundling and minification change its distribution format.',
       'Copyright (c) 2017, 2021 Kiel University and others.');
   }
   const documents = await Promise.all(names.map(async name => `--- ${name} ---\n${await readFile(join(directory, name), 'utf8')}`));
@@ -60,8 +60,8 @@ export async function bundledNotices(bundle) {
   }
   const sorted = [...packages.values()].sort((a, b) => `${a.metadata.name}@${a.metadata.version}`.localeCompare(`${b.metadata.name}@${b.metadata.version}`));
   const notices = await Promise.all(sorted.map(noticeFor));
-  return 'Folio Studio — bundled third-party software\n\nThese components retain their own licenses and copyright notices.\n'
-    + 'Folio’s Apache-2.0 license and the example content license do not replace these terms.\n\n'
+  return 'Linivera Studio — bundled third-party software\n\nThese components retain their own licenses and copyright notices.\n'
+    + 'Linivera’s Apache-2.0 license and the example content license do not replace these terms.\n\n'
     + notices.join('\n\n' + '='.repeat(72) + '\n\n') + '\n';
 }
 

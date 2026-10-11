@@ -10,7 +10,7 @@ import { verifyPackedMarkdownLinks } from './package-links.js';
 const repo = dirname(import.meta.dirname);
 const npmCli = process.env.npm_execpath;
 if (!npmCli) throw new Error('run this check with npm run package:verify');
-const sandbox = await mkdtemp(join(tmpdir(), 'folio-package-'));
+const sandbox = await mkdtemp(join(tmpdir(), 'linivera-package-'));
 
 function run(command, args, cwd) {
   const result = spawnSync(command, args, { cwd, encoding: 'utf8', timeout: 180_000,
@@ -23,7 +23,7 @@ function run(command, args, cwd) {
 
 try {
   const [packed] = JSON.parse(run(process.execPath, [npmCli, 'pack', '--json', '--ignore-scripts', '--pack-destination', sandbox], repo));
-  assert.ok(packed.files.some((file) => file.path === 'viewer/dist/index.html'), 'installed folio-view needs built screens');
+  assert.ok(packed.files.some((file) => file.path === 'viewer/dist/index.html'), 'installed linivera-view needs built screens');
   assert.ok(packed.files.some((file) => file.path === 'examples/run.js'));
   assert.ok(packed.files.some((file) => file.path === 'examples/assets.js'));
   for (const path of ['adapters/embedding/index.js', 'adapters/embedding/worker.py', 'adapters/embedding/requirements.txt', 'docs/embeddings.md', 'skill/folio/references/embeddings.md', 'examples/tracking.js', 'examples/tracking-host.js', 'docs/tracking.md',
@@ -33,15 +33,19 @@ try {
   assert.ok(packed.files.some((file) => file.path === 'packs/sources/checkers/claims.js'));
   assert.ok(!packed.files.some((file) => /^(test\/|docs\/plans\/|tree\/|entities\/|assets\/|\.local-output\/|\.superpowers\/)|(^|\/)\.folio\/|\.(zip|epub|png)$/.test(file.path)),
     'test data, implementation plans, work state and work outputs must stay out of the package');
-  await writeFile(join(sandbox, 'package.json'), '{"name":"folio-install-check","version":"1.0.0","private":true}\n');
+  await writeFile(join(sandbox, 'package.json'), '{"name":"linivera-install-check","version":"1.0.0","private":true}\n');
   run(process.execPath, [npmCli, 'install', '--omit=dev', '--ignore-scripts', '--no-audit', '--no-fund', join(sandbox, packed.filename)], sandbox);
   const installed = join(sandbox, 'node_modules', packed.name);
   const manifest = JSON.parse(await readFile(join(installed, 'package.json'), 'utf8'));
   const documentation = await verifyPackedMarkdownLinks({ root: installed, files: packed.files.map((file) => file.path) });
-  assert.equal(manifest.bin['folio-mcp'], 'bin/folio-mcp.js');
-  assert.equal(manifest.bin['folio-view'], 'bin/folio-view.js');
-  assert.equal(manifest.bin['folio-doctor'], 'bin/folio-doctor.js');
-  await access(join(sandbox, 'node_modules', '.bin', process.platform === 'win32' ? 'folio-view.cmd' : 'folio-view'));
+  assert.equal(manifest.name, 'linivera');
+  for (const prefix of ['linivera', 'folio']) {
+    for (const command of ['mcp', 'view', 'doctor']) {
+      const name = `${prefix}-${command}`;
+      assert.equal(manifest.bin[name], `bin/${name}.js`);
+      await access(join(sandbox, 'node_modules', '.bin', process.platform === 'win32' ? `${name}.cmd` : name));
+    }
+  }
   assert.ok(!Object.keys(manifest.scripts).some((name) => /^(preinstall|install|postinstall|prepare)$/.test(name)));
   assert.ok(!packed.files.some((file) => /^viewer\/(?!dist\/)|\.(safetensors|gguf|pt|pth)$/.test(file.path)), 'only prepared viewer files; no model weights');
   const developmentDependenciesAbsent = (await Promise.all(Object.keys(manifest.devDependencies).flatMap((name) =>
@@ -50,7 +54,8 @@ try {
   // Resolve every benchmark dependency inside the installed package, which excludes test fixtures.
   const benchmark = await import(pathToFileURL(join(installed, 'scripts/benchmark-local.js')).href);
   assert.equal(typeof benchmark.benchmarkLocal, 'function');
-  const doctor = await verifyInstalledDoctor(sandbox, installed);
+  const doctor = await verifyInstalledDoctor(sandbox, installed, 'linivera');
+  const legacyDoctor = await verifyInstalledDoctor(sandbox, installed, 'folio');
   const examples = JSON.parse(run(process.execPath, [join(installed, 'examples', 'run.js'), 'all', '--verify'], sandbox));
   assert.equal(examples.verified, true);
   assert.deepEqual(examples.results.map((result) => result.example), ['story', 'guide', 'picturebook', 'fairytale']);
@@ -66,7 +71,7 @@ try {
   for (const field of ['synthetic', 'viewerResourceVisible', 'epubVerified', 'resourceOnlyVerified', 'installedCliReady']) assert.equal(production[field], true);
   assert.equal(production.outputsRetained, false);
   console.log(JSON.stringify({ installedFromTarball: true, developmentDependenciesAbsent,
-    production, doctor, documentation, benchmarkModuleVerified: true, entryCount: packed.entryCount, examples: examples.results.map((result) => result.example), assets, tracking }, null, 2));
+    production, doctor, legacyDoctor, documentation, benchmarkModuleVerified: true, entryCount: packed.entryCount, examples: examples.results.map((result) => result.example), assets, tracking }, null, 2));
 } finally {
   await rm(sandbox, { recursive: true, force: true });
 }
