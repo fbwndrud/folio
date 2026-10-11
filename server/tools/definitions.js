@@ -40,7 +40,7 @@ export const BASE_TOOL_NAMES = Object.freeze([
 
 export const TOOLS = Object.freeze([
   tool('folio_init', "Create a new writing work. The first pack provides the starting structure and writing steps; novel is the default. Choose a preset such as serial, novel, scene, textbook, history, guide, sourcebook, reference, picturebook, fairytale or gamebook from the first pack. Unknown presets return details.packPresets. Existing work.yaml is preserved and returns created:false. Optional features control extra capabilities, never the required safeguards.",
-    { title: ID, preset: ID, packs: { type: 'array', items: ID, minItems: 1 }, features: { type: 'object', additionalProperties: { type: 'boolean' } } }, ['title', 'preset']),
+    { title: ID, preset: ID, language: { type: 'string', minLength: 1, maxLength: 35 }, packs: { type: 'array', items: ID, minItems: 1 }, features: { type: 'object', additionalProperties: { type: 'boolean' } } }, ['title', 'preset']),
   tool('folio_status', "Show the next section, work in progress and pending questions. Identify sections needing another review, new checks, must-fix issues, or review and finalization of edited text. Include version status, appearance and evidence links needing relinking, and activity-record verification. Finalized means reviewed and recorded, not published online."),
   tool('folio_run', "Continue one section through its writing steps. normal writes and reviews; recheck reviews finalized text without rewriting; recommit reviews and finalizes edited text and requires a section id. node defaults to next; next-recheck requires mode recheck. Non-main versions use normal only. Results: needs_model (waiting for AI), needs_user (your decision), done, idle, waiting_children or skipped.",
     {

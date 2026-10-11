@@ -92,6 +92,20 @@ function readOptions(input, errors) {
 const isStringList = (value) => Array.isArray(value) && value.every((item) => typeof item === 'string');
 const optionalString = (value) => value === undefined || typeof value === 'string';
 
+/** Optional manuscript language; absence must not change legacy normalized settings. */
+function readLanguage(input, errors) {
+  if (input === undefined) return {};
+  try {
+    if (typeof input !== 'string' || !input || input.length > 35) throw new Error();
+    const language = Intl.getCanonicalLocales(input)[0];
+    if (!language || language.length > 35) throw new Error();
+    return { language };
+  } catch {
+    errors.push({ code: 'WORK_LANGUAGE_INVALID' });
+    return {};
+  }
+}
+
 /** userCheckSets: { id: { title?, description?, checks: [] } }. id 규칙·멤버 존재는 resolveChecks 가 본다. */
 function readUserCheckSets(input, errors) {
   if (input === undefined) return {};
@@ -117,6 +131,7 @@ export function validateWorkConfig(raw) {
   const variants = readVariantDecls(input.variants, errors);
   const config = {
     title: typeof input.title === 'string' ? input.title : '',
+    ...readLanguage(input.language, errors),
     levels,
     order,
     // 판본 id 목록(main 이 첫째)과 main 밖 판본의 선언. 판본을 다루는 기능은 features.variants 로 켜고 끈다.

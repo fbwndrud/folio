@@ -4,7 +4,7 @@
 
 먼저 `folio_export { root, op: "check", format: "web", variant: "main" }`로 확인할 항목을 본다. 그다음 `folio_export { root, output: "/기존/부모/새폴더", format: "web" }`를 부른다. output은 작품 밖의 아직 없는 폴더이고 부모는 있어야 한다. 기존 출력은 덮지 않는다. 결과의 index.html을 열어 읽고 브라우저 인쇄에서 PDF로 저장한다. 엔진은 PDF 파일을 직접 생성하지 않는다.
 
-`format: "epub"`은 `book.epub`을 만든다. EPUB은 화면 크기에 따라 흐르는 형식이라 명시 지면 좌표를 적용하지 않는다고 경고한다. 지면에만 놓은 그림은 그림 부록에 포함한다. 특정 판본은 `variant: "en"`처럼 고른다. 출판 언어는 판본의 lang, 원본은 ko가 기본이다. 다른 원본 언어는 language: "en"처럼 명시한다. Intl이 지원하는 언어 태그만 받으며 부적절한 값은 거부한다. 모든 잎의 판본 원고가 있어야 하고 빠진 원고를 main으로 채우지 않는다.
+`format: "epub"`은 `book.epub`을 만든다. EPUB은 화면 크기에 따라 흐르는 형식이라 명시 지면 좌표를 적용하지 않는다고 경고한다. 지면에만 놓은 그림은 그림 부록에 포함한다. 특정 판본은 `variant: "en"`처럼 고른다. 출판 언어는 명시한 `language` → 원본의 `work.yaml language` 또는 선택 판본의 `lang` → `ko` 순으로 결정한다. 새 작품은 `folio_init { root, title, preset, language: "en" }`처럼 본문 언어를 저장한다. 기존 작품은 자동 변경하지 않으며, 사용자가 원하면 `work.yaml`에 `language: en`을 추가한다. 이 설정은 Studio UI 언어와 독립이다. Intl이 지원하는 언어 태그만 받으며 부적절한 값은 거부한다. 모든 잎의 판본 원고가 있어야 하고 빠진 원고를 main으로 채우지 않는다.
 
 Web·EPUB의 목차는 본문 절과 부모 그룹 제목의 계층을 보존한다. 부모의 계획 메모는
 출판 본문에 넣지 않는다. `manifest.json`의 contents에 목차와 anchor를 기록한다.

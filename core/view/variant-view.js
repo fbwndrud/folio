@@ -13,7 +13,7 @@ import { viewWorkspaceMode } from './workspace-mode.js';
 import { downloadPublication } from './publication-view.js';
 
 function declaration(work, id) {
-  if (id === MAIN) return { id: MAIN, kind: 'original', lang: null };
+  if (id === MAIN) return { id: MAIN, kind: 'original', lang: work.config.language ?? null };
   if (typeof id !== 'string' || !VARIANT_ID.test(id) || !Object.hasOwn(work.config.variantSpecs, id)) throw new FolioError('VARIANT_UNKNOWN', 'Choose a declared edition');
   if (!work.config.features.variants) throw new FolioError('FEATURE_DISABLED', 'variants are turned off', { feature: 'variants' });
   return work.config.variantSpecs[id];

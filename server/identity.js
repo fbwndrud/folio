@@ -9,7 +9,7 @@ export const SERVER_INSTRUCTIONS = `${manifest.name} manages local resources, re
   + 'The host writes text, generates images and runs model inference. Use user-confirmed absolute work folders. '
   + 'Ask about purpose, audience, language and the details to track before creating the work. '
   + 'Relay actual user decisions; do not turn self-review or an example approval into author acceptance. '
-  + 'Use folio_init and folio_structure to prepare the agreed outline. Drive folio_run until idle; '
+  + 'Use folio_init with the agreed manuscript language and folio_structure to prepare the agreed outline. Drive folio_run until idle; '
   + 'answer needs_model requests with folio_resume using the requested schema. At needs_user, '
   + 'show the draft and findings and wait for the actual user decision before folio_decide. '
   + 'Never bypass hard findings or rewrite text from soft advice without consent. Use folio_status '

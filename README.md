@@ -2,7 +2,7 @@
 
 **Keep your sources, versions, and results connected.**
 
-[한국어](README.ko.md) · [English examples](https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-examples-en.zip) · [Releases](https://github.com/fbwndrud/linivera/releases/tag/v0.1.1) · [Getting started](docs/getting-started.en.md) · [Report a bug](https://github.com/fbwndrud/linivera/issues)
+[한국어](README.ko.md) · [English examples](https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-examples-en.zip) · [Releases](https://github.com/fbwndrud/linivera/releases/tag/v0.1.2) · [Getting started](docs/getting-started.en.md) · [Report a bug](https://github.com/fbwndrud/linivera/issues)
 
 Linivera is a local data workspace for projects you work on with an AI assistant. Keep source documents, structured data, images, revisions, evidence and review history together. Writing is one use case. Open Studio to read the work, follow its references and see what needs another check. Export a reading edition as a website or EPUB.
 
@@ -28,19 +28,19 @@ Run the command for your AI application, then reconnect or restart it.
 **Claude Code** — run in the project where you want to use Linivera:
 
 ```sh
-claude mcp add --scope project linivera -- npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-0.1.1.tgz
+claude mcp add --scope project linivera -- npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.2/linivera-0.1.2.tgz
 ```
 
 **Codex:**
 
 ```sh
-codex mcp add linivera -- npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-0.1.1.tgz
+codex mcp add linivera -- npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.2/linivera-0.1.2.tgz
 ```
 
 **Grok CLI:**
 
 ```sh
-grok mcp add linivera -- npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-0.1.1.tgz
+grok mcp add linivera -- npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.2/linivera-0.1.2.tgz
 ```
 
 On Windows, replace `-- npx` with `-- cmd /c npx`. For apps with a JSON MCP settings form:
@@ -50,7 +50,7 @@ On Windows, replace `-- npx` with `-- cmd /c npx`. For apps with a JSON MCP sett
   "mcpServers": {
     "linivera": {
       "command": "npx",
-      "args": ["-y", "https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-0.1.1.tgz"]
+      "args": ["-y", "https://github.com/fbwndrud/linivera/releases/download/v0.1.2/linivera-0.1.2.tgz"]
     }
   }
 }
@@ -65,7 +65,7 @@ Windows JSON settings use `"command": "cmd"` and start `args` with `"/c", "npx",
 One command creates a small **English** story and opens a local Studio server:
 
 ```sh
-npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-0.1.1.tgz demo
+npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.2/linivera-0.1.2.tgz demo
 ```
 
 Open the address printed in the terminal. Choose English or Korean in the toolbar. The demo uses fixed responses and simulated approval, so no AI account or model download is needed. Stop Studio with Ctrl+C.
@@ -121,7 +121,7 @@ Each bundle contains a Linivera work copy, images where used, Web/EPUB editions 
 
 The translation keeps its Korean original and source-bound English variant. Its Web, EPUB and updated Studio open the English translation. In Studio, use **Reading edition** to switch between the original and translation; section text, review records and publication follow that choice. Settings and tracking remain tied to the original.
 
-The edition selector is included in the current source checkout and updated English Studio bundles. The original `folio-0.1.0.tgz` and earlier example ZIPs remain unchanged. The prepared `linivera-0.1.1.tgz` includes the built Studio and current MCP server.
+The edition selector is included in the current source checkout and updated English Studio bundles. The original `folio-0.1.0.tgz` and earlier example ZIPs remain unchanged. The prepared `linivera-0.1.2.tgz` includes the built Studio and current MCP server.
 
 English examples use simulated approval and same-host review. The Korean research book remains a draft awaiting author approval. These examples show the workflow and its outputs, not an independent assessment of writing quality. Generated works are release downloads; the source and engine package contain only small synthetic fixtures.
 
@@ -134,7 +134,7 @@ MCP tool IDs still use `folio_*`, and the skill keeps its `folio` ID and `skill/
 ## Update an existing installation
 
 1. Stop Studio and disconnect the MCP server in your AI app. Back up the entire work folder; keep it separate from the installation.
-2. For a source checkout, run `git pull --ff-only` and `npm run setup`. For a release archive, install the downloaded archive in a new installation folder with `npm install --omit=dev --ignore-scripts /path/to/downloaded-package.tgz`.
+2. For an npx registration, replace the package URL with the v0.1.2 URL in Installation and reconnect. For a source checkout, run `git pull --ff-only` and `npm run setup`. For a release archive, install the downloaded archive in a new installation folder with `npm install --omit=dev --ignore-scripts /path/to/downloaded-package.tgz`.
 3. Replace any separately copied `skill/folio/` folder with the version from that installation. Update the MCP script path if the installation moved.
 4. Reconnect the MCP server and start a fresh chat if the app caches its tools or instructions. Confirm that the server's reported name/version match the installed `package.json`, then read the work's status and reopen Studio.
 

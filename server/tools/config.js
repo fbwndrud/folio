@@ -26,7 +26,7 @@ export async function describeConfig(root, { packs, checkDraft, workKind, node }
   const { config } = work;
   const stages = stagesByTier(pipelines);
   return {
-    title: config.title, levels: config.levels, packs: config.packs,
+    title: config.title, language: config.language ?? null, levels: config.levels, packs: config.packs,
     pipelines: Object.fromEntries(Object.entries(pipelines.byLevel).map(([level, p]) => [level, { digest: p.digest, steps: p.steps.map(stepView) }])),
     checkSets: describeCheckSets(registry, config),
     recommended: recommendCheckSets({ registry, config, workKind: workKind ?? null }),

@@ -48,7 +48,7 @@ export function createHandlers({ packs, viewer = createViewerRegistry({ packs })
     folio_policy: ({ root, ...args }) => policyTool(root, args),
     folio_operations: ({ root, ...args }) => operationsTool(root, args),
     folio_resource_query: ({ root, ...args }) => resourceQueryTool(root, args),
-    folio_init: ({ root, title, preset, packs: names = ['novel'], features }) => initWork(root, { title, preset, packs: names, available: packs, features }),
+    folio_init: ({ root, title, preset, packs: names = ['novel'], features, language }) => initWork(root, { title, preset, packs: names, available: packs, features, language }),
     folio_status: async ({ root }) => {
       const status = await workStatus(root, { packs });
       const pending = status.activeRun ? outcomeFromPending(await createRunStore(root).load(status.activeRun.runId)) : null;

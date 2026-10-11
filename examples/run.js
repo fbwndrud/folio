@@ -34,7 +34,7 @@ export async function runExamples({ names = EXAMPLES, out = null, verify = false
     for (const name of names) {
       const scenario = JSON.parse(await readFile(join(import.meta.dirname, ...(language === 'en' ? ['en'] : []), `${name}.json`), 'utf8'));
       const root = join(base, name);
-      const init = await call('folio_init', { root, title: scenario.title, preset: scenario.preset, packs: scenario.packs });
+      const init = await call('folio_init', { root, title: scenario.title, preset: scenario.preset, packs: scenario.packs, language });
       assert.equal(init.created, true);
       for (const entity of scenario.entities) {
         const dir = join(root, 'entities', entity.kind);

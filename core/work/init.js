@@ -54,9 +54,9 @@ const presetsByPack = (available) => Object.fromEntries([...available]
  * work.yaml 이 이미 있으면 아무것도 쓰지 않는다 — 덮어쓰지 않는다. 동시에 여러 번 불려도 하나만 이긴다.
  * 쓰기 전에 팩·프리셋·설정을 모두 검증한다.
  * @param {string} root
- * @param {{ title: string, packs: string[], preset?: string|null, available: Map<string, any>, features?: Record<string, boolean> }} options
+ * @param {{ title: string, packs: string[], preset?: string|null, available: Map<string, any>, features?: Record<string, boolean>, language?: string }} options
  */
-export async function initWork(root, { title, packs, preset = null, available, features = undefined }) {
+export async function initWork(root, { title, packs, preset = null, available, features = undefined, language = undefined }) {
   if (await hasWorkYaml(root)) return { created: false, root };
   const registry = resolvePacks(packs, available);
   const presets = registry.primary.presets ?? {};
@@ -69,9 +69,11 @@ export async function initWork(root, { title, packs, preset = null, available, f
     title, levels: structuredClone(chosen.levels), ...(chosen.order !== undefined ? { order: chosen.order } : {}),
     packs: [...packs], ...(chosen.checkSets !== undefined ? { checkSets: [...chosen.checkSets] } : {}),
     ...(features !== undefined ? { features: { ...features } } : {}),
+    ...(language !== undefined ? { language } : {}),
   };
-  const { errors } = validateWorkConfig(config);
+  const { config: validated, errors } = validateWorkConfig(config);
   if (errors.length) throw new FolioError('CONFIG_INVALID', errors.map((e) => e.code).join(', '), { errors });
+  if (language !== undefined) config.language = validated.language;
   for (const dir of [TREE_DIR, ENTITIES_DIR, CHECKS_DIR]) await mkdir(join(root, dir), { recursive: true });
   const ino = await createWorkYamlExclusive(root, stringifyYaml(config));
   if (ino === null) return { created: false, root };

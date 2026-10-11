@@ -49,7 +49,7 @@ const DESCRIPTIONS = {
   assetId: "New image id not already used in the work. Lowercase letters, numbers and hyphens.",
   from: "Absolute path to the Vibelore work to read only. root must be a new folder outside from.",
   format: "web: pages and browser printing; epub: flowing electronic book. No direct PDF generation.",
-  language: "BCP 47 publication language, such as ko or en-US. Omit to use the work/version language.",
+  language: "BCP 47 manuscript/publication language, such as ko or en-US, independent of Studio UI. init saves it in a new work; export overrides it for that output. Omit for legacy defaults.",
   output: "Absolute path to a new output folder outside the work. Its parent must exist. Required for export, which is the default operation.",
 };
 const DEFAULTS = {

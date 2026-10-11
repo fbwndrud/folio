@@ -1,6 +1,6 @@
 # 보안 제보와 신뢰 범위
 
-0.1.0 초기 버전을 유지한다. 안정 릴리스와 장기 지원 버전은 아직 없다.
+0.1 계열은 로컬 사용을 위한 초기 릴리스다. 안정 릴리스와 장기 지원 버전은 아직 없다.
 
 GitHub의 [비공개 취약점 신고](https://github.com/fbwndrud/linivera/security/advisories/new)를 사용한다.
 저장소의 비공개 신고 기능을 활성화했다. 공개 이슈에 원고·키·공격에 쓸 수 있는 상세 입력을 올리지 않는다.
@@ -17,7 +17,7 @@ JS 팩은 서버 프로세스의 권한으로 실행하므로 신뢰하는 코�
 
 
 로컬 HTTP 화면은 `127.0.0.1`에만 바인딩한다. 모든 `/api/*`는 실행마다 발급한
-`X-Linivera-Token`과 정확한 `Host`(`127.0.0.1:<port>` 또는 `localhost:<port>`)가 필요하다.
+`X-Folio-Token`과 정확한 `Host`(`127.0.0.1:<port>` 또는 `localhost:<port>`)가 필요하다.
 POST는 JSON 본문이며 Origin이 있으면 같은 로컬 주소만 허용한다. GET의 Origin은
 거부 조건이 아니며 CORS 허용 헤더를 보내지 않는다. token을 아는 로컬 클라이언트가
 외부 Origin 문자열을 붙인 GET을 보내면 응답할 수 있다. 같은 사용자 권한으로 token을

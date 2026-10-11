@@ -8,14 +8,14 @@ Ask your assistant:
 
 You need Node.js 24 (22.13+ within 22.x, or 26.x also supported). The prepared package includes Studio. No cloning, source build or separate model download is needed. npm downloads the package and its dependencies on first use; you need internet access then. The package is distributed through GitHub Releases, not the npm registry.
 
-For a manual registration command, see [Installation](../README.md#installation). Reconnect or restart the AI application after registering. Ask it to list the server tools: the server reports `linivera`, version `0.1.1`, with 22 tools. Existing tool IDs still start with `folio_` for compatibility.
+For a manual registration command, see [Installation](../README.md#installation). Reconnect or restart the AI application after registering. Ask it to list the server tools: the server reports `linivera`, version `0.1.2`, with 22 tools. Existing tool IDs still start with `folio_` for compatibility.
 
 The server supplies basic workflow instructions on connection. Hosts supporting MCP resources can read this guide at `linivera://guides/getting-started`, the detailed skill at `linivera://guides/skill`, and its listed references. The detailed references currently use Korean; this guide and the tool descriptions cover the first English workflow. For a host without resource support, its instruction/skill mechanism can load the packaged `skill/folio/` folder.
 
 ## Try an example before writing
 
 ```sh
-npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-0.1.1.tgz demo
+npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.2/linivera-0.1.2.tgz demo
 ```
 
 This creates a new English synthetic story with fixed responses and simulated approval, then prints the Studio address. Open that address. You can select English or Korean in the toolbar; UI language and manuscript language are separate choices. No AI account is used for the demonstration.
@@ -23,7 +23,7 @@ This creates a new English synthetic story with fixed responses and simulated ap
 The terminal prints the saved work folder. The default is a new temporary folder; use `demo --out ./my-first-example` to keep it in a chosen new folder. The folder's parent must already exist. An existing folder is never overwritten. Stop Studio with Ctrl+C. To reopen a saved work:
 
 ```sh
-npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-0.1.1.tgz view ./my-first-example/story
+npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.2/linivera-0.1.2.tgz view ./my-first-example/story
 ```
 
 Use `demo --language ko` for Korean. For four small English examples with automatic verification and cleanup, run the same package with `examples all --verify`.
@@ -35,6 +35,8 @@ Tell the connected assistant:
 > Help me write a short story with Linivera in English. First confirm a new folder for the work, then ask about my readers, main character and tone. Keep the agreed setting with the manuscript and show me the draft in Studio. I'll decide whether to accept it.
 
 Give the assistant a folder you control. Do not use the package installation folder for your work. Agree on the audience, language, outline and details worth tracking. Start with one scene. You can add tracking rules as the project grows.
+
+Ask it to save your manuscript language when creating the work, for example `language: "en"` with `folio_init`. Studio's UI language is a separate choice. Web and EPUB use the saved manuscript language unless you request an override. Older works without this setting retain the Korean export default; you can add `language: en` to their `work.yaml` when you choose to.
 
 The assistant prepares the work with `folio_init` and `folio_structure`, then uses `folio_run`. It handles `needs_model` requests with `folio_resume`, providing the requested text or structured answer. At `needs_user`, it shows you the draft and findings and waits for your decision. Only your actual approval can be relayed through `folio_decide`; simulated approvals in example fixtures do not apply to your work. A blocking finding must be resolved first. An advisory should be discussed rather than silently changing the manuscript.
 

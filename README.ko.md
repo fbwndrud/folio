@@ -2,7 +2,7 @@
 
 **원본부터 결과까지, 연결해서 관리하세요.**
 
-[English](README.md) · [다운로드](https://github.com/fbwndrud/linivera/releases/tag/v0.1.1) · [첫 작품 쓰기](docs/writing-guide.md) · [문제 신고](https://github.com/fbwndrud/linivera/issues)
+[English](README.md) · [다운로드](https://github.com/fbwndrud/linivera/releases/tag/v0.1.2) · [첫 작품 쓰기](docs/writing-guide.md) · [문제 신고](https://github.com/fbwndrud/linivera/issues)
 
 리니베라는 AI와 작업하는 프로젝트의 데이터를 내 컴퓨터에서 관리하는 도구입니다. 원본 문서·구조화 데이터·그림과 수정본·근거·검토 기록을 함께 보관합니다. 집필은 활용 사례 중 하나입니다. Studio에서 글을 읽고, 근거를 따라가고, 다시 확인할 부분을 볼 수 있습니다. 완성한 원고는 웹이나 EPUB으로 내보냅니다.
 
@@ -26,19 +26,19 @@
 Claude Code는 사용할 프로젝트에서:
 
 ```sh
-claude mcp add --scope project linivera -- npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-0.1.1.tgz
+claude mcp add --scope project linivera -- npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.2/linivera-0.1.2.tgz
 ```
 
 Codex:
 
 ```sh
-codex mcp add linivera -- npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-0.1.1.tgz
+codex mcp add linivera -- npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.2/linivera-0.1.2.tgz
 ```
 
 Grok CLI:
 
 ```sh
-grok mcp add linivera -- npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-0.1.1.tgz
+grok mcp add linivera -- npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.2/linivera-0.1.2.tgz
 ```
 
 Windows에서는 `-- npx` 대신 `-- cmd /c npx`를 사용합니다. 등록 후 AI 프로그램을 재연결하거나 다시 시작하세요. 첫 다운로드 중 시간 초과가 나면 아래 데모를 한 번 실행하고 재연결하세요. Codex의 `startup_timeout_sec`는 필요하면 60으로 늘립니다. JSON 설정은 [영어 README](README.md#installation)를 참고하세요.
@@ -50,7 +50,7 @@ Windows에서는 `-- npx` 대신 `-- cmd /c npx`를 사용합니다. 등록 후 
 다음 한 줄로 한국어 합성 원고를 만들고 Studio 서버를 엽니다.
 
 ```sh
-npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-0.1.1.tgz demo --language ko
+npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.2/linivera-0.1.2.tgz demo --language ko
 ```
 
 표시된 주소를 브라우저에서 여세요. 화면 상단에서 한국어와 영어를 선택합니다. 고정 응답과 모의 승인으로 동작하므로 AI 계정이나 모델 다운로드가 필요 없습니다. Ctrl+C로 종료합니다.
@@ -121,7 +121,7 @@ MCP 연결 때 기본 작업 규칙을 보냅니다. MCP 리소스를 지원하�
 ## 이미 설치했다면 업데이트하기
 
 1. AI 앱의 MCP 연결과 Studio를 종료하고 작품 폴더 전체를 백업합니다. 작품은 설치 폴더와 별도로 보관하세요.
-2. 소스 설치는 `git pull --ff-only`와 `npm run setup`을 실행합니다. 릴리스 파일은 새 설치 폴더에서 `npm install --omit=dev --ignore-scripts /path/to/downloaded-package.tgz`로 설치합니다.
+2. npx로 등록했다면 설치 안내의 v0.1.2 패키지 주소로 등록 값을 갱신합니다. 소스 설치는 `git pull --ff-only`와 `npm run setup`을 실행합니다. 릴리스 파일은 새 설치 폴더에서 `npm install --omit=dev --ignore-scripts /path/to/downloaded-package.tgz`로 설치합니다.
 3. 별도로 복사한 `skill/folio/`도 새 설치본의 폴더로 바꿉니다. 설치 위치가 달라졌다면 MCP 실행 경로도 고칩니다.
 4. MCP를 재연결합니다. 앱이 도구나 지침을 기억한다면 새 대화를 시작하세요. 서버가 알리는 이름·버전이 설치본 `package.json`과 같은지 확인한 다음 작품 상태를 조회하고 Studio를 다시 엽니다.
 

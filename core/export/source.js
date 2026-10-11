@@ -16,7 +16,7 @@ export const EXPORT_LIMITS = Object.freeze({ nodes: 5000, files: 5000, assets: 5
 export async function loadExportSource({ root, variant = MAIN, language = null }) {
   const original = await openWork(root, { hashAssetFiles: false });
   if (original.config.features.export === false) throw new FolioError('FEATURE_DISABLED', '내보내기 기능이 꺼졌다', { feature: 'export' });
-  const declaration = variant === MAIN ? { lang: 'ko' } : original.config.variantSpecs[variant];
+  const declaration = variant === MAIN ? { lang: original.config.language ?? 'ko' } : original.config.variantSpecs[variant];
   if (!declaration) throw new FolioError('EXPORT_VARIANT_INVALID', '선언하지 않은 판본이다', { variant });
   if (variant !== MAIN && !original.config.features.variants) throw new FolioError('FEATURE_DISABLED', '판본 기능이 꺼졌다', { feature: 'variants' });
   const ids = preorder(original.tree).filter((id) => original.tree.nodes.get(id).kind === 'leaf');

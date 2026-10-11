@@ -1,6 +1,13 @@
 # Changelog
 
-## Unreleased
+## 0.1.2 — 2026-10-11
+
+Fixes manuscript-language metadata in Studio exports and the API authentication guide.
+
+- New works can save their manuscript language through `folio_init`; Studio Web/EPUB downloads use it. Existing works keep their export defaults unless the author sets a language.
+- Corrected the documented Studio authentication header to the compatible `X-Folio-Token`.
+
+## 0.1.1 — 2026-10-11
 
 - Studio reading-edition selector for declared translations, revisions and summaries.
 - Selected text, section receipts, publication preview and Web/EPUB downloads stay together.

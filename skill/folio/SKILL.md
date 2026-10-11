@@ -37,7 +37,7 @@ description: Linivera MCP로 새 작품·이어쓰기·그림책·동화·게임
 
 | 도구 | 언제 |
 |---|---|
-| `folio_init` | 새 작품. `{ root, title, preset }`. 소설 팩: `serial`(아크→회차), `novel`(권→장→장면), `scene`(장면), `picturebook`(책→펼침면), `fairytale`(장→장면). 지식 책은 `packs: ['knowledge']`와 `textbook`·`history`·`guide`([references/knowledge.md](references/knowledge.md)). 이미 있으면 `created: false` |
+| `folio_init` | 새 작품. `{ root, title, preset, language }`. `language`는 인터뷰에서 합의한 본문 언어 태그(예: `en`, `ko`)다. 소설 팩: `serial`(아크→회차), `novel`(권→장→장면), `scene`(장면), `picturebook`(책→펼침면), `fairytale`(장→장면). 지식 책은 `packs: ['knowledge']`와 `textbook`·`history`·`guide`([references/knowledge.md](references/knowledge.md)). 이미 있으면 `created: false` |
 | `folio_status` | 지금 상태. `next`(다음 노드), `activeRun`과 `pending`(떠 있는 질문), `stale`·`recheck`·`flagged`·손수정(`drift`), `trackingStale`·`backfillPending`, 등장 위치(`occurrences.stale`)·근거 연결(`evidence.stale`) |
 | `folio_run` | 다음 노드(또는 `node`)를 돈다 |
 | `folio_resume` | `needs_model` 요청에 답한다 |
@@ -57,7 +57,7 @@ description: Linivera MCP로 새 작품·이어쓰기·그림책·동화·게임
 
 ## 흐름
 
-1. **새 작품**: 작가에게 제목과 형식을 확인하고 `folio_init`. 저장 위치가 현재 대화에 없으면 작가가 선택·확인하도록 연결 환경에 맞게 안내한다. 제목만으로 작품 위치를 추측하지 않는다. 지식 책은 [references/knowledge.md](references/knowledge.md). 검사 세트는 [references/checks.md](references/checks.md)의 첫 설정 인터뷰로 맞춘다.
+1. **새 작품**: 작가에게 제목·형식·본문 언어를 확인하고 `folio_init`의 `language`에 합의한 언어 태그를 전달한다. Studio UI 언어는 별도다. 저장 위치가 현재 대화에 없으면 작가가 선택·확인하도록 연결 환경에 맞게 안내한다. 제목만으로 작품 위치를 추측하지 않는다. 지식 책은 [references/knowledge.md](references/knowledge.md). 검사 세트는 [references/checks.md](references/checks.md)의 첫 설정 인터뷰로 맞춘다.
 2. **큰 틀**: 맨 위 노드를 `folio_structure { op: 'add', level, id, title }`로 만든다(예: `arc-1`). 아래 노드는 위 노드의 `children` 단계가 만든다.
 3. **쓰기 루프**: `folio_run { root }` → 결과에 따라
    - `needs_model`: `requests`마다 아래 "답하는 법"대로 답을 만들어 `folio_resume { root, runId, answers: { requestId: 답 } }`. 추출(extract) 요청의 `occurrences.wanted`가 true면 답에 등장 위치를 넣는다([references/occurrences.md](references/occurrences.md)). `evidence.wanted`가 true면 주장과 자료 인용(`claims`)을 넣는다([references/sources.md](references/sources.md)).
