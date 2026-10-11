@@ -1,4 +1,4 @@
-# 검증과 CI
+# 로컬 검증
 
 읽기 전용 진단은 `node --test test/diagnostics/*.test.js`로 검증한다.
 파일 bytes·mode·inode·mtime·ctime·링크와 숨김/빈 디렉터리까지 전후 비교하며 index·gate 생성,
@@ -34,30 +34,23 @@ viewer/dist를 명시적으로 빌드해 포함하며 설치 hook·모델 가중
 원고·팩·기록장에 영향을 주는 변경은 새 실패 경로를 재현하는 회귀 테스트로 검증한다.
 커버리지 100%를 목표로 단순히 같은 구현을 반복하는 테스트를 추가하지 않는다.
 
-## GitHub Actions
+## 검증 운영 방식
 
-[ci.yml](https://github.com/fbwndrud/linivera/blob/v0.1.0/.github/workflows/ci.yml)은 다음 조합에 설치·검사·원고 예제·자산 예제·새 설치 명령을 실행한다.
+GitHub Actions CI는 사용하지 않는다. push·pull request 시 자동 검증은 실행하지 않으며,
+변경 범위에 맞는 위 로컬 명령을 실행하고 결과를 기록한다.
+OS·Node 지원 범위와 실제 검증한 환경은 구분한다.
 
-| OS | Node |
-|---|---|
-| Ubuntu | 22.13.0, 최신 22, 최신 24, 최신 26 |
-| macOS | 최신 24 |
-| Windows | 최신 24 |
-
-main push, pull request, 수동 workflow_dispatch로 실행한다.
-모든 조합이 통과해야 지원 환경의 CI 확인을 마친 것으로 본다.
-README나 이 문서에 매트릭스가 있다는 사실은 실제 통과 기록을 대신하지 않는다.
+## 이전 로컬 검증 기록
 
 2026-10-03 공개 준비 작업의 로컬 환경은 macOS·Node 24.19.0이다.
 lint·타입 검사·테스트 728/728, 두 합성 예제, 개발 의존성 없는 tarball 새 설치를 확인했다.
-원격 저장소가 없어 GitHub Actions의 OS·Node 매트릭스 실행 결과는 아직 확인하지 못했다.
-실제 Actions 실행 URL이 생기면 이 기록을 갱신한다.
+다른 OS·Node 조합의 실행 결과는 이 로컬 기록에 포함하지 않는다.
 
 2026-10-04 공통 자산 관리 구현 뒤 macOS·Node 24.19.0에서 lint·타입 검사·전체
 테스트 **753/753**을 확인했다. 실제 stdio MCP 자산 예제와 개발 의존성 없는
 tarball 새 설치에서 네 원고 예제·자산 예제도 통과했다.
 [계획별 수용 결과](https://github.com/fbwndrud/linivera/blob/v0.1.0/docs/plans/2026-10-04-assets-implementation.md)에 반영 위치와 한계를 기록했다.
-실제 생성 제공자와의 수동 실습·시각 검토 정확도 및 원격 CI 매트릭스는 확인하지 않았다.
+실제 생성 제공자와의 수동 실습·시각 검토 정확도 및 다른 OS·Node 조합은 이 기록에서 확인하지 않았다.
 
 동적 추적의 A1–A20/A17b별 실제 테스트명과 최신 로컬 실행 결과는
 [추적 수용 증거](tracking-verification.md)에 기록한다. 실제 stdio와 새 tarball 설치는
@@ -81,7 +74,6 @@ SDK lock 1.32.1, ESLint 10.12.0, source-map-js 1.2.2에서 root runtime/full 및
 viewer build는 성공했으며 Graph chunk **1613.44 kB (gzip 501.80 kB)**가 기본 500 kB 경고를 낸다.
 이미 별도 화면으로 지연 로딩되며 기본 JS는 291.09 kB다. 임의로 경고 상한을 높이지 않았다.
 추가 분할 여부는 실제 graph 로딩·파싱·배치 비용을 측정한 뒤 결정할 후속 항목이다.
-CI 설정에 root/viewer·production/package 검증을 연결했지만 원격 실행 결과는 아직 없다.
 
 ## 검증하지 않는 것
 
@@ -102,4 +94,8 @@ HTTP token/Host·POST Origin·GET의 CORS 미허용·경로 주입·후보 숨�
 
 ## 최종 로컬 출시 후보 검증
 
-코드 `5fc61bc`에서 controller fresh lint·타입·전체 1713/1713, viewer 37/37, 설치본·공개 stdio/HTTP/export·100개 규모·실제 Google/Chrome을 확인했다. 독립 리뷰의 중단 복구 두 결함은 수정·재리뷰했다. [영구 증거](https://github.com/fbwndrud/linivera/blob/v0.1.0/docs/plans/2026-10-09-local-production-evidence/README.md)와 [최종 판정](https://github.com/fbwndrud/linivera/blob/v0.1.0/docs/plans/2026-10-09-production-readiness.md)에 원본/실측/미검증 범위를 남긴다. 원격 CI와 장기 실작품 검증은 통과했다고 주장하지 않는다.
+코드 `5fc61bc`에서 controller fresh lint·타입·전체 1713/1713, viewer 37/37, 설치본·공개 stdio/HTTP/export·100개 규모·실제 Google/Chrome을 확인했다. 독립 리뷰의 중단 복구 두 결함은 수정·재리뷰했다. [영구 증거](https://github.com/fbwndrud/linivera/blob/v0.1.0/docs/plans/2026-10-09-local-production-evidence/README.md)와 [최종 판정](https://github.com/fbwndrud/linivera/blob/v0.1.0/docs/plans/2026-10-09-production-readiness.md)에 원본/실측/미검증 범위를 남긴다. 다른 OS·Node 조합과 장기 실작품 검증은 통과했다고 주장하지 않는다.
+
+## 2026-10-11 이름 변경 검증
+
+macOS arm64·Node 24.19.0에서 lint·타입 검사·backend 1763/1763, viewer 70/70과 새 tarball 설치 검증을 통과했다. 이전 v0.1.0 데이터와 실행 명령의 호환성도 합성 데이터로 확인했다. 사용자의 요청으로 CI 워크플로를 제거했으며, 이후 검증은 위 로컬 명령으로 수행한다.

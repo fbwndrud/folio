@@ -89,7 +89,7 @@ SDK minimum은 patched 1.x이며 현재 lock은 1.32.1이다. [SDK advisory](htt
 
 ESLint 9 deprecation을 확인하고 10.12.0 및 @eslint/js 10.0.1로 갱신했다. 지원 Node 범위는 Linivera와 맞는다. [v10 migration](https://eslint.org/docs/latest/use/migrate-to-10.0.0)의 새 recommended 규칙을 모두 유지했다. no-useless-assignment가 찾은 사용되지 않는 초기값 세 개만 제거했다. preserve-caught-error를 맞추려고 사용자 경로·민감 원인을 공개 오류에 추가하지 않았다. 기존 FolioError 마스킹 경계는 유지하며 이 규칙이 사용자 정의 오류의 마스킹 정확성을 보증하지는 않는다.
 
-감사는 root runtime(`npm audit --omit=dev`)과 viewer full(`npm --prefix viewer audit`) 결과를 구분한다. build의 graph chunk 크기 경고는 성공 종료와 별개다. 실제 로컬 결과·CI 설정과 미검증 범위는 [검증 기록](testing.md)을 따른다.
+감사는 root runtime(`npm audit --omit=dev`)과 viewer full(`npm --prefix viewer audit`) 결과를 구분한다. build의 graph chunk 크기 경고는 성공 종료와 별개다. 실제 로컬 결과와 미검증 범위는 [검증 기록](testing.md)을 따른다.
 
 
 ## 합성 규모 측정과 출시 판정

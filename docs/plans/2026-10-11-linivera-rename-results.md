@@ -41,3 +41,7 @@ work.yaml, .folio, 원고/영수증/기록장 형식, folio_* ID, skill/folio, F
 로컬 전체 검사·viewer 70개·새 설치 E2E와 실제 v0.1.0 호환성 검증이 통과했다. 코드 변경 9c4c9c4를 main으로 push하고 GitHub에서 README 및 linivera@0.1.1 package.json을 직접 확인했다.
 
 [원격 CI 38115657988](https://github.com/fbwndrud/linivera/actions/runs/38115657988)는 failure다. GitHub annotation은 “The job was not started because your account is locked due to a billing issue.”라고 보고했다. Linux/Windows/macOS 및 Node22/24/26 매트릭스의 여섯 작업 모두 step 수가 0이다. 코드 테스트가 실행된 실패도, 원격 통과도 아니다. 계정의 결제 잠금 해소 후 CI를 다시 실행해야 한다. 이 한계를 로컬 검증으로 대신하지 않는다.
+
+## 후속 결정: CI 제외
+
+위 CI 실패는 당시의 실행 기록이다. 이후 사용자가 CI 제외를 요청하여 GitHub Actions CI 워크플로를 비활성화하고 소스에서 제거했다. CI 재실행을 출시 조건으로 두지 않는다. 로컬 테스트·타입 검사·패키지 검증 명령은 유지하며 다른 OS·Node 환경이 검증됐다고 간주하지 않는다.
