@@ -8,6 +8,7 @@ import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js'
 import { AjvJsonSchemaValidator } from '@modelcontextprotocol/sdk/validation/ajv';
 import { runExamples } from './run.js';
 import { verifyEpub, verifyViewerCli } from './production-verify.js';
+import { verifyProductionEditions } from './production-editions.js';
 
 const REPO = dirname(import.meta.dirname);
 const SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4"><rect width="4" height="4" fill="blue"/></svg>';
@@ -71,6 +72,10 @@ export async function runProductionExample() {
     const [writing] = await runExamples({ names: ['picturebook'], out: join(base, 'writing') });
     const root = writing.root;
     await client.connect(transport);
+    const manifest = JSON.parse(await readFile(join(REPO, 'package.json'), 'utf8'));
+    const serverInfo = client.getServerVersion();
+    assert.deepEqual(serverInfo, { name: manifest.name, version: manifest.version });
+    assert.match(client.getInstructions(), /Reading edition/);
     const { tools } = await client.listTools(); const provider = new AjvJsonSchemaValidator();
     for (const tool of tools) validators.set(tool.name, provider.getValidator(tool.outputSchema));
     await call('folio_structure', { root, op: 'add' }, 'TOOL_INPUT_INVALID');
@@ -90,6 +95,7 @@ export async function runProductionExample() {
     assert.match(await readFile(join(web.output, 'index.html'), 'utf8'), /상자/);
     const epub = await call('folio_export', { root, format: 'epub', output: join(base, 'epub') });
     const epubVerified = verifyEpub(await readFile(join(epub.output, 'book.epub')), SVG);
+    const editions = await verifyProductionEditions(root, call);
     const resourceRoot = join(base, 'resources'); await mkdir(resourceRoot);
     const selected = await resources(resourceRoot); await verifyHttp(resourceRoot, selected, 'resources');
     await assert.rejects(access(join(resourceRoot, 'work.yaml')), { code: 'ENOENT' });
@@ -97,7 +103,7 @@ export async function runProductionExample() {
     const installedCliReady = await verifyViewerCli(REPO, resourceRoot);
     assert.equal(stderr, '');
     return { synthetic: true, viewerResourceVisible: true, epubVerified, resourceOnlyVerified: true,
-      installedCliReady, impactVerified: snapshot.impact.available, embeddingUnavailable: missing.code, outputsRetained: false };
+      installedCliReady, serverInfo, editions, impactVerified: snapshot.impact.available, embeddingUnavailable: missing.code, outputsRetained: false };
   } finally {
     try { await client.close(); } finally { await rm(base, { recursive: true, force: true }); }
   }

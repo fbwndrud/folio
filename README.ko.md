@@ -2,9 +2,9 @@
 
 [English](README.md) · [다운로드](https://github.com/fbwndrud/folio/releases/tag/v0.1.0) · [첫 작품 쓰기](docs/writing-guide.md) · [문제 신고](https://github.com/fbwndrud/folio/issues)
 
-Folio는 AI와 작업할 때 쓰는 원고·그림·자료와 수정·검토 기록을 함께 보관하는 도구입니다. Studio에서 글을 읽고, 근거를 따라가고, 다시 확인할 부분을 볼 수 있습니다. 완성한 원고는 웹이나 EPUB으로 내보냅니다.
+Folio는 AI와 작업하는 프로젝트의 데이터를 내 컴퓨터에서 관리하는 도구입니다. 원본 문서·구조화 데이터·그림과 수정본·근거·검토 기록을 함께 보관합니다. 집필은 활용 사례 중 하나입니다. Studio에서 글을 읽고, 근거를 따라가고, 다시 확인할 부분을 볼 수 있습니다. 완성한 원고는 웹이나 EPUB으로 내보냅니다.
 
-**0.1.0은 로컬 사용을 위한 초기 버전입니다.** 집필하려면 stdio MCP를 지원하는 AI 프로그램이 필요합니다. 연결한 AI가 글을 쓰고, 이미지 도구를 지원하면 그림도 만듭니다. Folio는 파일과 기록을 관리합니다. 화면은 한국어와 영어를 선택할 수 있습니다.
+**0.1 계열은 로컬 사용을 위한 초기 버전입니다.** 집필하려면 stdio MCP를 지원하는 AI 프로그램이 필요합니다. 연결한 AI가 글을 쓰고, 이미지 도구를 지원하면 그림도 만듭니다. Folio는 파일과 기록을 관리합니다. 화면은 한국어와 영어를 선택할 수 있습니다.
 
 ![합성 예시를 연 Studio](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-studio-preview.jpg)
 
@@ -28,7 +28,22 @@ npm run viewer -- "./my-first-example/story"
 
 ## 내 작품 시작하기
 
-사용하는 AI 프로그램에 `node /absolute/path/to/folio/bin/folio-mcp.js`를 stdio MCP 서버로 등록합니다. `skill/folio/`도 그 프로그램의 스킬 기능으로 연결하세요. 스킬을 지원하지 않으면 프로그램의 지침 설정 기능으로 같은 내용을 전달합니다. [연결 안내](docs/connect.md)에서 연결 확인과 작품 폴더 선택 방법을 설명합니다.
+사용하는 AI 프로그램에 로컬 **stdio MCP 서버**로 등록합니다. `mcpServers` JSON 설정을 받는 프로그램에서는 다음 형태를 사용하세요.
+
+```json
+{
+  "mcpServers": {
+    "folio": {
+      "command": "node",
+      "args": ["/absolute/path/to/folio/bin/folio-mcp.js"]
+    }
+  }
+}
+```
+
+예시 경로를 설치 위치로 바꾸세요. tarball 설치본은 `node_modules/folio/bin/folio-mcp.js`를 가리킵니다. 프로그램이 Node를 찾지 못하면 `command`에 Node 24 실행 파일의 전체 경로를 넣습니다. 등록 화면이 있는 앱에서는 같은 명령과 인수를 입력하세요.
+
+`skill/folio/` 폴더 전체도 프로그램의 스킬 기능으로 연결하세요. 스킬을 지원하지 않으면 프로그램의 지침 설정 기능으로 같은 내용을 전달합니다. MCP 연결 때 짧은 안내를 보내지만 상세 작업 규칙은 이 폴더에 있습니다. 새 작품을 만들기 전에 실제 도구 목록을 확인하세요. [연결 안내](docs/connect.md)에서 확인 방법을 설명합니다.
 
 연결한 다음에는 원하는 작업을 말하면 됩니다.
 
@@ -65,7 +80,16 @@ Folio는 내 컴퓨터에서 실행합니다. 호스팅·인증·공동 편집·
 
 영어 예시는 [영어 모음 ZIP](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-english-example-library-studio.zip)으로 받습니다. 새 단편·그림책·실습 안내서·네 장짜리 이야기와 기존 한국어 단편의 영어 번역이 들어 있습니다. 네 장짜리 이야기는 2,657단어의 구조 실습용 예시입니다. 새 묶음의 Web·EPUB·Studio는 영어 번역을 엽니다. Studio 상단의 **읽는 판본**에서 한국어 원본과 번역본을 전환하세요. 본문·구간 검토 기록·출판 미리보기가 함께 바뀌며 설정과 추적 정보는 원본 기준입니다.
 
-판본 선택은 현재 소스와 새 영어 Studio 묶음에 포함됩니다. 최초 `folio-0.1.0.tgz`와 기존 예시 ZIP은 변경하지 않았습니다.
+판본 선택은 현재 소스와 새 영어 Studio 묶음에 포함됩니다. 최초 `folio-0.1.0.tgz`와 기존 예시 ZIP은 변경하지 않았습니다. 현재 소스에서 `npm run package:build`를 실행하면 최신 MCP 서버와 빌드된 Studio를 함께 담은 설치 패키지를 만듭니다.
+
+## 이미 설치했다면 업데이트하기
+
+1. AI 앱의 MCP 연결과 Studio를 종료하고 작품 폴더 전체를 백업합니다. 작품은 설치 폴더와 별도로 보관하세요.
+2. 소스 설치는 `git pull --ff-only`와 `npm run setup`을 실행합니다. 릴리스 파일은 새 설치 폴더에서 `npm install --omit=dev --ignore-scripts /path/to/downloaded-package.tgz`로 설치합니다.
+3. 별도로 복사한 `skill/folio/`도 새 설치본의 폴더로 바꿉니다. 설치 위치가 달라졌다면 MCP 실행 경로도 고칩니다.
+4. MCP를 재연결합니다. 앱이 도구나 지침을 기억한다면 새 대화를 시작하세요. 서버가 알리는 이름·버전이 설치본 `package.json`과 같은지 확인한 다음 작품 상태를 조회하고 Studio를 다시 엽니다.
+
+실행 중인 서버와 예전에 내보낸 읽기 전용 Studio 사본은 자동으로 바뀌지 않습니다. 사본은 다시 내보내세요. 문제가 생기면 이전 설치본의 MCP 경로로 돌아갈 수 있게 남겨 두세요. 이번 변경은 작품 형식과 `folio_*` 도구 ID를 유지합니다.
 
 ## 더 읽기와 참여
 

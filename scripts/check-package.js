@@ -35,7 +35,7 @@ try {
     'test data, implementation plans, work state and work outputs must stay out of the package');
   await writeFile(join(sandbox, 'package.json'), '{"name":"folio-install-check","version":"1.0.0","private":true}\n');
   run(process.execPath, [npmCli, 'install', '--omit=dev', '--ignore-scripts', '--no-audit', '--no-fund', join(sandbox, packed.filename)], sandbox);
-  const installed = join(sandbox, 'node_modules', 'folio');
+  const installed = join(sandbox, 'node_modules', packed.name);
   const manifest = JSON.parse(await readFile(join(installed, 'package.json'), 'utf8'));
   const documentation = await verifyPackedMarkdownLinks({ root: installed, files: packed.files.map((file) => file.path) });
   assert.equal(manifest.bin['folio-mcp'], 'bin/folio-mcp.js');
@@ -61,6 +61,8 @@ try {
   assert.equal(tracking.verified, true);
   assert.deepEqual(tracking.scenarios, ['mystery', 'cookbook', 'picturebook']);
   const production = JSON.parse(run(process.execPath, [join(installed, 'examples', 'production.js')], sandbox));
+  assert.deepEqual(production.serverInfo, { name: manifest.name, version: manifest.version });
+  assert.equal(production.editions.verified, true);
   for (const field of ['synthetic', 'viewerResourceVisible', 'epubVerified', 'resourceOnlyVerified', 'installedCliReady']) assert.equal(production[field], true);
   assert.equal(production.outputsRetained, false);
   console.log(JSON.stringify({ installedFromTarball: true, developmentDependenciesAbsent,

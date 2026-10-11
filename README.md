@@ -2,9 +2,9 @@
 
 [한국어](README.ko.md) · [English examples](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-english-example-library-studio.zip) · [Releases](https://github.com/fbwndrud/folio/releases/tag/v0.1.0) · [Getting started (한국어)](docs/writing-guide.md) · [Report a bug](https://github.com/fbwndrud/folio/issues)
 
-Folio keeps the manuscripts, images and sources you work on with an AI assistant, along with their revisions and review history. Open Studio to read the work, follow its references and see what needs another check. Export a reading edition as a website or EPUB.
+Folio is a local data workspace for projects you work on with an AI assistant. Keep source documents, structured data, images, revisions, evidence and review history together. Writing is one use case. Open Studio to read the work, follow its references and see what needs another check. Export a reading edition as a website or EPUB.
 
-**v0.1.0 is an early release for local use.** You need an AI application that supports stdio MCP to write with Folio. Your AI application writes and, if its tools support it, generates images; Folio manages the files and records. Studio offers Korean and English.
+**The 0.1 series is an early release for local use.** You need an AI application that supports stdio MCP to write with Folio. Your AI application writes and, if its tools support it, generates images; Folio manages the files and records. Studio offers Korean and English.
 
 ![Studio showing a synthetic example](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-studio-preview.jpg)
 
@@ -30,7 +30,22 @@ A prepared `folio-0.1.0.tgz` is also available in the [GitHub release](https://g
 
 ## Start your own work
 
-Register `node /absolute/path/to/folio/bin/folio-mcp.js` as a stdio MCP server in your AI application. Load `skill/folio/` through its skill system, or provide those instructions using the application's supported instruction mechanism. The [connection guide (한국어)](docs/connect.md) explains how to check the connection and choose a work folder.
+Register a local **stdio MCP server** in your AI application. For applications that accept a `mcpServers` JSON configuration:
+
+```json
+{
+  "mcpServers": {
+    "folio": {
+      "command": "node",
+      "args": ["/absolute/path/to/folio/bin/folio-mcp.js"]
+    }
+  }
+}
+```
+
+Replace the example path with your installation path. For a tarball install, the script is under `node_modules/folio/bin/folio-mcp.js`. If the app cannot find Node, use the full path to your Node 24 executable as `command`. Apps with a registration form need the same command and argument.
+
+Load the entire `skill/folio/` folder through the app's skill system, or provide its instructions through the app's supported instruction mechanism. The MCP server sends a short initialization guide; detailed workflow instructions still live in that folder. Ask your assistant to check the actual tool list before creating a work folder. The [connection guide (한국어)](docs/connect.md) explains those checks.
 
 Then ask your assistant:
 
@@ -63,9 +78,18 @@ Each bundle contains a Folio work copy, images where used, Web/EPUB editions and
 
 The translation keeps its Korean original and source-bound English variant. Its Web, EPUB and updated Studio open the English translation. In Studio, use **Reading edition** to switch between the original and translation; section text, review records and publication follow that choice. Settings and tracking remain tied to the original.
 
-The edition selector is included in the current source checkout and updated English Studio bundles. The original `folio-0.1.0.tgz` and earlier example ZIPs remain unchanged.
+The edition selector is included in the current source checkout and updated English Studio bundles. The original `folio-0.1.0.tgz` and earlier example ZIPs remain unchanged. For an engine package built from current source, use `npm run package:build`; the resulting archive includes the built Studio and current MCP server.
 
 English examples use simulated approval and same-host review. The Korean research book remains a draft awaiting author approval. These examples show the workflow and its outputs, not an independent assessment of writing quality. Generated works are release downloads; the source and engine package contain only small synthetic fixtures.
+
+## Update an existing installation
+
+1. Stop Studio and disconnect the MCP server in your AI app. Back up the entire work folder; keep it separate from the installation.
+2. For a source checkout, run `git pull --ff-only` and `npm run setup`. For a release archive, install the downloaded archive in a new installation folder with `npm install --omit=dev --ignore-scripts /path/to/downloaded-package.tgz`.
+3. Replace any separately copied `skill/folio/` folder with the version from that installation. Update the MCP script path if the installation moved.
+4. Reconnect the MCP server and start a fresh chat if the app caches its tools or instructions. Confirm that the server's reported name/version match the installed `package.json`, then read the work's status and reopen Studio.
+
+Running processes and old read-only Studio snapshots do not update automatically. Re-export a snapshot to include the new screens. Keep the previous installation so you can switch the MCP path back if needed. These changes preserve the work format and `folio_*` tool IDs.
 
 ## Before relying on it
 

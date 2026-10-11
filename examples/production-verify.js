@@ -5,10 +5,8 @@ import { inflateRawSync } from 'node:zlib';
 import { join } from 'node:path';
 
 /** Independent ZIP reader checks the actual generated publication, not an exporter return flag. */
-export function verifyEpub(bytes, svg) {
+export function readZipEntries(bytes) {
   const entries = new Map(); let at = 0;
-  assert.equal(bytes.readUInt16LE(8), 0);
-  assert.equal(bytes.readUInt16LE(28), 0);
   while (bytes.readUInt32LE(at) === 0x04034b50) {
     const method = bytes.readUInt16LE(at + 8), size = bytes.readUInt32LE(at + 18);
     const length = bytes.readUInt16LE(at + 26), extra = bytes.readUInt16LE(at + 28);
@@ -22,6 +20,14 @@ export function verifyEpub(bytes, svg) {
     assert.equal(raw.length, bytes.readUInt32LE(at + 22));
     entries.set(name, raw); at = start + size;
   }
+  assert.equal(bytes.readUInt32LE(at), 0x02014b50);
+  return entries;
+}
+
+export function verifyEpub(bytes, svg) {
+  assert.equal(bytes.readUInt16LE(8), 0);
+  assert.equal(bytes.readUInt16LE(28), 0);
+  const entries = readZipEntries(bytes);
   assert.equal(entries.keys().next().value, 'mimetype');
   assert.equal(entries.get('mimetype').toString(), 'application/epub+zip');
   assert.match(entries.get('META-INF/container.xml').toString(), /OEBPS\/package.opf/);
@@ -29,7 +35,6 @@ export function verifyEpub(bytes, svg) {
   assert.match(entries.get('OEBPS/nav.xhtml').toString(), /book.xhtml#node-/);
   assert.match(entries.get('OEBPS/book.xhtml').toString(), /상자/);
   assert.ok([...entries.values()].some((raw) => raw.toString() === svg));
-  assert.equal(bytes.readUInt32LE(at), 0x02014b50);
   return true;
 }
 

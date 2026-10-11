@@ -4,10 +4,15 @@ import { join } from 'node:path';
 import { TOOLS } from '../../server/tools/definitions.js';
 import { connectFolio } from '../support/mcp-client.js';
 import { tempDir } from '../support/fixtures.js';
+import { readFile } from 'node:fs/promises';
 
 test('the stdio server lists the tools, answers calls and keeps stderr free of the SQLite warning', async (t) => {
   const folio = await connectFolio();
   t.after(() => folio.close());
+  const manifest = JSON.parse(await readFile(new URL('../../package.json', import.meta.url), 'utf8'));
+  assert.deepEqual(folio.client.getServerVersion(), { name: manifest.name, version: manifest.version });
+  assert.match(folio.client.getInstructions(), /Reading edition/);
+  assert.match(folio.client.getInstructions(), /actual user decisions/);
   const { tools } = await folio.client.listTools();
   assert.deepEqual(tools.map((tool) => tool.name), TOOLS.map((tool) => tool.name));
   assert.deepEqual(tools.find((tool) => tool.name === 'folio_run').inputSchema, TOOLS.find((tool) => tool.name === 'folio_run').inputSchema);

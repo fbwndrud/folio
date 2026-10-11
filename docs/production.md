@@ -32,7 +32,7 @@ npm run package:build
 npm run package:verify
 ```
 
-package:build는 viewer build 후 npm pack --ignore-scripts를 수행해 현재 폴더에 tarball을 만든다. package:verify는 화면을 다시 빌드하고 임시 tarball을 개발 의존성 없이 새로 설치한다. 설치본의 stdio 스키마, 네 원고·자산·추적 예제, 전체 production 경로와 folio-view 실행을 확인하고 임시 설치와 npm cache를 정리한다. 단순 npm pack은 화면을 빌드하지 않으므로 배포에는 package:build를 쓴다.
+package:build는 viewer build 후 npm pack --ignore-scripts를 수행해 현재 폴더에 tarball을 만든다. package:verify는 화면을 다시 빌드하고 임시 tarball을 개발 의존성 없이 새로 설치한다. 설치본의 stdio 스키마, 네 원고·자산·추적 예제, 전체 production 경로와 folio-view 실행, 설치본 package.json과 MCP 초기 응답의 이름·버전 일치, 합성 영어 번역의 원본 결속 영수증·판본 HTTP 조회·Web/EPUB 실제 본문을 확인하고 임시 설치와 npm cache를 정리한다. 단순 npm pack은 화면을 빌드하지 않으므로 배포에는 package:build를 쓴다.
 
 tarball을 받은 사용자는 별도 설치 폴더에서 다음처럼 실행한다(파일 이름은 받은 파일로 바꾼다).
 
@@ -44,10 +44,20 @@ npm install --omit=dev --ignore-scripts /path/to/folio-0.1.0.tgz
 
 Windows에서는 같은 설치 폴더의 `node_modules\.bin\folio-view.cmd`를 쓴다. MCP 호스트에는 `node /absolute/install/path/node_modules/folio/bin/folio-mcp.js`를 등록한다. 설치된 패키지는 화면을 포함하므로 setup을 다시 실행하지 않는다. 설치 hook, Python 설치와 모델 가중치는 없다. 선택 embedding용 Python 스크립트는 포함하지만 Python 자체는 의존성이 아니다. 화면 누락 패키지는 새로 빌드한 tarball로 교체한다.
 
+## 기존 설치 갱신과 롤백
+
+1. AI 앱의 MCP와 Studio를 종료하고 작품 폴더 전체를 백업한다. 설치 폴더와 작품 폴더는 분리한다.
+2. 새 tarball은 새 설치 폴더에 설치한다. 소스는 `git pull --ff-only` 뒤 `npm run setup`으로 준비한다.
+3. 별도 복사한 skill/folio 폴더 전체를 교체하고, MCP 실행 경로가 달라졌으면 등록 값을 갱신한다.
+4. MCP를 재연결하고 serverInfo 이름·버전이 설치된 package.json과 일치하는지 확인한다. 앱이 캐시한 도구·지침은 새 대화에서 확인한다.
+5. 작품 상태와 읽기 전용 doctor를 확인한 뒤 Studio를 다시 연다. 정적 검토 사본은 다시 내보낸다.
+
+문제가 생기면 MCP 실행 경로를 이전 설치 폴더로 되돌린다. 이번 업데이트는 기존 작품 형식·`.folio` 기록장·`folio_*` 도구 이름을 유지한다. 최신 소스는 0.1.1 패키지를 준비하며, 최초 v0.1.0 다운로드는 이전 버전으로 그대로 보존한다. 새 이름과 릴리스가 확정되기 전에는 0.1.1 공개 다운로드가 있다고 안내하지 않는다.
+
 ## 화면과 내보내기
 
 집필 작품은 **Manuscript / Review / Publish**를 사용한다. 원고와 시점별 추적,
-대상·기준·그룹별 근거 비교, 실제 main 판본의 Web ZIP·EPUB 다운로드를 제공한다.
+대상·기준·그룹별 근거 비교, 선택한 읽는 판본의 Web ZIP·EPUB 다운로드를 제공한다. UI 언어 선택과 읽는 판본은 별도이며, 구간 본문·구간 영수증·출판 화면은 같은 판본을 사용한다. 설정·추적은 원본 기준이다.
 부모 그룹과 본문 절의 목차를 보존하며 그룹 계획 메모는 출판하지 않는다.
 이전 정적 사본에서 새 필드가 없으면 미포함으로 안내한다. [세 모드 사용법](studio.md)을 참고한다.
 

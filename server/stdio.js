@@ -3,8 +3,9 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 import { loadBuiltinPacks } from '../packs/index.js';
 import { createToolbox } from './toolbox.js';
+import { SERVER_INFO, SERVER_INSTRUCTIONS } from './identity.js';
 
-export const SERVER_INFO = Object.freeze({ name: 'folio', version: '0.1.0' });
+export { SERVER_INFO } from './identity.js';
 
 /**
  * 공식 SDK 의 저수준 Server 에 도구 상자를 붙인다. 입력 검증은 도구 상자가 한다(zod 를 쓰지 않는다).
@@ -13,7 +14,7 @@ export const SERVER_INFO = Object.freeze({ name: 'folio', version: '0.1.0' });
  * @param {{ tools: readonly any[], call: (name: string, args: any) => Promise<any> }} toolbox
  */
 export function createMcpServer(toolbox) {
-  const server = new Server({ ...SERVER_INFO }, { capabilities: { tools: {} } });
+  const server = new Server({ ...SERVER_INFO }, { capabilities: { tools: {} }, instructions: SERVER_INSTRUCTIONS });
   // 통로 오류(예: 한 메시지가 SDK 읽기 한도를 넘어 연결이 닫힘)를 stderr 한 줄로 남긴다. stdout 은 MCP 통로라 쓰지 않는다.
   server.onerror = (error) => {
     process.stderr.write(`folio-mcp: ${String(error?.message ?? error).replace(/\s+/g, ' ')}\n`);

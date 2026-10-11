@@ -10,5 +10,8 @@ test('production path uses real stdio, HTTP, CLI and verified synthetic exports 
   assert.equal(summary.outputsRetained, false);
   assert.equal(summary.resourceOnlyVerified, true);
   assert.equal(summary.installedCliReady, true);
+  assert.equal(summary.editions.verified, true);
+  assert.equal(summary.editions.receiptBoundToOriginal, true);
+  assert.deepEqual(summary.editions.downloadsVerified, ['web', 'epub']);
   assert.equal(summary.embeddingUnavailable, 'EMBEDDING_RUNTIME_UNAVAILABLE');
 });
