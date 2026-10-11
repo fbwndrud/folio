@@ -1,6 +1,6 @@
 # Folio
 
-[한국어](README.ko.md) · [English examples](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-english-example-library.zip) · [Releases](https://github.com/fbwndrud/folio/releases/tag/v0.1.0) · [Getting started (한국어)](docs/writing-guide.md) · [Report a bug](https://github.com/fbwndrud/folio/issues)
+[한국어](README.ko.md) · [English examples](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-english-example-library-studio.zip) · [Releases](https://github.com/fbwndrud/folio/releases/tag/v0.1.0) · [Getting started (한국어)](docs/writing-guide.md) · [Report a bug](https://github.com/fbwndrud/folio/issues)
 
 Folio keeps the manuscripts, images and sources you work on with an AI assistant, along with their revisions and review history. Open Studio to read the work, follow its references and see what needs another check. Export a reading edition as a website or EPUB.
 
@@ -12,7 +12,7 @@ Folio keeps the manuscripts, images and sources you work on with an AI assistant
 
 ## Try it
 
-To read an English work first, [download the English example library](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-english-example-library.zip). It includes a beginner guide and four other examples. The small fixed demo below uses Korean text.
+To read an English work first, [download the English example library](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-english-example-library-studio.zip). It includes a beginner guide and four other examples. The small fixed demo below uses Korean text.
 
 Use Node.js 24. Supported versions are 22.13+, 24 and 26 within their respective major versions. From a source checkout:
 
@@ -55,13 +55,15 @@ Optional [vector retrieval (한국어)](docs/embeddings.md) requires a separate 
 
 ## Open a complete example
 
-Choose an [English example library](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-english-example-library.zip) or the [Korean example library](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-example-library.zip). Both are separate downloads from the [v0.1.0 release](https://github.com/fbwndrud/folio/releases/tag/v0.1.0).
+Choose an [English example library](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-english-example-library-studio.zip) or the [Korean example library](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-example-library.zip). Both are separate downloads from the [v0.1.0 release](https://github.com/fbwndrud/folio/releases/tag/v0.1.0).
 
 The English library contains four new works—a short story, a picture-book manuscript with two illustrations, a practical beginner guide and a four-chapter story—plus an English translation of the Korean short story. The four-chapter story is a 2,657-word structural example, not a full-length novella. The Korean library includes a longer story and a research-book draft.
 
 Each bundle contains a Folio work copy, images where used, Web/EPUB editions and a read-only Studio. Extract a ZIP, read its English or Korean README and run `node serve.mjs` to open the collection. Copy the entire example folder before editing. See [example instructions](docs/examples.md#english).
 
-The translation keeps its Korean original and source-bound English variant. Its Web and EPUB editions are English; Studio currently shows the original main manuscript and has no variant reader selector.
+The translation keeps its Korean original and source-bound English variant. Its Web, EPUB and updated Studio open the English translation. In Studio, use **Reading edition** to switch between the original and translation; section text, review records and publication follow that choice. Settings and tracking remain tied to the original.
+
+The edition selector is included in the current source checkout and updated English Studio bundles. The original `folio-0.1.0.tgz` and earlier example ZIPs remain unchanged.
 
 English examples use simulated approval and same-host review. The Korean research book remains a draft awaiting author approval. These examples show the workflow and its outputs, not an independent assessment of writing quality. Generated works are release downloads; the source and engine package contain only small synthetic fixtures.
 

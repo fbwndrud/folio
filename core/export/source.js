@@ -23,6 +23,7 @@ export async function loadExportSource({ root, variant = MAIN, language = null }
   if (!ids.length) throw new FolioError('EXPORT_EMPTY', '내보낼 잎 원고가 없다');
   if (ids.length > EXPORT_LIMITS.nodes) throw new FolioError('EXPORT_LIMIT', '원고 잎이 5000개를 넘었다');
   const records = await openLedger(root, 'receipts').readAll(), commits = lastCommits(records, variant), receipts = receiptsById(records);
+  const mainCommits = lastCommits(records, MAIN);
   const nodes = new Map(original.tree.nodes), warnings = [...original.warnings], manifestNodes = [];
   let bytes = 0;
   for (const id of ids) {
@@ -37,6 +38,14 @@ export async function loadExportSource({ root, variant = MAIN, language = null }
     manifestNodes.push({ id, bodyHash, status: node.status, commitReceiptId: bound ? commit.receiptId : null, committedHash: bound ? commit.committedHash : null });
     if (!bound || (variant === MAIN && node.status !== 'committed')) warnings.push({ code: 'EXPORT_UNVERIFIED', nodeId: id, variant });
     else if (bodyHash !== commit.committedHash) warnings.push({ code: 'EXPORT_BODY_CHANGED', nodeId: id, variant });
+    if (bound && variant !== MAIN) {
+      const main = mainCommits.get(id), source = receipt.original;
+      if (!source || source.receiptId !== main?.receiptId || source.committedHash !== main?.committedHash || sha256(node.body) !== source.committedHash) {
+        warnings.push({ code: 'EXPORT_SOURCE_CHANGED', nodeId: id, variant });
+      }
+      const terms = receipt.refs.find(ref => ref.kind === 'terms' && ref.id === variant);
+      if (!terms || terms.rev !== original.variants.get(variant)?.terms.rev) warnings.push({ code: 'EXPORT_TERMS_CHANGED', nodeId: id, variant });
+    }
   }
   const tree = { ...original.tree, nodes }, work = { ...original, tree, blocks: validateBlocks(tree) };
   const catalog = blockCatalog(work); warnings.push(...catalog.problems);

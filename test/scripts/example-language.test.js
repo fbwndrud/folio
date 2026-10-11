@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { exampleEditions } from '../../scripts/example-editions.js';
+import { exampleStudio } from '../../scripts/example-studio.js';
 import { exampleReadme } from '../../scripts/example-readme.js';
 import { openWork } from '../../core/store/work.js';
 import { buildExampleCollection } from '../../scripts/example-bundle.js';
@@ -55,9 +56,9 @@ test('translation editions select variant text and derived English headings with
   assert.match(web, /Demonstration: simulated approval/);
   assert.deepEqual(await sourceSnapshot(root), before);
   const readme = exampleReadme({ ...details, language: editions.language }, 'Synthetic notice');
-  assert.match(readme, /reading editions use the English translation variant/);
+  assert.match(readme, /Studio open the English translation variant/);
   assert.match(readme, /original main manuscript/);
-  assert.match(readme, /has no variant reader selector/);
+  assert.match(readme, /use Reading edition to switch/);
 });
 
 test('an English gallery starts in English and packaged metadata distinguishes the reader and Studio variants', async t => {
@@ -91,4 +92,20 @@ test('canonical language tags and own title mappings determine the derived editi
   const web = editions.web.get('index.html').toString();
   assert.doesNotMatch(web, /Inherited title must be ignored/);
   assert.match(web, /Demonstration: simulated approval/);
+});
+
+test('derived Studio titles apply only to the reading variant, escape script boundaries and preserve review hashes', () => {
+  const original = { node: { id: 'a', title: 'Original title' }, breadcrumb: [], contentHash: 'original' };
+  const translated = { node: { id: 'a', title: 'Original title' }, breadcrumb: [], contentHash: 'translation' };
+  const snapshot = { nodes: { a: original }, variants: { editions: { en: { nodes: { a: translated }, receiptNodes: { a: { title: 'Original title' } }, publication: { contents: [{ id: 'a', title: 'Original title' }] } } } } };
+  const html = `<script type="application/json" id="folio-data">${JSON.stringify(snapshot)}</script></body>`;
+  const result = exampleStudio(html, { variant: 'en', titles: { a: '</script>English title' } });
+  assert.doesNotMatch(result, /<\/script>English title/);
+  const data = JSON.parse(result.match(/id="folio-data">([\s\S]*?)<\/script>/)[1]);
+  assert.equal(data.nodes.a.node.title, 'Original title');
+  assert.equal(data.variants.editions.en.nodes.a.node.title, '</script>English title');
+  assert.equal(data.variants.editions.en.nodes.a.contentHash, 'translation');
+  assert.equal(data.variants.editions.en.receiptNodes.a.title, '</script>English title');
+  assert.equal(data.variants.editions.en.publication.contents[0].title, '</script>English title');
+  assert.equal(translated.node.title, 'Original title');
 });

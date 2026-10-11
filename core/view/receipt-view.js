@@ -6,6 +6,7 @@ import { lastCommits, receiptsById } from '../ledger/receipts.js';
 import { lastImports } from '../import/records.js';
 import { latestRecheck } from '../scope/stale-checks.js';
 import { readLedgerView } from './ledgers.js';
+import { variantTextOf } from '../variants/original.js';
 import { MAIN, variantOf } from '../variants/model.js';
 
 /**
@@ -69,33 +70,34 @@ export async function viewReceiptList(root, { packs }, context = null) {
  * 노드 하나의 영수증: 커밋 이력, 마지막 커밋의 영수증 전체(단계별 결과, 건너뛴 이유와 출처, 참고한 버전, 지적),
  * 그 커밋 뒤의 가장 최근 재검사, 다시 확인 필요 이유와 손수정. 읽기만 한다.
  * @param {string} root
- * @param {{ packs: Map<string, any> }} options
+ * @param {{ packs: Map<string, any>, variant?: string }} options
  * @param {string} nodeId
  */
-export async function viewNodeReceipts(root, { packs }, nodeId, context = null) {
+export async function viewNodeReceipts(root, { packs, variant = MAIN }, nodeId, context = null) {
   const { records, ledger } = context?.receipts ?? await readLedgerView(root, 'receipts');
   if (!records) return { ledger, nodeId, commits: [], receipt: null, imported: null, recheck: null, stale: null, drift: null };
   const work = context?.work ?? await openWork(root);
   const node = work.tree.nodes.get(nodeId);
   if (!node) throw new FolioError('NODE_NOT_FOUND', String(nodeId).slice(0, 200));
   const status = context && Object.hasOwn(context, 'status') ? context.status : await statusOrNull(root, packs);
-  // 원본(main) 커밋만 — 판본 커밋(N6)은 이 화면의 영수증이 아니다.
-  const commits = records.filter((r) => r.type === 'commit' && r.nodeId === nodeId && variantOf(r) === MAIN);
+  // 선택 판본의 커밋만 읽는다. 생략하면 기존 main 조회다.
+  const commits = records.filter((r) => r.type === 'commit' && r.nodeId === nodeId && variantOf(r) === variant);
   const last = commits.at(-1) ?? null;
   const receipt = last ? receiptsById(records).get(last.receiptId) ?? null : null;
-  const importedRecord = lastImports(records).get(nodeId);
+  const importedRecord = variant === MAIN ? lastImports(records).get(nodeId) : null;
+  const selectedStatus = variant === MAIN ? status : status?.variants?.[variant];
   const recheck = last ? latestRecheck(records, last) : null;
   return {
-    ledger, nodeId, title: node.title,
+    ledger, nodeId, variant, title: variant === MAIN ? node.title : variantTextOf(work, variant, nodeId)?.title ?? node.title,
     commits: commits.map((c) => ({ receiptId: c.receiptId, seq: c.seq, at: c.at, committedHash: c.committedHash })),
     receipt: receipt ? {
       receiptId: receipt.receiptId, runId: receipt.runId, level: receipt.level, at: receipt.at, draftHash: receipt.draftHash,
       pipelineDigest: receipt.pipelineDigest, steps: receipt.steps, refs: receipt.refs, hard: receipt.hard,
-      advisories: receipt.advisories ?? [], overridden: receipt.overridden ?? [], attempts: receipt.attempts, order: receipt.order ?? null,
+      advisories: receipt.advisories ?? [], overridden: receipt.overridden ?? [], attempts: receipt.attempts, order: receipt.order ?? null, variant: variantOf(receipt), original: receipt.original ?? null,
     } : null,
     imported: importedRecord ? { ...importedOf(importedRecord), importedHash: importedRecord.importedHash, origin: importedRecord.origin } : null,
     recheck: recheck ? { recheckId: recheck.recheckId, at: recheck.at, hard: recheck.hard, steps: recheck.steps } : null,
-    stale: status ? (status.stale.find((s) => s.nodeId === nodeId)?.reasons ?? []) : null,
-    drift: status ? (status.drift.find((d) => d.nodeId === nodeId && variantOf(d) === MAIN) ?? null) : null,
+    stale: selectedStatus ? (selectedStatus.stale.find((s) => s.nodeId === nodeId)?.reasons ?? []) : null,
+    drift: selectedStatus ? (selectedStatus.drift.find((d) => d.nodeId === nodeId && (variant !== MAIN || variantOf(d) === MAIN)) ?? null) : null,
   };
 }

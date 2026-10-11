@@ -16,6 +16,16 @@ export function createStaticApi(data) {
     const pick = (table, code) => { const value = own(table, id); if (value === undefined) throw missing(code); return value; };
     const whole = (value) => { if (value === null || value === undefined) throw missing('STATIC_UNAVAILABLE'); return value; };
     switch (kind) {
+      case 'variants': {
+        if (id === null) return data.variants?.catalog ?? { editions: [{ id: 'main', kind: 'original', lang: null }] };
+        const edition = id === 'main' ? data : own(data.variants?.editions, id), parts = String(path).split('/');
+        if (!edition) throw missing('VARIANT_UNKNOWN');
+        let nodeId; try { nodeId = parts[5] ? decodeURIComponent(parts[5]) : null; } catch { throw missing('ROUTE_INVALID'); }
+        if (parts[4] === 'nodes' && parts.length === 6 && nodeId) { const value = own(edition.nodes, nodeId); if (!value) throw missing('NODE_NOT_FOUND'); return value; }
+        if (parts[4] === 'receipts' && parts.length === 6 && nodeId) { const value = own(edition.receiptNodes, nodeId); if (!value) throw missing('NODE_NOT_FOUND'); return value; }
+        if (parts[4] === 'publication' && parts.length === 5) return whole(edition.publication);
+        throw missing('ROUTE_UNKNOWN');
+      }
       case 'work': return data.work;
       case 'resources': return id === null ? whole(data.resources) : pick(data.resourceDetails, 'RESOURCE_NOT_VISIBLE');
       case 'nodes': return pick(data.nodes, 'NODE_NOT_FOUND');

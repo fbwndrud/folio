@@ -19,6 +19,8 @@ import { viewCheckSets } from './check-sets-view.js';
 import { viewNodeEvidence, viewSource, viewSources } from './evidence-view.js';
 import { viewBlocks } from './blocks-view.js';
 
+import { variantSnapshot } from './variant-view.js';
+
 export const SNAPSHOT_VERSION = 1;
 
 /** 설정 때문에 못 여는 화면은 빈칸(null)으로 둔다. 그 밖의 오류는 그대로 던진다. */
@@ -65,6 +67,7 @@ async function writingSnapshot(root, packs, config, resources) {
   const tracking = trackingReadView(context.work);
   const result = {
     version: SNAPSHOT_VERSION,
+    variants: await variantSnapshot(context, root, packs),
     ...resources,
     work: { ...work, capabilities: { ...work.capabilities, viewerToggles: false }, features: { ...work.features, viewerToggles: false } },
     nodes: await each(nodeIds, (id) => viewNode(root, id, context)),
@@ -93,7 +96,7 @@ async function writingSnapshot(root, packs, config, resources) {
 /** 한 벌이 가리키는 그림 id(읽기 화면의 본문·붙은 그림, 엔티티의 관련 그림). */
 export function snapshotAssetIds(snapshot) {
   const ids = new Set();
-  for (const node of Object.values(snapshot.nodes)) for (const a of [...node.assets.inline, ...node.assets.attached]) if (a.hasFile) ids.add(a.id);
+  for (const node of [...Object.values(snapshot.nodes), ...Object.values(snapshot.variants?.editions ?? {}).flatMap(e => Object.values(e.nodes))]) for (const a of [...node.assets.inline, ...node.assets.attached]) if (a.hasFile) ids.add(a.id);
   for (const entity of Object.values(snapshot.entities)) for (const a of entity.assets) if (a.hasFile) ids.add(a.id);
   return [...ids].sort();
 }

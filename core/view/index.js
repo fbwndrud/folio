@@ -23,3 +23,5 @@ export { viewTracking } from './tracking-view.js';
 export { viewPublication, downloadPublication } from './publication-view.js';
 
 export { viewImpact } from './impact-view.js';
+
+export { viewVariants, viewVariantNode, viewVariantReceipts, viewVariantPublication } from './variant-view.js';

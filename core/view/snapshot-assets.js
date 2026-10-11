@@ -14,6 +14,7 @@ export async function* snapshotAssetFiles(root, snapshot) {
   const catalog = new Map();
   const summaries = [
     ...Object.values(snapshot.nodes).flatMap((n) => [...n.assets.inline, ...n.assets.attached]),
+    ...Object.values(snapshot.variants?.editions ?? {}).flatMap(e => Object.values(e.nodes)).flatMap(n => [...n.assets.inline, ...n.assets.attached]),
     ...Object.values(snapshot.entities).flatMap((e) => e.assets),
   ];
   for (const summary of summaries) {

@@ -53,13 +53,13 @@ npm run examples:bundle -- .local-output/chosen-examples.json .local-output/new-
 
 ## English
 
-[Download the English example library](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-english-example-library.zip). It includes four new English works and one Korean-to-English translation. Individual ZIPs are also available in the [release](https://github.com/fbwndrud/folio/releases/tag/v0.1.0). Check English downloads against `ENGLISH-SHA256SUMS`.
+[Download the English example library](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-english-example-library-studio.zip). It includes four new English works and one Korean-to-English translation. Individual ZIPs are also available in the [release](https://github.com/fbwndrud/folio/releases/tag/v0.1.0). The updated collection and translation Studio ZIP use `STUDIO-EDITION-SHA256SUMS`; the earlier individual English ZIPs use `ENGLISH-SHA256SUMS`. Earlier downloads remain unchanged.
 
 - **The Last Light at Platform Nine:** three-scene original short story, 1,009 words.
 - **Pip and the Pocket of Wind:** four-spread original picture-book manuscript, 107 words, two illustrations.
 - **Your First Work with Folio:** four-part practical beginner guide, 902 words.
 - **The Atlas of Borrowed Rooms:** four chapters, eight scenes, 2,657 words; a structural example rather than a full-length novella. The brass key has four recorded custody states with passage references.
-- **The Mailbox After the Rain:** English translation of the Korean short story, with a term map and three source-bound review receipts. Web/EPUB are English. Studio shows the original main manuscript; it does not yet have a variant reader selector.
+- **The Mailbox After the Rain:** English translation of the Korean short story, with a term map and three source-bound review receipts. The updated collection opens the English variant in Web/EPUB and Studio. Use **Reading edition** to switch text, section review records and publication between original and translation. Outline, settings and tracking describe the original. Download just the [updated translation Studio bundle](https://github.com/fbwndrud/folio/releases/download/v0.1.0/folio-example-en-mailbox-translation-studio.zip) if preferred.
 
 All five use simulated approval and same-host, scripted review responses. Text and images were created by the assistant; Folio stored them through public MCP tools. Translation checks and source-change guards were exercised, but this is not independent certification of translation or literary quality.
 

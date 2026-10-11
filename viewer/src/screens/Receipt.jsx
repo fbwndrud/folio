@@ -1,3 +1,4 @@
+import { useEdition } from '../edition-context.jsx';
 import { useT } from '../i18n/context.jsx';
 import { stepLabel, RESULT_LABELS, SEVERITY_LABELS, readable, kindLabel, originLabel } from '../lib/labels.js';
 import { checkTitle } from '../lib/check-labels.js';
@@ -18,7 +19,8 @@ function Findings({ checks }) {
 /** 노드 하나의 영수증: 단계별 결과, 건너뛴 이유와 출처, Versions used, Review needed 이유. */
 export function Receipt({ id, outline = null }) {
   const t = useT();
-  const [state] = useLoad(`/api/receipts/${encodeURIComponent(id)}`);
+  const { path } = useEdition();
+  const [state] = useLoad(path(`/api/receipts/${encodeURIComponent(id)}`));
   if (!state.data) return <LoadState state={state} />;
   const view = state.data;
   if (!view.ledger.ok) return <article><h1>{view.title || t("Section review")}</h1><p className="error" role="alert">{t("The review records could not be verified. Unverified records are hidden. Ask your AI assistant to check the activity record.")}</p><TechnicalDetails code="LEDGER_TAMPERED" /></article>;
@@ -28,6 +30,7 @@ export function Receipt({ id, outline = null }) {
       <p><a href={hrefFor('read', id)}>{t("Read this section")}</a></p>
       <h2>{t("Review record")}</h2>
       <ReviewSummary view={view} />
+      {view.receipt?.original ? <p>{t("Source version:")} <code>{view.receipt.original.committedHash}</code></p> : null}
       {view.drift ? <TechnicalDetails code={view.drift.code} /> : null}
       {view.stale?.length ? <><h2>{t("Review needed")}</h2><RevisionReferences refs={view.stale} outline={outline} /></> : null}
       {!view.receipt ? <p className="muted">{t("No finalized version has been recorded.")}</p> : (

@@ -1,4 +1,17 @@
 export default Object.freeze({
+  'Reading edition': '읽는 판본',
+  'Original': '원본',
+  'Translation': '번역본',
+  'Summary': '요약본',
+  'Revision': '개정본',
+  'Reading editions could not be loaded. Only the original is available.': '판본 목록을 불러오지 못해 원본만 표시합니다.',
+  'Section text, section review records and publication use the selected edition. Outline, settings, library, tracking and work-wide review summaries describe the original work.': '본문·검토 기록·출판은 선택한 판본을 사용합니다. 목차·설정·자료실·추적 정보와 작품 전체 검토 요약은 원본 기준입니다.',
+  'This section has no text in the selected edition. The original has not been substituted.': '선택한 판본에 이 구간의 본문이 없습니다. 원문으로 대체하지 않았습니다.',
+  'Source version:': '판본의 원본 버전:',
+  'READING EDITION · {edition}': '읽기 판본 · {edition}',
+  'Download the selected saved edition. Exporting does not approve the work.': '선택한 저장 판본을 내려받습니다. 내보내기는 작품 승인이 아닙니다.',
+  'This edition is incomplete or unavailable for export. Ask your AI assistant to check its missing sections.': '이 판본은 미완성이거나 내보낼 수 없습니다. AI에게 누락된 구간을 확인하도록 요청하세요.',
+
   "Web and EPUB use the translation. Studio shows the original main manuscript; a variant selector is not available yet.": "Web과 EPUB는 번역본입니다. Studio는 원본 원고를 보여 주며, 판본 선택기는 아직 제공하지 않습니다.",
   'Examples': '예시 모음',
   'Start with a small example, then explore a complete work separately.': '작은 예시로 시작하고, 별도로 제공하는 완성된 작품 예시도 살펴보세요.',

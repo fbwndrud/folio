@@ -1,5 +1,7 @@
 // 출판 안내는 원래 경고 코드와 별개로 사람이 이해할 문장을 쓴다.
 const LABELS = {
+  EXPORT_SOURCE_CHANGED: 'The original section changed after this edition was reviewed.',
+  EXPORT_TERMS_CHANGED: 'The term map changed after this edition was reviewed.',
   EXPORT_UNVERIFIED: 'This section has not completed a Folio review.',
   EXPORT_BODY_CHANGED: 'This section was edited after its last review.',
   EXPORT_BLOCK_TARGET_NOT_EXPORTED: 'A referenced item is not included in this edition.',
@@ -14,6 +16,8 @@ const LABELS = {
 };
 
 const KOREAN = {
+  EXPORT_SOURCE_CHANGED: '이 판본을 검토한 뒤 원본이 바뀌었습니다.',
+  EXPORT_TERMS_CHANGED: '이 판본을 검토한 뒤 용어 대응표가 바뀌었습니다.',
   EXPORT_UNVERIFIED: '이 절은 Folio 검토를 완료하지 않았습니다.',
   EXPORT_BODY_CHANGED: '마지막 검토 이후 이 절의 본문이 바뀌었습니다.',
   EXPORT_BLOCK_TARGET_NOT_EXPORTED: '참조한 항목이 이 판본에 포함되지 않았습니다.',

@@ -1,3 +1,4 @@
+import { useEdition } from '../edition-context.jsx';
 import { useT } from '../i18n/context.jsx';
 import { TrackingPanel } from '../components/tracking/TrackingPanel.jsx';
 import { kindLabel } from '../lib/labels.js';
@@ -17,10 +18,11 @@ const MODES = [['mixed', 'Text & images'], ['text', 'Text only'], ['pictures', '
 
 export function Reader({ id, observationId }) {
   const t = useT();
-  const [state] = useLoad(`/api/nodes/${encodeURIComponent(id)}`);
-  const [tracking] = useLoad('/api/tracking');
-  const [panel, setPanel] = useState('tracking');
-  const [review] = useLoad(`/api/receipts/${encodeURIComponent(id)}`);
+  const { variant, path } = useEdition();
+  const [state] = useLoad(path(`/api/nodes/${encodeURIComponent(id)}`));
+  const [tracking] = useLoad(variant === 'main' ? '/api/tracking' : null);
+  const [panel, setPanel] = useState(variant === 'main' ? 'tracking' : 'review');
+  const [review] = useLoad(path(`/api/receipts/${encodeURIComponent(id)}`));
   const [mode, setMode] = useState('mixed');
   const [reviewOpen, setReviewOpen] = useState(() => window.matchMedia('(min-width: 1200px)').matches);
   const [selection, setSelection] = useState(null);
@@ -80,6 +82,7 @@ export function Reader({ id, observationId }) {
         {reviewStatus && reviewStatus.state !== 'recorded' ? <p className={reviewStatus.state === 'unverified' ? 'error' : 'warn'}><a href={hrefFor('receipt', id)}>{t(reviewStatus.label)}</a></p> : null}
         {review.error ? <p className="warn">{t("Review status could not be loaded.")} <a href={hrefFor('receipt', id)}>{t("Open review record")}</a></p> : null}
       </header>
+      {view.edition?.missing ? <p className="warn" role="status">{t("This section has no text in the selected edition. The original has not been substituted.")}</p> : null}
       <div className="modes" role="group" aria-label={t("Reading view")}>
         {MODES.map(([value, label]) => <button key={value} type="button" aria-pressed={mode === value} onClick={() => setMode(value)}>{t(label)}</button>)}
       </div>
@@ -88,7 +91,7 @@ export function Reader({ id, observationId }) {
       {pictures.length ? <div className="pictures">{pictures.map((a) => <AssetImage key={a.id} id={a.id} />)}</div> : null}
       {mode === 'pictures' && !pictures.length ? <p className="muted">{t("This section has no images. Choose Text & images to read the manuscript.")}</p> : null}
       {view.entities.length ? <details className="section-definitions"><summary>{t("Definitions in this section (")}{view.entities.length})</summary><ul>{view.entities.map((e) => <li key={e.id}><a href={hrefFor('entity', e.id)}>{e.name}</a> <span className="muted">{t(kindLabel(e.kind))}</span></li>)}</ul></details> : null}
-      <Claims nodeId={view.node.id} />
+      {variant === 'main' ? <Claims nodeId={view.node.id} /> : null}
       <footer className="pager">
         {view.prev ? <a href={hrefFor('read', view.prev)}>{t("Previous section")}</a> : <span />}
         <a href={hrefFor('receipt', view.node.id)}>{t("Review record")}</a>
@@ -97,7 +100,7 @@ export function Reader({ id, observationId }) {
     </article>
     <aside className="review-panel" id="section-review" ref={reviewPanel} tabIndex={-1} hidden={!reviewOpen || focused}>
       <button type="button" className="quiet review-back" onClick={backToText}>{t("Back to text")}</button>
-      <div className="tracking-tabs" role="group" aria-label={t("Side panel")}><button type="button" aria-pressed={panel === 'tracking'} onClick={() => setPanel('tracking')}>{t("Tracking")}</button><button type="button" aria-pressed={panel === 'review'} onClick={() => setPanel('review')}>{t("Section review")}</button></div>
+      <div className="tracking-tabs" role="group" aria-label={t("Side panel")}>{variant === 'main' ? <button type="button" aria-pressed={panel === 'tracking'} onClick={() => setPanel('tracking')}>{t("Tracking")}</button> : null}<button type="button" aria-pressed={panel === 'review'} onClick={() => setPanel('review')}>{t("Section review")}</button></div>
       {panel === 'tracking' ? <TrackingPanel id={id} state={tracking} preferredSubject={view.entities.find((e) => tracking.data?.observations.some((o) => o.subjectId === e.id && o.evidence.nodeId === id))?.id} /> : <SectionReview id={id} segments={view.segments} onQuote={showQuote} state={review} />}
     </aside>
   </div>;

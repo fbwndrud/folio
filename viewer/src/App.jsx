@@ -1,3 +1,5 @@
+import { EditionProvider, useEdition } from './edition-context.jsx';
+import { EditionSelect, EditionNotice } from './components/EditionSelect.jsx';
 import { LanguageSelect } from './components/LanguageSelect.jsx';
 import { useT } from './i18n/context.jsx';
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
@@ -52,7 +54,7 @@ export function App() {
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
-  return <ApiContext.Provider value={api}><ReadingProvider><Shell route={route} /></ReadingProvider></ApiContext.Provider>;
+  return <ApiContext.Provider value={api}><EditionProvider><ReadingProvider><Shell route={route} /></ReadingProvider></EditionProvider></ApiContext.Provider>;
 }
 
 export function Screen({ route, outline, reloadOutline, readId }) {
@@ -88,6 +90,7 @@ export function Screen({ route, outline, reloadOutline, readId }) {
 function Shell({ route }) {
   const t = useT();
   const api = useApi();
+  const { variant, reload: reloadEditions } = useEdition();
   const [outline, reloadOutline] = useLoad('/api/work');
   const [closed, setClosed] = useState(false);
   const [shutdownError, setShutdownError] = useState(null);
@@ -125,17 +128,17 @@ function Shell({ route }) {
         <nav aria-label={t("Pages")}>
           {groups.map((item) => <a key={item.name} href={item.screen === 'home' && readId ? hrefFor('read', readId) : item.screen === 'home' ? '#/' : hrefFor(item.screen)} aria-current={group.name === item.name ? 'true' : undefined}>{t(item.name)}</a>)}
         </nav>
-        <LanguageSelect />
+        <EditionSelect /><LanguageSelect />
         {api.static ? <span className="exported-label">{t("Exported view · Read only")}</span> : <button type="button" className="quiet close-viewer" onClick={shutdown}>{t("Close viewer")}</button>}
         {shutdownError ? <div className="error" role="alert">{t(errorSummary(shutdownError.code))}<TechnicalDetails code={shutdownError.code} message={shutdownError.message} /></div> : null}
       </header>
       <div className="workspace-nav">
         {!resourceOnly && !wideMode ? <button type="button" className="quiet contents-toggle" aria-expanded={contentsOpen} aria-controls="contents-panel" onClick={() => setContentsOpen((value) => !value)}>{contentsOpen ? t("Hide contents") : t("Show contents")}</button> : null}
         <nav aria-label={t("{group} pages", { group: t(group.name) })}>{(outline.data ? group.items : []).map(([screen, label]) => <a key={screen} aria-current={(route.screen === screen || (resourceOnly && route.screen === 'home' && screen === 'resources')) ? 'page' : undefined} href={screen === 'home' ? '#/' : hrefFor(screen)}>{t(label)}</a>)}</nav>
-        {!api.static ? <button type="button" className="quiet refresh-view" disabled={outline.loading} onClick={() => { reloadOutline(); setViewVersion((n) => n + 1); }}>{outline.loading ? t("Refreshing…") : t("Refresh view")}</button> : null}
+        {!api.static ? <button type="button" className="quiet refresh-view" disabled={outline.loading} onClick={() => { reloadOutline(); reloadEditions(); setViewVersion((n) => n + 1); }}>{outline.loading ? t("Refreshing…") : t("Refresh view")}</button> : null}
       </div>
       {!resourceOnly ? <aside className="side" id="contents-panel" hidden={!contentsOpen || focused || wideMode}>{outline.data ? <Outline nodes={outline.data.nodes} current={['read', 'receipt'].includes(route.screen) ? route.id : null} status={outline.data.status} /> : <LoadState state={outline} />}</aside> : null}
-      <main className={`main main-${route.screen}`} id="main-content" ref={main} tabIndex={-1}><ExampleNotice /><ErrorBoundary key={`${route.screen}:${route.id}:${viewVersion}`}><Screen route={route} outline={outline} reloadOutline={reloadOutline} readId={readId} /></ErrorBoundary></main>
+      <main className={`main main-${route.screen}`} id="main-content" ref={main} tabIndex={-1}><ExampleNotice /><EditionNotice /><ErrorBoundary key={`${route.screen}:${route.id}:${viewVersion}:${variant}`}><Screen route={route} outline={outline} reloadOutline={reloadOutline} readId={readId} /></ErrorBoundary></main>
     </div>
   );
 }

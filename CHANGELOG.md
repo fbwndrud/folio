@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Studio reading-edition selector for declared translations, revisions and summaries.
+- Selected text, section receipts, publication preview and Web/EPUB downloads stay together.
+- Portable review copies include edition-specific text, receipts and inline images.
+- Missing edition text never falls back to the original; changed source and term maps warn on export.
+- Updated English Studio collection and translation bundle are separate release assets; original 0.1.0 files are unchanged.
+
 ## 0.1.0 — 2026-10-11
 
 First public release for local use.

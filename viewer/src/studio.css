@@ -157,3 +157,5 @@
 
 .language-select { display: flex; align-items: center; gap: .4rem; font-size: .85rem; white-space: nowrap; }
 .language-select select { width: auto; min-width: 7rem; padding: .4rem .6rem; }
+
+.edition-select{display:flex;align-items:center;gap:8px;font-size:12px;flex-wrap:wrap}.edition-select select{font:inherit;max-width:220px;min-height:40px}

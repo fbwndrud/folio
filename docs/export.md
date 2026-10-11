@@ -41,3 +41,6 @@ nodeId는 잎 원고, assetId는 그림 설명서의 id다. 둘 중 하나만 �
 페이지 500, 전체 배치 항목·잎·그림·결과 파일 각각 5000, 출력 총 64MiB, layout.yaml 1MiB, 지면 경고 200개까지다. 상한을 넘으면 절단 사유 또는 실패를 명시한다. `features.export: false`는 도구를 끄고 `features.layout: false`는 지면을 적용하지 않으며 이유를 경고한다. 기존 실행/잠금 digest는 바뀌지 않는다.
 
 실패의 cleanupPending이 true이면 details.target/temp를 확인한다. 이 호출이 만든 바뀌지 않은 파일만 정리하며 타인이 넣은 파일은 보존한다. 성공의 EXPORT_TEMP_CLEANUP_PENDING은 결과는 완성됐고 임시 정리가 남았다는 뜻이다. 기존 `folio_view`의 검토 화면 정적 내보내기도 계속 쓸 수 있다.
+
+
+Studio의 새 판본 선택 기능은 본문 미리보기와 Web/EPUB 다운로드에 같은 판본을 전달한다. 번역 누락은 `EXPORT_VARIANT_MISSING`으로 거부한다. 검토 이후 원본 커밋·원본 본문 또는 용어표가 바뀌면 `EXPORT_SOURCE_CHANGED`·`EXPORT_TERMS_CHANGED` 경고가 나온다. 경고는 자동으로 원고를 수정하거나 승인하지 않는다. 현재 소스와 새 판본 지원 Studio 묶음에 적용되며 이전 배포 파일은 그대로다.

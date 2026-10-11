@@ -9,6 +9,7 @@ import { exportViewer } from '../server/view/export.js';
 import { collectFiles, fileInventory, includeWorkFile, writeFiles } from './example-files.js';
 import { approvalNotice, exampleEditions } from './example-editions.js';
 import { writeExampleGallery } from './example-gallery.js';
+import { exampleStudio } from './example-studio.js';
 import { exampleReadme } from './example-readme.js';
 import { VARIANT_ID } from '../core/variants/model.js';
 import { prepareExampleOutput } from './example-output.js';
@@ -50,8 +51,8 @@ async function buildOne(example, output, packs, distDir) {
   await rename(join(work, 'exports', 'viewer'), join(folder, 'studio'));
   await rmdir(join(work, 'exports')); // Preserve an unexpected file instead of deleting it.
   const htmlPath = join(folder, 'studio', 'index.html');
-  const html = await readFile(htmlPath, 'utf8');
-  const metadata = jsonBytes({ id: example.id, approval: example.approval, language: example.language ?? 'ko', readingVariant: example.variant ?? 'main', studioVariant: 'main' }).toString().replaceAll('<', '\\u003c');
+  const html = exampleStudio(await readFile(htmlPath, 'utf8'), example);
+  const metadata = jsonBytes({ id: example.id, approval: example.approval, language: example.language ?? 'ko', readingVariant: example.variant ?? 'main', studioVariant: example.variant ?? 'main' }).toString().replaceAll('<', '\\u003c');
   await writeFile(htmlPath, html.replace('</body>', `<script type="application/json" id="folio-example">${metadata}</script></body>`));
   await writeFiles(join(folder, 'web'), editions.web);
   await writeFiles(join(folder, 'epub'), editions.epub);
@@ -67,7 +68,7 @@ async function buildOne(example, output, packs, distDir) {
   if (JSON.stringify(fileInventory(original)) !== JSON.stringify(fileInventory(unchanged))) throw new Error('Source work changed during packaging; retry from a stable copy');
   const files = await collectFiles(folder, () => true, example.privateRoots ?? [example.root]);
   const info = { version: 1, id: example.id, title: example.title, description: example.description,
-    approval: example.approval, review: 'same-host', language: example.language ?? 'ko', readingVariant: example.variant ?? 'main', studioVariant: 'main', contentLicense: example.contentLicense ?? 'not-set', originalRecordsUnchanged: true,
+    approval: example.approval, review: 'same-host', language: example.language ?? 'ko', readingVariant: example.variant ?? 'main', studioVariant: example.variant ?? 'main', contentLicense: example.contentLicense ?? 'not-set', originalRecordsUnchanged: true,
     pending: inspection.checks.filter(c => c.status === 'warning').map(c => ({ name: c.name, message: c.message })),
     files: fileInventory(files) };
   const manifest = jsonBytes(info);

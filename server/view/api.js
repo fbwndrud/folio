@@ -2,7 +2,7 @@ import { FolioError } from '../../core/errors.js';
 import { RESOURCE_ROUTES } from './resource-routes.js';
 import { exportViewer } from './export.js';
 import {
-  viewImpact, viewTracking, viewPublication, downloadPublication, readAssetFile, setStageMode, viewBlocks, viewCheckSets, viewEntity, viewGraph, viewNode, viewNodeReceipts, viewNodeEvidence, viewOutline, viewPromiseBoard, viewReceiptList, viewSource, viewSources, viewStages, viewerStillOn,
+  viewVariants, viewVariantNode, viewVariantReceipts, viewVariantPublication, viewImpact, viewTracking, viewPublication, downloadPublication, readAssetFile, setStageMode, viewBlocks, viewCheckSets, viewEntity, viewGraph, viewNode, viewNodeReceipts, viewNodeEvidence, viewOutline, viewPromiseBoard, viewReceiptList, viewSource, viewSources, viewStages, viewerStillOn,
 } from '../../core/view/index.js';
 
 const MAX_ID = 200;
@@ -23,6 +23,11 @@ function segmentId(raw) {
 /** 뷰어 API. 작품 root 는 서버를 띄울 때 정해지고, 요청은 root 나 파일 경로를 줄 수 없다 — id 만 준다. */
 const ROUTES = [
   ...RESOURCE_ROUTES,
+  ['GET', /^\/api\/variants$/, async ctx => ({ json: await viewVariants(ctx.root, { packs: ctx.packs }) })],
+  ['GET', /^\/api\/variants\/([^/]+)\/nodes\/([^/]+)$/, async (ctx, [variant, id]) => ({ json: await viewVariantNode(ctx.root, { packs: ctx.packs }, variant, id) })],
+  ['GET', /^\/api\/variants\/([^/]+)\/receipts\/([^/]+)$/, async (ctx, [variant, id]) => ({ json: await viewVariantReceipts(ctx.root, { packs: ctx.packs }, variant, id) })],
+  ['GET', /^\/api\/variants\/([^/]+)\/publication$/, async (ctx, [variant]) => ({ json: await viewVariantPublication(ctx.root, { packs: ctx.packs }, variant) })],
+  ['GET', /^\/api\/variants\/([^/]+)\/publication\/(web|epub)$/, async (ctx, [variant, format]) => ({ file: await viewVariantPublication(ctx.root, { packs: ctx.packs }, variant, format) })],
   ['GET', /^\/api\/work$/, async (ctx) => ({ json: await viewOutline(ctx.root, { packs: ctx.packs }) })],
   ['GET', /^\/api\/nodes\/([^/]+)$/, async (ctx, [id]) => ({ json: await viewNode(ctx.root, id) })],
   ['GET', /^\/api\/entities\/([^/]+)$/, async (ctx, [id]) => ({ json: await viewEntity(ctx.root, id) })],
