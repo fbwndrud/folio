@@ -1,0 +1,26 @@
+{
+  "id": "story",
+  "title": "Synthetic example: The Lantern on the Steps",
+  "preset": "scene",
+  "packs": [
+    "novel"
+  ],
+  "rootNode": {
+    "level": "scene",
+    "id": "lantern",
+    "title": "A Light Left On"
+  },
+  "nodes": {
+    "lantern": {
+      "plan": "A single scene about a lantern left on a library step. Introduce no state changes or invented facts about tracked characters.",
+      "draft": "The library had closed an hour ago, but someone had left a lantern on the steps. Its light made a small, steady circle in the rain.\n\nBeside it lay a book wrapped in a blue scarf. A note slipped between the pages read: Keep the light on. I know the way back.\n\nThe scarf was dry underneath. Whoever had left it had tucked the corners carefully around the book. A second note, smaller than the first, said: There is room for two under the awning.\n\nAcross the street, the last bus pulled away. Footsteps sounded at the far end of the pavement. The lantern stayed where it was.\n",
+      "extract": {
+        "events": [],
+        "appearances": [],
+        "mentions": [],
+        "occurrences": []
+      }
+    }
+  },
+  "entities": []
+}

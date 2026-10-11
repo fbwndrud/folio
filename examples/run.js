@@ -12,10 +12,11 @@ const REPO = dirname(import.meta.dirname);
 const EXAMPLES = ['story', 'guide', 'picturebook', 'fairytale'];
 
 /** 공개 실행 파일과 실제 MCP 통신을 사용한다. 결과는 항상 새 폴더에만 쓴다. */
-export async function runExamples({ names = EXAMPLES, out = null, verify = false } = {}) {
+export async function runExamples({ names = EXAMPLES, out = null, verify = false, language = 'ko' } = {}) {
+  if (!['en', 'ko'].includes(language)) throw new Error('choose en or ko for example language');
   if (!names.length || names.some((name) => !EXAMPLES.includes(name))) throw new Error('choose story, guide, picturebook, fairytale or all');
   if (out && verify) throw new Error('--out and --verify cannot be combined');
-  const base = out ? resolve(out) : await mkdtemp(join(tmpdir(), 'folio-example-'));
+  const base = out ? resolve(out) : await mkdtemp(join(tmpdir(), 'linivera-example-'));
   if (out) await mkdir(base, { recursive: false });
   const transport = new StdioClientTransport({ command: process.execPath, args: [join(REPO, 'bin', 'linivera-mcp.js')], cwd: REPO, stderr: 'pipe' });
   let stderr = '';
@@ -31,7 +32,7 @@ export async function runExamples({ names = EXAMPLES, out = null, verify = false
   try {
     await client.connect(transport);
     for (const name of names) {
-      const scenario = JSON.parse(await readFile(join(import.meta.dirname, `${name}.json`), 'utf8'));
+      const scenario = JSON.parse(await readFile(join(import.meta.dirname, ...(language === 'en' ? ['en'] : []), `${name}.json`), 'utf8'));
       const root = join(base, name);
       const init = await call('folio_init', { root, title: scenario.title, preset: scenario.preset, packs: scenario.packs });
       assert.equal(init.created, true);
@@ -78,22 +79,24 @@ export async function runExamples({ names = EXAMPLES, out = null, verify = false
   }
 }
 
-async function main() {
-  const args = process.argv.slice(2);
+export async function runExampleCli(args = process.argv.slice(2)) {
+  args = [...args];
   const name = args[0] && !args[0].startsWith('--') ? args.shift() : 'all';
+  let language = 'en';
   let out = null;
   let verify = false;
   while (args.length) {
     const arg = args.shift();
     if (arg === '--verify') verify = true;
+    else if (arg === '--language' && args[0]) language = args.shift();
     else if (arg === '--out' && args[0] && !args[0].startsWith('--')) out = args.shift();
-    else throw new Error('usage: node examples/run.js [story|guide|picturebook|fairytale|all] [--out NEW_DIRECTORY | --verify]');
+    else throw new Error('usage: node examples/run.js [story|guide|picturebook|fairytale|all] [--language en|ko] [--out NEW_DIRECTORY | --verify]');
   }
-  console.log(JSON.stringify({ synthetic: true, verified: true, outputsRetained: !verify,
-    results: await runExamples({ names: name === 'all' ? EXAMPLES : [name], out, verify }) }, null, 2));
+  console.log(JSON.stringify({ synthetic: true, verified: true, language, outputsRetained: !verify,
+    results: await runExamples({ names: name === 'all' ? EXAMPLES : [name], out, verify, language }) }, null, 2));
 }
 
 const invokedPath = process.argv[1] ? await realpath(resolve(process.argv[1])).catch(() => null) : null;
 if (invokedPath === await realpath(fileURLToPath(import.meta.url))) {
-  main().catch((error) => { console.error(error.message); process.exitCode = 1; });
+  runExampleCli().catch((error) => { console.error(error.message); process.exitCode = 1; });
 }

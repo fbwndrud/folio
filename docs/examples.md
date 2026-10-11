@@ -13,7 +13,7 @@ Studio의 **설정 → 예시 모음**, 작품 개요의 **예시로 시작하�
 명령으로 실행한다면 Linivera 소스 또는 설치 패키지 폴더에서 실행한다. 출력 부모는 존재해야 하며 마지막 출력 폴더는 새 이름이어야 한다.
 
 ```sh
-node examples/run.js all --out ./my-new-examples
+node examples/run.js all --language ko --out ./my-new-examples
 ```
 
 기존 [합성 예시 안내](../examples/README.md)에 개별 실행과 자동 검증을 설명했다.
@@ -53,14 +53,16 @@ npm run examples:bundle -- .local-output/chosen-examples.json .local-output/new-
 
 ## English
 
-[Download the English example library](https://github.com/fbwndrud/linivera/releases/download/v0.1.0/folio-english-example-library-studio.zip). It includes four new English works and one Korean-to-English translation. Individual ZIPs are also available in the [release](https://github.com/fbwndrud/linivera/releases/tag/v0.1.0). The updated collection and translation Studio ZIP use `STUDIO-EDITION-SHA256SUMS`; the earlier individual English ZIPs use `ENGLISH-SHA256SUMS`. Earlier downloads remain unchanged.
+[Download the English example library](https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-examples-en.zip). Individual `linivera-example-*.zip` downloads and checksums are in the [v0.1.1 release](https://github.com/fbwndrud/linivera/releases/tag/v0.1.1). Earlier v0.1.0 files remain unchanged.
 
-- **The Last Light at Platform Nine:** three-scene original short story, 1,009 words.
-- **Pip and the Pocket of Wind:** four-spread original picture-book manuscript, 107 words, two illustrations.
-- **Your First Work with Linivera:** four-part practical beginner guide, 902 words.
-- **The Atlas of Borrowed Rooms:** four chapters, eight scenes, 2,657 words; a structural example rather than a full-length novella. The brass key has four recorded custody states with passage references.
-- **The Mailbox After the Rain:** English translation of the Korean short story, with a term map and three source-bound review receipts. The updated collection opens the English variant in Web/EPUB and Studio. Use **Reading edition** to switch text, section review records and publication between original and translation. Outline, settings and tracking describe the original. Download just the [updated translation Studio bundle](https://github.com/fbwndrud/linivera/releases/download/v0.1.0/folio-example-en-mailbox-translation-studio.zip) if preferred.
+- **The Last Light at Platform Nine:** an original three-scene story, 1,009 words.
+- **Pip and the Pocket of Wind:** a four-spread picture-book manuscript, 107 words, with two illustrations.
+- **Your First Work with Linivera:** a new, fixed synthetic beginner guide covering a brief, sources, review and sharing. It replaces the earlier Folio-titled guide in the new collection.
+- **The Atlas of Borrowed Rooms:** four chapters and eight scenes, 2,657 words; a structural example rather than a full-length novella. The brass key has four recorded custody states with passage references.
+- **The Mailbox After the Rain:** an English translation preserving its Korean original, with a term map and three source-bound review receipts. Studio, Web and EPUB open the English reading edition. Use **Reading edition** to switch the text and review records; settings and tracking describe the original.
 
-All five use simulated approval and same-host, scripted review responses. Text and images were created by the assistant; Linivera stored them through public MCP tools. Translation checks and source-change guards were exercised, but this is not independent certification of translation or literary quality.
+All five use simulated approval and same-host review. They show the workflow and output format, not an independent assessment of translation or literary quality. The first-work guide uses scripted synthetic responses; the other works were created earlier by the assistant and recorded through public MCP tools. Their source records are preserved when repackaging.
 
-Small synthetic examples ship with Linivera. Generated works ship separately as self-contained ZIPs; text, images, evidence and original activity records stay together. Open **Settings → Examples** in Studio. For a downloaded bundle, extract it, read `README.md`, then run `node serve.mjs` for the read-only Studio. Web and EPUB editions are also included. Copy the whole folder before editing. Simulated approval is not author approval. Version 0.1.0 examples are separate GitHub release downloads. Original example content is CC0-1.0; third-party quotes, code and trademarks are excluded, and Studio software retains its own licenses.
+Extract a downloaded ZIP, read its English `README.md`, then run `node serve.mjs` to open the read-only Studio. Web and EPUB are included. Copy the whole folder before editing. Original example content is CC0-1.0; third-party quotes, code and trademarks are excluded, and Studio software retains its own licenses.
+
+For a first English example without downloading the whole collection, use the one-command [demo](getting-started.en.md#try-an-example-before-writing). The shipped CLI examples default to English; `--language ko` selects Korean. The `runExamples` JavaScript API retains Korean as its default for existing callers.

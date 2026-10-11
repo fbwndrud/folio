@@ -44,6 +44,7 @@
     "licenses/"
   ],
   "bin": {
+    "linivera": "bin/linivera.js",
     "linivera-mcp": "bin/linivera-mcp.js",
     "linivera-view": "bin/linivera-view.js",
     "linivera-doctor": "bin/linivera-doctor.js",

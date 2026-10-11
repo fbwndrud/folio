@@ -74,7 +74,7 @@ async function buildOne(example, output, packs, distDir) {
   const manifest = jsonBytes(info);
   await writeFile(join(folder, 'manifest.json'), manifest); files.set('manifest.json', manifest);
   const zip = zipFiles(new Map([...files].map(([path, bytes]) => [`${example.id}/${path}`, bytes])));
-  const filename = `folio-example-${example.id}.zip`;
+  const filename = `linivera-example-${example.id}.zip`;
   await writeFile(join(output, filename), zip, { flag: 'wx' });
   return { id: info.id, title: info.title, description: info.description, approval: info.approval,
     contentLicense: info.contentLicense, language: info.language, readingVariant: info.readingVariant, studioVariant: info.studioVariant, filename, bytes: zip.length, hash: sha256(zip), files: files.size };

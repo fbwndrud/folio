@@ -1,0 +1,51 @@
+{
+  "id": "picturebook",
+  "title": "Synthetic example: The Seed in the Cup",
+  "preset": "picturebook",
+  "packs": [
+    "novel"
+  ],
+  "rootNode": {
+    "level": "book",
+    "id": "seed-book",
+    "title": "The Seed in the Cup"
+  },
+  "nodes": {
+    "seed-book": {
+      "plan": "Two spreads separate read-aloud text from illustration directions. This fixture contains no generated images.",
+      "children": [
+        {
+          "id": "seed-1",
+          "title": "A Small Beginning",
+          "brief": "A child plants a seed in a cup."
+        },
+        {
+          "id": "seed-2",
+          "title": "A New Leaf",
+          "brief": "A sprout appears in the same cup."
+        }
+      ]
+    },
+    "seed-1": {
+      "plan": "Use one brief sentence and a clear illustration brief.",
+      "draft": "### Read aloud\nOne small seed. One small cup.\n\n### Illustration brief\nA red cup of soil on a low windowsill. A child places a single seed in the soil. These are directions, not a finished illustration.\n",
+      "extract": {
+        "events": [],
+        "appearances": [],
+        "mentions": [],
+        "occurrences": []
+      }
+    },
+    "seed-2": {
+      "plan": "Show the sprout visually without describing every detail in the read-aloud line.",
+      "draft": "### Read aloud\nGood morning, little one.\n\n### Illustration brief\nThe same red cup and windowsill. A tiny green sprout leans toward the sunlight. No illustration file has been generated.\n",
+      "extract": {
+        "events": [],
+        "appearances": [],
+        "mentions": [],
+        "occurrences": []
+      }
+    }
+  },
+  "entities": []
+}

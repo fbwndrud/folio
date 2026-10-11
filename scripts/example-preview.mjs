@@ -27,7 +27,7 @@ export async function startExamplePreview(directory, { port = 0 } = {}) {
     if (!path || path.endsWith('/')) path += 'index.html';
     const parts = path.split('/');
     if (/[\\\0]/.test(path) || parts.some(p => !p || p === '.' || p === '..')) throw new Error('Unsafe path');
-    const publicFile = /^(index\.html|gallery\.(css|js)|catalog\.json|manifest\.json|README\.md|THIRD-PARTY-NOTICES\.txt|SHA256SUMS|folio-example-[a-z0-9-]+\.zip)$/.test(path);
+    const publicFile = /^(index\.html|gallery\.(css|js)|catalog\.json|manifest\.json|README\.md|THIRD-PARTY-NOTICES\.txt|SHA256SUMS|(?:linivera|folio)-example-[a-z0-9-]+\.zip)$/.test(path);
     const previewFile = collection ? /^examples\/[a-z0-9-]+\/(studio|web|epub)\//.test(path) : /^(studio|web|epub)\//.test(path);
     if (!publicFile && !previewFile) throw new Error('Private file');
     if (await realpath(root) !== root) throw new Error('Moved root');

@@ -10,7 +10,7 @@ test('the example CLI runs through an aliased entry path and verifies a committe
   const dir = await tempDir('folio-example-alias-');
   const alias = join(dir, 'example.mjs');
   await symlink(join(import.meta.dirname, '..', '..', 'examples', 'run.js'), alias);
-  const result = spawnSync(process.execPath, [alias, 'story', '--verify'], { encoding: 'utf8', timeout: 30_000 });
+  const result = spawnSync(process.execPath, [alias, 'story', '--language', 'ko', '--verify'], { encoding: 'utf8', timeout: 30_000 });
   assert.equal(result.status, 0, result.stderr);
   const output = JSON.parse(result.stdout);
   assert.equal(output.verified, true);

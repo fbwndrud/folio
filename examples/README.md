@@ -59,3 +59,7 @@ npm run examples:verify
 네 위임 중 새 기준·과거 보충은 false로 두어 일회 기록 보충 승인을 검증한다.
 후보 비공개, 관리 대상 path:null, 원문 hash 보존, 다음 요청 근거, 보충과 재검토의 차이,
 연결 복원, 잘못된 입력, 기능을 꺼도 기록 삭제를 거부하는 경계를 확인한다.
+
+## English fixtures
+
+CLI examples now default to English. Use `node examples/run.js all --language en --verify`, or the one-command demo in [Getting started](../docs/getting-started.en.md). Use `--language ko` for the original Korean fixtures. The JavaScript `runExamples` API keeps its original Korean default. Both versions use fixed synthetic responses and simulated approval; they never approve a real user work.

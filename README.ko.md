@@ -2,54 +2,82 @@
 
 **원본부터 결과까지, 연결해서 관리하세요.**
 
-[English](README.md) · [다운로드](https://github.com/fbwndrud/linivera/releases/tag/v0.1.0) · [첫 작품 쓰기](docs/writing-guide.md) · [문제 신고](https://github.com/fbwndrud/linivera/issues)
+[English](README.md) · [다운로드](https://github.com/fbwndrud/linivera/releases/tag/v0.1.1) · [첫 작품 쓰기](docs/writing-guide.md) · [문제 신고](https://github.com/fbwndrud/linivera/issues)
 
 리니베라는 AI와 작업하는 프로젝트의 데이터를 내 컴퓨터에서 관리하는 도구입니다. 원본 문서·구조화 데이터·그림과 수정본·근거·검토 기록을 함께 보관합니다. 집필은 활용 사례 중 하나입니다. Studio에서 글을 읽고, 근거를 따라가고, 다시 확인할 부분을 볼 수 있습니다. 완성한 원고는 웹이나 EPUB으로 내보냅니다.
 
 **0.1 계열은 로컬 사용을 위한 초기 버전입니다.** 집필하려면 stdio MCP를 지원하는 AI 프로그램이 필요합니다. 연결한 AI가 글을 쓰고, 이미지 도구를 지원하면 그림도 만듭니다. 리니베라는 파일과 기록을 관리합니다. 화면은 한국어와 영어를 선택할 수 있습니다.
 
-![합성 예시를 연 Studio](https://github.com/fbwndrud/linivera/releases/download/v0.1.0/folio-studio-preview.jpg)
+![합성 예시를 연 Studio](https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-studio-preview.png)
 
 *미리 정한 합성 입력·AI 응답과 모의 승인으로 만든 예시 화면입니다.*
 
+## 설치
+
+쓰는 AI 프로그램에 저장소 주소를 주고 부탁하세요.
+
+> https://github.com/fbwndrud/linivera 를 MCP 서버로 등록해 줘. README에 나온 빌드된 릴리스 패키지를 사용하고, 연결을 확인한 뒤 새 작품을 시작하자.
+
+**Node.js 24**가 필요합니다. 22.13 이상인 22 버전과 26 버전도 지원합니다. 릴리스 패키지에는 Studio가 들어 있어 저장소 복제·빌드·절대 경로 편집이 필요 없습니다. 첫 실행 때 npm이 패키지와 의존성을 내려받습니다. npm 레지스트리에는 아직 게시하지 않았으며 GitHub 릴리스에서 제공합니다.
+
+<details>
+<summary>직접 MCP를 등록하려면</summary>
+
+Claude Code는 사용할 프로젝트에서:
+
+```sh
+claude mcp add --scope project linivera -- npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-0.1.1.tgz
+```
+
+Codex:
+
+```sh
+codex mcp add linivera -- npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-0.1.1.tgz
+```
+
+Grok CLI:
+
+```sh
+grok mcp add linivera -- npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-0.1.1.tgz
+```
+
+Windows에서는 `-- npx` 대신 `-- cmd /c npx`를 사용합니다. 등록 후 AI 프로그램을 재연결하거나 다시 시작하세요. 첫 다운로드 중 시간 초과가 나면 아래 데모를 한 번 실행하고 재연결하세요. Codex의 `startup_timeout_sec`는 필요하면 60으로 늘립니다. JSON 설정은 [영어 README](README.md#installation)를 참고하세요.
+
+</details>
+
 ## 먼저 열어 보기
 
-Node.js 24를 권장합니다. 지원 범위는 22.13 이상인 22 버전과 24·26 버전입니다. 소스를 받아 다음을 실행합니다.
+다음 한 줄로 한국어 합성 원고를 만들고 Studio 서버를 엽니다.
+
+```sh
+npx -y https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-0.1.1.tgz demo --language ko
+```
+
+표시된 주소를 브라우저에서 여세요. 화면 상단에서 한국어와 영어를 선택합니다. 고정 응답과 모의 승인으로 동작하므로 AI 계정이나 모델 다운로드가 필요 없습니다. Ctrl+C로 종료합니다.
+
+예시는 표시된 새 임시 폴더에 남습니다. 보관할 위치를 정하려면 `--out ./my-first-example`을 덧붙이세요. 이미 있는 폴더는 덮어쓰지 않습니다. 영어 예시는 `--language ko`를 빼면 됩니다.
+
+<details>
+<summary>소스를 받아 개발하려면</summary>
 
 ```sh
 git clone https://github.com/fbwndrud/linivera.git
 cd linivera
 npm run setup
-node examples/run.js story --out ./my-first-example
-npm run viewer -- "./my-first-example/story"
+node bin/linivera.js demo --language ko
 ```
 
-터미널에 표시된 주소를 열면 원고와 검토 기록을 볼 수 있습니다. 예시 작품은 `my-first-example/story`에 남습니다. 이 시연은 고정 응답과 모의 승인을 사용하므로 AI 계정이나 모델 다운로드가 필요 없습니다. 화면 서버는 Ctrl+C로 종료합니다. 다시 실행할 때는 새 출력 폴더를 선택하세요.
+소스 개발 경로에서는 의존성을 설치하고 화면을 빌드합니다. 배포 파일은 `npm run package:build`로 만듭니다.
 
-이전 Folio의 설치본 `folio-0.1.0.tgz`도 [GitHub 릴리스](https://github.com/fbwndrud/linivera/releases/tag/v0.1.0)에서 제공합니다. 새 이름의 `linivera-0.1.1.tgz`는 현재 소스에서 `npm run package:build`로 만듭니다. 두 버전의 설치 경로는 [설치 안내](docs/production.md)를 따르세요. npm에는 게시하지 않습니다.
+</details>
 
 ## 내 작품 시작하기
 
-사용하는 AI 프로그램에 로컬 **stdio MCP 서버**로 등록합니다. `mcpServers` JSON 설정을 받는 프로그램에서는 다음 형태를 사용하세요.
-
-```json
-{
-  "mcpServers": {
-    "linivera": {
-      "command": "node",
-      "args": ["/absolute/path/to/linivera/bin/linivera-mcp.js"]
-    }
-  }
-}
-```
-
-예시 경로를 설치 위치로 바꾸세요. tarball 설치본은 `node_modules/linivera/bin/linivera-mcp.js`를 가리킵니다. 프로그램이 Node를 찾지 못하면 `command`에 Node 24 실행 파일의 전체 경로를 넣습니다. 등록 화면이 있는 앱에서는 같은 명령과 인수를 입력하세요.
-
-`skill/folio/` 폴더 전체도 프로그램의 스킬 기능으로 연결하세요. 스킬을 지원하지 않으면 프로그램의 지침 설정 기능으로 같은 내용을 전달합니다. MCP 연결 때 짧은 안내를 보내지만 상세 작업 규칙은 이 폴더에 있습니다. 새 작품을 만들기 전에 실제 도구 목록을 확인하세요. [연결 안내](docs/connect.md)에서 확인 방법을 설명합니다.
-
-연결한 다음에는 원하는 작업을 말하면 됩니다.
+연결한 다음에는 원하는 작업을 말하세요.
 
 > 리니베라로 짧은 이야기를 쓰고 싶어. 사용할 새 작품 폴더를 먼저 확인하고, 독자와 주인공, 분위기를 질문해 줘. 정한 설정과 원고를 함께 관리하고 초안을 화면에서 보여 줘. 채택 여부는 내가 결정할게.
+
+MCP 연결 때 기본 작업 규칙을 보냅니다. MCP 리소스를 지원하는 호스트는 상세 지침도 서버에서 직접 읽으므로 이 경로에서는 별도 스킬 복사가 필요 없습니다. 리소스를 지원하지 않는 호스트는 `skill/folio/`를 지침 기능으로 연결합니다. [첫 작품 안내](docs/writing-guide.md)와 [영어 시작 안내](docs/getting-started.en.md)를 참고하세요.
 
 리니베라는 어떤 내용을 검사했고 어느 버전을 채택했는지 기록합니다. 관련 자료·설정·그림이 바뀌면 다시 검토할 부분을 표시합니다. 반드시 해결해야 하는 검사 결과가 있으면 채택을 막습니다. 참고 의견만으로 본문을 고치지 않으며, 같은 AI의 검토는 자기검토로 표시합니다.
 
@@ -80,7 +108,7 @@ npm run viewer -- "./my-first-example/story"
 
 중요한 작품은 먼저 백업하세요. [운영 안내](docs/operations.md)는 진단·복원·중단된 작업을, [호환성](docs/compatibility.md)은 확인한 환경과 검증 범위를 설명합니다. AI 구독과 생성 비용은 연결한 프로그램의 조건을 따릅니다.
 
-영어 예시는 [영어 모음 ZIP](https://github.com/fbwndrud/linivera/releases/download/v0.1.0/folio-english-example-library-studio.zip)으로 받습니다. 새 단편·그림책·실습 안내서·네 장짜리 이야기와 기존 한국어 단편의 영어 번역이 들어 있습니다. 네 장짜리 이야기는 2,657단어의 구조 실습용 예시입니다. 새 묶음의 Web·EPUB·Studio는 영어 번역을 엽니다. Studio 상단의 **읽는 판본**에서 한국어 원본과 번역본을 전환하세요. 본문·구간 검토 기록·출판 미리보기가 함께 바뀌며 설정과 추적 정보는 원본 기준입니다.
+영어 예시는 [영어 모음 ZIP](https://github.com/fbwndrud/linivera/releases/download/v0.1.1/linivera-examples-en.zip)으로 받습니다. 새 단편·그림책·실습 안내서·네 장짜리 이야기와 기존 한국어 단편의 영어 번역이 들어 있습니다. 네 장짜리 이야기는 2,657단어의 구조 실습용 예시입니다. 새 묶음의 Web·EPUB·Studio는 영어 번역을 엽니다. Studio 상단의 **읽는 판본**에서 한국어 원본과 번역본을 전환하세요. 본문·구간 검토 기록·출판 미리보기가 함께 바뀌며 설정과 추적 정보는 원본 기준입니다.
 
 판본 선택은 현재 소스와 새 영어 Studio 묶음에 포함됩니다. 최초 `folio-0.1.0.tgz`와 기존 예시 ZIP은 변경하지 않았습니다. 현재 소스에서 `npm run package:build`를 실행하면 최신 MCP 서버와 빌드된 Studio를 함께 담은 설치 패키지를 만듭니다.
 

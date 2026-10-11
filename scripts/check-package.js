@@ -4,6 +4,7 @@ import { access, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { verifyPackageEntry } from './package-entry.js';
 import { verifyInstalledDoctor } from './package-doctor.js';
 import { verifyPackedMarkdownLinks } from './package-links.js';
 
@@ -39,6 +40,8 @@ try {
   const manifest = JSON.parse(await readFile(join(installed, 'package.json'), 'utf8'));
   const documentation = await verifyPackedMarkdownLinks({ root: installed, files: packed.files.map((file) => file.path) });
   assert.equal(manifest.name, 'linivera');
+  assert.equal(manifest.bin.linivera, 'bin/linivera.js');
+  assert.match(run(process.execPath, [join(installed, 'bin/linivera.js'), '--help'], sandbox), /linivera demo/);
   for (const prefix of ['linivera', 'folio']) {
     for (const command of ['mcp', 'view', 'doctor']) {
       const name = `${prefix}-${command}`;
@@ -54,10 +57,12 @@ try {
   // Resolve every benchmark dependency inside the installed package, which excludes test fixtures.
   const benchmark = await import(pathToFileURL(join(installed, 'scripts/benchmark-local.js')).href);
   assert.equal(typeof benchmark.benchmarkLocal, 'function');
+  const npx = await verifyPackageEntry({ npmCli, sandbox, tarball: join(sandbox, packed.filename), manifest });
   const doctor = await verifyInstalledDoctor(sandbox, installed, 'linivera');
   const legacyDoctor = await verifyInstalledDoctor(sandbox, installed, 'folio');
   const examples = JSON.parse(run(process.execPath, [join(installed, 'examples', 'run.js'), 'all', '--verify'], sandbox));
   assert.equal(examples.verified, true);
+  assert.equal(examples.language, 'en');
   assert.deepEqual(examples.results.map((result) => result.example), ['story', 'guide', 'picturebook', 'fairytale']);
   const assets = JSON.parse(run(process.execPath, [join(installed, 'examples', 'assets.js')], sandbox));
   assert.equal(assets.verified, true);
@@ -70,7 +75,7 @@ try {
   assert.equal(production.editions.verified, true);
   for (const field of ['synthetic', 'viewerResourceVisible', 'epubVerified', 'resourceOnlyVerified', 'installedCliReady']) assert.equal(production[field], true);
   assert.equal(production.outputsRetained, false);
-  console.log(JSON.stringify({ installedFromTarball: true, developmentDependenciesAbsent,
+  console.log(JSON.stringify({ installedFromTarball: true, developmentDependenciesAbsent, npx,
     production, doctor, legacyDoctor, documentation, benchmarkModuleVerified: true, entryCount: packed.entryCount, examples: examples.results.map((result) => result.example), assets, tracking }, null, 2));
 } finally {
   await rm(sandbox, { recursive: true, force: true });

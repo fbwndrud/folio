@@ -1,0 +1,51 @@
+{
+  "id": "fairytale",
+  "title": "Synthetic example: The Quiet Bridge",
+  "preset": "fairytale",
+  "packs": [
+    "novel"
+  ],
+  "rootNode": {
+    "level": "chapter",
+    "id": "bridge",
+    "title": "The Quiet Bridge"
+  },
+  "nodes": {
+    "bridge": {
+      "plan": "Two scenes connect a choice with its consequence. Avoid an added moral or assumed reader age.",
+      "children": [
+        {
+          "id": "bridge-1",
+          "title": "Wait",
+          "brief": "The traveler waits for the wind to calm."
+        },
+        {
+          "id": "bridge-2",
+          "title": "Cross",
+          "brief": "After the wind calms, the traveler crosses."
+        }
+      ]
+    },
+    "bridge-1": {
+      "plan": "The traveler chooses to wait at a windy bridge.",
+      "draft": "The bridge swayed above the stream. The traveler put down a bag and sat beside a stone. There was time to wait.\n",
+      "extract": {
+        "events": [],
+        "appearances": [],
+        "mentions": [],
+        "occurrences": []
+      }
+    },
+    "bridge-2": {
+      "plan": "The wind stops and the traveler crosses.",
+      "draft": "The wind softened. The ropes grew still. The traveler picked up the bag and crossed, one careful step at a time.\n",
+      "extract": {
+        "events": [],
+        "appearances": [],
+        "mentions": [],
+        "occurrences": []
+      }
+    }
+  },
+  "entities": []
+}

@@ -1,0 +1,48 @@
+{
+  "id": "guide",
+  "title": "Your First Work with Linivera",
+  "preset": "guide",
+  "packs": [
+    "knowledge"
+  ],
+  "rootNode": {
+    "level": "chapter",
+    "id": "first-work",
+    "title": "From a Small Idea to a Reading Copy"
+  },
+  "nodes": {
+    "first-work": {
+      "plan": "A beginner practice guide with one section covering a brief, sources, review and sharing. Define review cycle before using it. Commands belong in the installation guide, not in the manuscript.",
+      "children": [
+        {
+          "id": "first-steps",
+          "title": "Try One Small Work",
+          "brief": "Define the review cycle and walk through a short story example in plain English."
+        }
+      ]
+    },
+    "first-steps": {
+      "plan": "Define review cycle. Explain the human workflow using a library story. Keep host writing and Linivera record keeping distinct. Require actual user approval and mention full-folder backups.",
+      "draft": "A review cycle is a pass through drafting, checking and deciding what to keep. Linivera keeps the files and records for each pass. Your AI assistant writes the words. You choose what becomes part of your work.\n\n## Start small\n\nTell your assistant: \"Help me write a short story with Linivera. Ask about the reader, main character and tone. Confirm a new folder before creating anything. Show me the first scene before I decide whether to accept it.\"\n\nFor a first try, choose one place and one problem. A library is closing for the night. Someone has left a lantern on the steps. Who is coming back? This is enough to begin. You do not need to design a whole world first.\n\nAnswer the assistant's questions in your own words. You might ask for a quiet, hopeful story for adult readers, told from one person's point of view. Read back the brief before writing starts. If it says \"children's adventure\" instead, correct it now.\n\n## Keep the things that matter\n\nAsk the assistant to save important details alongside the manuscript. Perhaps the lantern is green and the library closes at nine. Tell it which details must stay the same and which are still ideas. If you supply a document or image, ask it to register that source and use the recorded version.\n\nAn image is like another piece of source material. Your AI application makes it; Linivera records its ID, file and review status. Ask to see the image before accepting it. A recorded image is not automatically a good image.\n\n## Read, check, decide\n\nAsk to open the work in Studio. Read the scene first, then look at its review. Follow an evidence link when you want to see where a detail came from. If the lantern turns blue in the draft, request a correction. A check by the same AI is self-review; it can miss a mistake.\n\nWhen a draft works for you, say so explicitly. The assistant must use your actual decision. If there is a blocking finding, fix the problem and check again. An advisory is a suggestion you can discuss; it should not quietly rewrite your text.\n\nIf you later change the setting or replace an image, look for work that needs another check. A previous acceptance applied to the previous version. Ask the assistant to show the affected sections and review them before sharing again.\n\n## Make a reading copy\n\nAsk to export the selected reading edition as a website or EPUB. Open the result and read a page, check the contents and inspect any illustrations. A read-only Studio copy lets someone inspect the work and its records. A reading copy is an export, not a backup of the editable project.\n\nBack up the entire work folder. It contains more than the manuscript: sources, settings and the record of what happened belong together. When you return later, give your assistant the same folder and ask it to read the current status before continuing.\n\nPractice: write one scene, request one specific change, review the new version and export it. This fixture uses simulated responses and approval to demonstrate the sequence. Your own work needs your real decision.\n",
+      "extract": {
+        "events": [
+          {
+            "entityId": "review-cycle",
+            "kind": "term.defined",
+            "quote": "A review cycle is a pass through drafting, checking and deciding what to keep."
+          }
+        ],
+        "appearances": [],
+        "mentions": [],
+        "occurrences": []
+      }
+    }
+  },
+  "entities": [
+    {
+      "id": "review-cycle",
+      "kind": "term",
+      "name": "review cycle"
+    }
+  ]
+}

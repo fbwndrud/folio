@@ -36,6 +36,7 @@ test('downloaded bundle preserves original records, moves safely and exposes pre
   const before = await sourceSnapshot(root);
   const result = await buildExampleCollection({ examples: [{ ...example(root), contentLicense: 'CC0-1.0' }], output: output('release') });
   assert.equal(result.published, false);
+  assert.equal(result.examples[0].filename, 'linivera-example-synthetic.zip');
   const zip = await readFile(join(result.output, result.examples[0].filename));
   assert.equal(sha256(zip), result.examples[0].hash);
   const files = unzip(zip), bundle = JSON.parse(files.get('synthetic/manifest.json'));
@@ -73,6 +74,8 @@ test('downloaded bundle preserves original records, moves safely and exposes pre
   assert.equal(download.headers.get('content-type'), 'application/zip');
   assert.equal(sha256(Buffer.from(await download.arrayBuffer())), result.examples[0].hash);
   assert.equal((await fetch(`${gallery.url}examples/synthetic/work/work.yaml`)).status, 404);
+  await writeFile(join(result.output, 'folio-example-legacy.zip'), zip);
+  assert.equal((await fetch(`${gallery.url}folio-example-legacy.zip`)).status, 200);
 });
 
 test('unsafe source, leaked location and invalid approval fail without rewriting or partial output', async (t) => {
